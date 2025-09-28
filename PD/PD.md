@@ -44,6 +44,6 @@
     - **Sicuri**: Evitare ad utenti non autorizzati di accedere
 
     - **Trasparenza**: Mascherare i dettagli e le differenze della architettura al fine di agevolare la progettazione e la implementazione<br>
-    ![Relazione fra le Trasparenze](img/RelazioneTrasparenza.png)
+    ![Relazione fra le Trasparenze](img/RelazioneTrasparenza.png)<br>
     Esistono diversi tipi di trasparenza:
         - **Trasparenza di accesso**: 
