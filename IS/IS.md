@@ -40,7 +40,7 @@
         - **Sviluppo incrementale**: Il sistema viene decomposto in sottosistemi che vengono implementati, testati, rilasciati, installati e messi in manutenzione con priorità diverse.
         Permette di anticipare da subito delle funzionalità al committente in base alla priorità più alta e permette di eseguire un testing più esaustivo grazie ai prototipi che permettono di individuare i requisiti per i successivi incrementi con una maggiore copertura per i servizi con più alta priorità
 
-        - **Sviluppo Iterativo**: Presenta da subito tutte le funzionalità/sottosistemi ed in seguito vengono migliorate
+        - **Sviluppo iterativo**: Presenta da subito tutte le funzionalità/sottosistemi ed in seguito vengono migliorate
 
         - **Extreme programming**: Partecipazione più attiva del committente al team di sviluppo e con un miglioramente costante e continuo del codice
 
