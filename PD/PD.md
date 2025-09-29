@@ -54,7 +54,7 @@
       - **Trasparenza alla scalabilità**: Permette di poter servire carichi di lavoro via via crescenti senza dover modificare la propria architettura e la propria organizzazione
       - **Trasparenza alle prestazioni**: Assicura che il progettista sia ignaro dei mecccanismi che vengono utilizzati per le prestazioni del sistema
 
-# **Middleware ad Oggetti Distribuiti** 
+## **Middleware ad Oggetti Distribuiti** 
 - Gli oggetti distribuiti hanno come obiettivo quello di realizzare servizi distribuiti, in modo da essere efficienti, flessibili, sicuri e robusti, basato su una architettura che utilizza come risorse nodi eterogenei, sia per hardware che per software.
 - Il **middleware** ad oggetti distribuiti che risiede fra le applicazioni e lo strato del sistema operativo ha lo scopo di permettere la comunicazione e la cooperazioni fra le componenti di sistema, astraendo le operazioni di basso livello risolvendo i problemi eterogeneità.
 Evita che il programmatore si occupa dei dettagli di comunicazione del livello di rete.
@@ -67,3 +67,22 @@ Poichè il middleware ad oggetti astrae significativamente la parte di servizio 
 Imponeva la sincronia delle invocazioni bloccando il client fino a quando il server non avesse risposto all'invocazione remota attraverso gli stub
 - **Middleware ad Oggetti Distribuiti**: Estensione del modello RPC in modo da permettere l'invocazione di metodi oggetti remoti
     - **CORBA, Java RMI, .NET**:
+
+# Continuo slide
+
+
+# Lezione 29/09 Programmazione concorrente e thread
+legge di moore, raddoppio tansistor ogni 2 anni problema calore
+user code spillatto all'aumento dei core
+parallelo memoria condivisa
+distribuiti memoria separate
+ogni thread viene mappato ad un core
+thread vivono all'interno del processo che sta usando i thread
+applicativo ha un main thread
+JVM è un porgramma capace di eseguire altri programmi scritti in java, è una specifica che può essere implemantata in una macchina virtuale java
+extends classe thread o implement interfaccia runnable e fare new thread
+sleep lancia eccezione 
+java non ha riferimenti fisica. ma ha i riferimenti relativi alla posizione java
+rece condition esecuzione concorrente
+non posso dire che un parte del mio codice viene eseguita prima degli altri thread
+

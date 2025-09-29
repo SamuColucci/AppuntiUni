@@ -5,9 +5,9 @@
     - **Upper-CASE**: Strumenti che supportano le attività delle fasi di analisi e specifica dei requisiti e progettazione di un processo software
     - **Lower-CASE**: Strumenti che supportano attività delle fasi finali del processo quali programming, testing e debugging
 ## Ciclo di vita del Software
-- **Software life cycle**: Periodo di tempo che inizia quando un sotware viene concepito e termina quando non + più utilizzabile
+- **Software life cycle**: Periodo di tempo che inizia quando un sotware viene concepito e termina quando non è più utilizzabile
 - **Software Development cycle**: Periodo di tempo che inizia con la decisione di sviluppo del prodotto software e termina quando è consegnato
-- **Modello ciclo di vita del Software(CVS)**: Rappresenta come un sistema software descrittiva o prescrittiva di come un sistema sotware viene o dovrebbe essere sviluppato. Esistono vari tipi di CVS
+- **Modello ciclo di vita del Software(CVS)**: Rappresenta una caratterizzazione descrittiva o prescrittiva di come un sistema sotware viene o dovrebbe essere sviluppato. Esistono vari tipi di CVS
     - **Modelli a cascata**: rappresenta un modello sequenziale lineare senza fasi di riciclo. Viene organizzato in fasi caratterizzate dalle tasks, dalle attività e dai controlli, i prodotti di una fase non sono più modificabili
         - **Studio di fattibilità**: Stabilire se avviare il progetto indiviuando le scelte necessarie e dà in output il documento di fattibilità
         - **Analisi dei requisiti**: Descrivere le funzionalità e le caratteristica che l'applicazione deve avere e dà in output il documento di specifica dei requsiti
@@ -23,6 +23,8 @@
         - **Verification**: si occupa di stabilire la corrispondenza fra un software e la sua specifica.
         - **Validation**: si occupa di stabilire l'appropriatezza di un prodotto software alla sua missione operativa
         - **Feedback**: possono essere innviate ad una qualsiasi delle fasi precedenti
+
+        - Alcune fasi possono essere solo verificati solo attraverso la validation
     
     - **Modello a V**: Fasi a sinistra collegate a quelle a destra, i test eseguiti a destra vengono pianificati a sinistra e se si trova un errore si rivedono le attività della fase a sinistra
 
