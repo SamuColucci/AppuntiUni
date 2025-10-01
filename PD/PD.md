@@ -72,7 +72,7 @@ Imponeva la sincronia delle invocazioni bloccando il client fino a quando il ser
 - **Middleware esplicito**: Rappresenta quello che lo sviluppatore deve invocare direttamente all'interno del codice per accedere ai seervizi che offre, essendo di fatto meno trasparente ma al contempo più controllabile dallo sviluppatore
 
 
-# Programmazione concorrente e  Thread in Java
+## Programmazione concorrente e  Thread in Java
 
 - **Legge di Moore**: numero transistor raddopia ogni 2 anni 
 
