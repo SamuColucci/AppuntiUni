@@ -50,3 +50,6 @@
 - **TableLayout**: Organizza gli elementi in righe e colonne
 - **GridView**: Visualizza un insieme di elementi e da un Adapter che fornisce gli elementi da inserire nel GridView
 - **List View**: Visualizza un insieme di elementi organizzati in una lista e la Adpater fornisce gli elementi da inserire nel List View
+
+## appunti
+testo inserito in un altro file resourse per gestire meglio la stringa avendo più stringhe in modo da non poterla modificare dall'xml, permette di avere una versione di più lingue

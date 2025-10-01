@@ -65,24 +65,43 @@ Poichè il middleware ad oggetti astrae significativamente la parte di servizio 
 
 - **Remote Procedure Call (RPC)**: Un modello che permetteva ad una procedura in esecuzione su una macchina di invocarne un'altra che si trovasse si una macchina diversa rendendo possibile trasmettere i dati utilizzando uno stream di byte su socket e permettere che si superassero le differenze nella rappresentazione stessa dei dati da trasmettere.
 Imponeva la sincronia delle invocazioni bloccando il client fino a quando il server non avesse risposto all'invocazione remota attraverso gli stub
-- **Middleware ad Oggetti Distribuiti**: Estensione del modello RPC in modo da permettere l'invocazione di metodi oggetti remoti
-    - **CORBA, Java RMI, .NET**:
+- **Middleware ad Oggetti Distribuiti**: Estensione del modello RPC in modo da permettere l'invocazione di metodi oggetti remoti, alcuni esempi rappresentativi sono: **CORBA, Java RMI, .NET**
+- **Middleware implicito**: Attraverso meccanismi di intercettazione delle richieste e delle interazioni tra gli oggetti, è in grado di fornire servizi comuni e trasversali ad ogni componente senza che essa debba esplicitamente richiederli
+  - Il **Server** Fornisce i servizi in base alle richieste, in maniera trasparente allo sviluppatore software in modo da favorire una maggiore interoperabilità tra produttori di software diversi
 
-# Continuo slide
+- **Middleware esplicito**: Rappresenta quello che lo sviluppatore deve invocare direttamente all'interno del codice per accedere ai seervizi che offre, essendo di fatto meno trasparente ma al contempo più controllabile dallo sviluppatore
 
 
-# Lezione 29/09 Programmazione concorrente e thread
-legge di moore, raddoppio tansistor ogni 2 anni problema calore
-user code spillatto all'aumento dei core
-parallelo memoria condivisa
-distribuiti memoria separate
-ogni thread viene mappato ad un core
-thread vivono all'interno del processo che sta usando i thread
-applicativo ha un main thread
-JVM è un porgramma capace di eseguire altri programmi scritti in java, è una specifica che può essere implemantata in una macchina virtuale java
-extends classe thread o implement interfaccia runnable e fare new thread
-sleep lancia eccezione 
-java non ha riferimenti fisica. ma ha i riferimenti relativi alla posizione java
-rece condition esecuzione concorrente
-non posso dire che un parte del mio codice viene eseguita prima degli altri thread
+# Programmazione concorrente e  Thread in Java
 
+- **Legge di Moore**: numero transistor raddopia ogni 2 anni 
+
+- **Thermal Noise**: Effetto della termodinamica che disturba la crescita secondo la legge di Moore e conseguete difficoltà di raffreddamento dei troppi transistorù
+
+- **Accesso in memoria**
+  - **SingleCore**: Un singolo thread accede alla memoria
+  - **MultiCore**: Più thread accedono alla memoria causando problemi di **cache missing, page faults e Context-switch dallo scheduler**
+
+- **Multithread**: Permette di eseguire più thread contemporaneamente
+
+- **Thread**: Si differenziano dai processi per la capacità di avere a disposizione e condividere gli stessi dati
+
+  - **Thread in Java**: sono oggetti e quindi istanze di una classe Thread, esitono due metodi per istanziare un oggetto thread;
+    - Extends Thread
+    - Implements Runnable e uso del costruttore di Thread
+
+    Altri metodi utili:
+    - **Sleep**: Sospende il thread
+    - **Interrupt**: Indicazione al fine di fermare il thread e far fare qualcosa altro e lancia l'eccezione **InterruptedException**
+    - **Join**: Attende il completamento di un altro thread
+  
+  - **Comunicazione fra Thread**: Comunicano condividendo acceso ai campi e ai campi che contengono riferimenti ad oggetti.
+  Per risolvere il problema interferenza di thread e inconsistenza della memoria è necessaria la sincronizzazione
+
+  - **Problema accesso concorrente**: La race condition dipende dall'ordine di esecuzione di diversi thread, tuttavia questi errori rendono difficile il debugging
+    - **Errori di incosistenza**: Si verifica quando i thread hanno visioni diverse dei dati, l'happen-before è una garanzia che la memoria scritta da un thread è visibile da un altro thread
+- **Informazioni utili**
+  - Ogni thread viene mappato ad un core, thread vivono all'interno del processo che li sta usando
+  - Ogni applicativo ha un main thread
+  - JVM è un porgramma capace di eseguire altri programmi scritti in java, è una specifica che può essere implemantata in una macchina virtuale java
+  - Java non ha riferimenti fisica, ma gestisce i riferimenti relativi alla posizione java
