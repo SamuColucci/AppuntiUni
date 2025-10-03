@@ -47,3 +47,37 @@
         - **Extreme programming**: Partecipazione più attiva del committente al team di sviluppo e con un miglioramente costante e continuo del codice
 
         - **Modello a spirale**: Sfrutta il concetto di riciclo, il processo viene rappresentato come una spirale, rappresenta un meta-modello e non prevede un numero predefinito di fasi, in cui una fase è un giro della spirale
+
+## Modeling with UML
+- **Modeling**: Consiste nel costruire una astrazione della realtà in modo da ignorare irrelevanti dettagli
+    - **Model**: Astrazione che descrive un sottoinsieme del sistema
+    - **View**: Descrive selezionati aspetti della realtà
+    - **Notation**: Insieme di regole grafiche o testuale per descrive le views
+- **Phenomenon**: Un oggetto nel mondo del dominio come lo percepisce
+- **Concept**: Descrive le proprietà del fenomeno che sono comuni
+    - **Name**
+    - **Purpose**
+    - **Members**
+- **Abstract data type**: Tipo speciale la cui implementazione rimane nascosta al resto del sistema
+- **Class**: Una astrazione nel contesto dei linguaggi object-oriented
+- **Application Domain**: ambiente nel quale il sistema opera
+- **Solution Domain**: Le tecnologie disponibile dalla build del sistema
+- **UML(Unified Modeling Language)**: Uno standard per modellare software obbject-oriented
+    - **Use case Diagrams**: Descrive il comportamento funzionale come viene visto dall'utente
+        - **Actor**: Modella una esterna entità che comunica col sistema, e ha un nome unico e una descrizione opzionale
+        - **Use Case**: Rappresenta una funzionalità di una classe provvista dal sistema come un flusso di eventi
+        - **Extend**: Rappresenta un caso eccezionale
+        - **Inlcudes**: Comportamento escluso dal caso d'uso
+    - **Class diagrams**: Descrive la struttura statica del sistema
+        - **Object**
+        - **Attributes**
+        - **Relations**
+    - **Sequence diagrams**: Descrive il comportamento dianamico tra gli attori e il sistema attraverso gli oggetti del sistema
+    - **Statechart diagrams**: Descrive il comportamento dinamico degli oggetti singoli
+    - **Activity Diagrams**: Modella il comportamento dinamico del sistema
+    - **Comventions**
+        - Rettangoli sono classi o istanze
+        - Ovali sono user cases o funzioni
+        - Istanze denotate con un nome sottolineato
+        - Tipi denotate con un nome non sottolineato
+        - Diagrammi sono i grafi
