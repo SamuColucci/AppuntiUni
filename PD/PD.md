@@ -105,3 +105,12 @@ Imponeva la sincronia delle invocazioni bloccando il client fino a quando il ser
   - Ogni applicativo ha un main thread
   - JVM è un porgramma capace di eseguire altri programmi scritti in java, è una specifica che può essere implemantata in una macchina virtuale java
   - Java non ha riferimenti fisica, ma gestisce i riferimenti relativi alla posizione java
+
+## Appunti 02/10/25
+Progr. conc e thread
+La legge di amdahl è realtivo all'implementazione sequenziale
+synchronized esecuzioni di tutti i thread una sotto l'laltra come in un esecuzione sequenziale evitando interliving sospendendo i metodi degli altri thread che invocano lo stesso oggetto, tuttavia ineffieciente
+lock è un astrazione della proprietà di una risorsa, garant
+
+isce quindi un accesso esclusivo
+Thread-safe un implementazione Java usabile su più thread
