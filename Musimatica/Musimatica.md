@@ -2,7 +2,7 @@
 ## Suoni
 - Un corpo in vibrazione produce delle onde sonore che si propagano nell'aria raggiungendo l'orecchio.
 La velocità del suono nell'aria è di circa <em>343,1 m/s</em> ad una temperatura di 20°
-Formula: $$ 331,3 + 0,6*t$$
+Formula: $$331,3 + 0,6*t$$
 <em>t</em>: temperatura misurata in Celsius
 
 - **Frequenza**: **Altezza** del suono e l'intensità che determina il **volume** del suono percepito e viene misurata in Hertz
@@ -15,12 +15,12 @@ Formula: $$ 331,3 + 0,6*t$$
 - La capacità di individuare la differenza di frequenza è soggettiva
 - Due suoni con la stessa frequenza sono consonanti e quindi risultano più gradevoli
 - **Intervallo**: Distanza fra due suoni
-    $$ f_1/f_2=intervallo$$
+    $$f_1/f_2=intervallo$$
 
     - **Intervallo** = 1 viene detto **unisono**
     - **Intervallo** = 2 viene detto **ottava**
         - Data una frequenza f<sub>r</sub> si possono ottenere le ottave corrispondenti raddoppiando o dimezzando
-            $$ f_n=f_r*2^n, n \in Z$$
+            $$f_n=f_r*2^n, n \in Z$$
             - f<sub>n</sub> &gt; f<sub>r</sub>: ottave più acute
             - f<sub>n</sub> &lt; f<sub>r</sub>: ottave più gravi
             - ottava con <em>n</em>
@@ -29,7 +29,7 @@ Formula: $$ 331,3 + 0,6*t$$
 ## **Note in un'ottava**
 - Se ad ogni frequenza facciamo corrispondere una nota alla avremmo infinite note, quindi per convenzione le ottave sono divise in 12 note
 L'ottava è divisa in 12 intervalli detti semitoni uguali
-    $$ f_k=f_R*(2^{1/12})^k, k \in 0,1,2,...,12$$
+    $$f_k=f_R*(2^{1/12})^k, k \in 0,1,2,...,12$$
 
     Le note di un ottava sono identificate da nomi, 7 hanno un nome proprio mentre 5 si ottengono usando le alterazioni bemolle (♭) che abbassa la frequenza e diesis (#) che alza la frequenza
 
