@@ -108,7 +108,7 @@ Imponeva la sincronia delle invocazioni bloccando il client fino a quando il ser
 
 - **Legge di Amdahl**: Lo speedup che si ottiene eseguendo il programma <em>X</em> su <em>n</em> processori, dove <em>p</em> è la parte di <em>X</em> che si può parallelizzare è:
 
-  $$S=\frac{1}{1-p+p/n}$$
+    $$S=\frac{1}{1-p+p/n}$$
 
 Per velocizzare un programma non basta investire sull'hardware ma è assolutamente necessario e molto più cost-effective impegnarsi a rendere la parte parallela predominante rispetto alla parte sequenziale
 - **Sincronizzazione**: Risolve il problema di interferenza fra thread e di incosistenza alla memoria
