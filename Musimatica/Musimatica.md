@@ -29,6 +29,7 @@ Formula: $$331,3 + 0,6*t$$
 ## **Note in un'ottava**
 - Se ad ogni frequenza facciamo corrispondere una nota alla avremmo infinite note, quindi per convenzione le ottave sono divise in 12 note
 L'ottava è divisa in 12 intervalli detti semitoni uguali
+
     $$f_k=f_R*(2^{1/12})^k, k \in 0,1,2,...,12$$
 
     Le note di un ottava sono identificate da nomi, 7 hanno un nome proprio mentre 5 si ottengono usando le alterazioni bemolle (♭) che abbassa la frequenza e diesis (#) che alza la frequenza
