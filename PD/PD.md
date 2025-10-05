@@ -106,7 +106,10 @@ Imponeva la sincronia delle invocazioni bloccando il client fino a quando il ser
   - JVM è un porgramma capace di eseguire altri programmi scritti in java, è una specifica che può essere implemantata in una macchina virtuale java
   - Java non ha riferimenti fisica, ma gestisce i riferimenti relativi alla posizione java
 
-- **Legge di Amdahl**: Lo speedup che si ottiene eseguendo il programma <em>X</em> su <em>n</em> processori, dove <em>p</em> è la parte di <em>X</em> che si può parallelizzare è: $$S=\frac{1}{1-p+p/n}$$
+- **Legge di Amdahl**: Lo speedup che si ottiene eseguendo il programma <em>X</em> su <em>n</em> processori, dove <em>p</em> è la parte di <em>X</em> che si può parallelizzare è:
+
+  $$S=\frac{1}{1-p+p/n}$$
+
 Per velocizzare un programma non basta investire sull'hardware ma è assolutamente necessario e molto più cost-effective impegnarsi a rendere la parte parallela predominante rispetto alla parte sequenziale
 - **Sincronizzazione**: Risolve il problema di interferenza fra thread e di incosistenza alla memoria
   - **Metodo synchronnized**: Costrutto Java che evita che due esecuzioni dello stesso metodo sullo stesso oggetto siano interfogliate, sospendendo gli altri thread che invocano lo stesso metodo synchronnized, quando il thread esce dal metodo e si stabbilisce una relazione di **happen-before**
