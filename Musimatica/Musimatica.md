@@ -58,4 +58,4 @@ L'ottava è divisa in 12 intervalli detti semitoni uguali
 
 ## Scale
 - Una scala musicale è una sequenza di suoni con altezza crescente che partono da una determinata nota e arrivanno all'ottava successivo, identificata da una sequenza di <em>n</em> interi positivi
-    $$ \sum_{i=1}^{n} s^i=12$$
+    $$ \sum_{i=1}^{n} s^i=12 $$
