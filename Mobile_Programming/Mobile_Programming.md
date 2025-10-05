@@ -35,6 +35,7 @@
 - Si possono definire in XML o in modo programmatico e si possono usare in sinergia
 - **Programmatico**: dinamico, dobbiamo gestire il layout nel codice
 - **XML**: facile da specificare e separe in modo netto UI dal codice, tuttavia presenta elementi statici
+  - Testo inserito in un altro file resource per gestire meglio la stringa avendo più stringhe in modo da non poterla modificare dall'xml, permette di avere una versione di più lingue
 - **ViewGroup**: gruppi di altri elementi
 - **Attributi**: Specificano aspetto grafico, dove visualizzare l'elemento e forniscono informazioni
 - **ID (Creazione)**: android:id=@+id/text, dopo la @ viene interpretato, il + specifica che stiamo creando un nuovo elemento di nome text
@@ -51,5 +52,5 @@
 - **GridView**: Visualizza un insieme di elementi e da un Adapter che fornisce gli elementi da inserire nel GridView
 - **List View**: Visualizza un insieme di elementi organizzati in una lista e la Adpater fornisce gli elementi da inserire nel List View
 
-## appunti
-testo inserito in un altro file resourse per gestire meglio la stringa avendo più stringhe in modo da non poterla modificare dall'xml, permette di avere una versione di più lingue
+## Android Studio Debugger
+  - Permette di eseguire l'app di debug

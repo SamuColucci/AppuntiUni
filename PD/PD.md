@@ -106,11 +106,13 @@ Imponeva la sincronia delle invocazioni bloccando il client fino a quando il ser
   - JVM è un porgramma capace di eseguire altri programmi scritti in java, è una specifica che può essere implemantata in una macchina virtuale java
   - Java non ha riferimenti fisica, ma gestisce i riferimenti relativi alla posizione java
 
-## Appunti 02/10/25
-Progr. conc e thread
-La legge di amdahl è realtivo all'implementazione sequenziale
-synchronized esecuzioni di tutti i thread una sotto l'laltra come in un esecuzione sequenziale evitando interliving sospendendo i metodi degli altri thread che invocano lo stesso oggetto, tuttavia ineffieciente
-lock è un astrazione della proprietà di una risorsa, garant
-
-isce quindi un accesso esclusivo
-Thread-safe un implementazione Java usabile su più thread
+- **Legge di Amdahl**: Lo speedup che si ottiene eseguendo il programma <em>X</em> su <em>n</em> processori, dove <em>p</em> è la parte di <em>X</em> che si può parallelizzare è: $$ S=\frac{1}{1-p+p/n}$$
+Per velocizzare un programma non basta investire sull'hardware ma è assolutamente necessario e molto più cost-effective impegnarsi a rendere la parte parallela predominante rispetto alla parte sequenziale
+- **Sincronizzazione**: Risolve il problema di interferenza fra thread e di incosistenza alla memoria
+  - **Metodo synchronnized**: Costrutto Java che evita che due esecuzioni dello stesso metodo sullo stesso oggetto siano interfogliate, sospendendo gli altri thread che invocano lo stesso metodo synchronnized, quando il thread esce dal metodo e si stabbilisce una relazione di **happen-before**
+  - **Lock intrinsichi**: entità associata ad ogni oggetto e garantisce sia accesso esclusivo sia accesso consistente
+  - **Azioni Atomiche**: Azioni che non sono innterrompibili e si completano del tutto
+  - **Deadlock**: Si verifica quando due thread sono in attesa uno dell'altro
+  - **Starvation**: Si verifica quando un thread non riesce a acquisire un accesso ad una risorsa condivisa
+  - **Livelock**: I thread rispondono alle azione di un altro thread
+  - **Thread-safe**: Un implementazione Java usabile su più thread

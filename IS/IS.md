@@ -81,3 +81,5 @@
         - Istanze denotate con un nome sottolineato
         - Tipi denotate con un nome non sottolineato
         - Diagrammi sono i grafi
+
+# Fare parte laboratorio
