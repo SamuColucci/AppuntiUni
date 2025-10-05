@@ -51,8 +51,8 @@ L'ottava è divisa in 12 intervalli detti semitoni uguali
     - **Croma**: equivale a 1 ottavo
     - **Semicroma**: equivale a 1 sedicesimo
 
-    <img src="https://www.accordiespartiti.it/wp-content/uploads/2013/01/valori-musicali.png" width="500">
-    
+        <img src="https://www.accordiespartiti.it/wp-content/uploads/2013/01/valori-musicali.png" width="500">
+
     - **Punto**: aumenta durata del 50%
     - **Durata di ogi battuta** viene specificata subito dopo la chiave
         - Il numeratore rapprresenta il numero di elementi di cui è fatta
