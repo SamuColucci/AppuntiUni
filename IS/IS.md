@@ -83,3 +83,5 @@
         - Diagrammi sono i grafi
 
 # Fare parte laboratorio
+
+# Appunti 06/10/25
