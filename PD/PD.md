@@ -110,7 +110,7 @@ Imponeva la sincronia delle invocazioni bloccando il client fino a quando il ser
 
     $$S=\frac{1}{1-p+(p/n)}$$
 
-Per velocizzare un programma non basta investire sull'hardware ma è assolutamente necessario e molto più cost-effective impegnarsi a rendere la parte parallela predominante rispetto alla parte sequenziale
+- Per velocizzare un programma non basta investire sull'hardware ma è assolutamente necessario e molto più cost-effective impegnarsi a rendere la parte parallela predominante rispetto alla parte sequenziale
 - **Sincronizzazione**: Risolve il problema di interferenza fra thread e di incosistenza alla memoria
   - **Metodo synchronnized**: Costrutto Java che evita che due esecuzioni dello stesso metodo sullo stesso oggetto siano interfogliate, sospendendo gli altri thread che invocano lo stesso metodo synchronnized, quando il thread esce dal metodo e si stabbilisce una relazione di **happen-before**
   - **Lock intrinsichi**: entità associata ad ogni oggetto e garantisce sia accesso esclusivo sia accesso consistente
@@ -119,3 +119,144 @@ Per velocizzare un programma non basta investire sull'hardware ma è assolutamen
   - **Starvation**: Si verifica quando un thread non riesce a acquisire un accesso ad una risorsa condivisa
   - **Livelock**: I thread rispondono alle azione di un altro thread
   - **Thread-safe**: Un implementazione Java usabile su più thread
+
+## Dai Socket agli Oggetti Remoti
+- **Java** fornisce le API di programmazione di rete nel pacchetto **java.net** permettendo di definire classi per trattare gli indirizzi di rete
+- La comunicazione sfrutta il protocollo **TCP/IP**
+- **Socket TCP**: Endpoint di comunicazione bidirezionale sulla rete che unisce due programmi
+  - Combinazione di indirizzo IP e numero di porta
+  - **Server**: Attende che qualche client richieda la connessione
+    - Classe **ServerSocket**
+  - **Client**: Conosce indirizzo macchina su cui è in esecuzione il server e il numero di porta e deve comunicare indirizzo e numero di porta locale sul quale ricererà i dati
+    - Classe **Socket**
+  
+- **Stream**: La comunicazione fra client e server avviene attraverso la scrittura e la lettura di stream associati con il socket
+  - **ObjectInputStream**: Fornisce meccanismo di deserializzazione quando si riceve un oggetto precedentemente serializzato con **ObjectInputStream**
+    - Gli oggetti che possono essere trasmessi su questo stream devoo implementare interfaccia Serializable o Externalizable
+  
+ - **Oggetto remoto**: Adottiamo il principio dell'astrazione introducedo uno **strato software** al fine di nascondere al programmatore il lavoro necessario all'invocazione di metodi remoti
+    - **Strato software** composto da **stub** e **skeleton**
+    - **Stub**: Oggetto che si trova sul client e rappresenta l'oggetto server verso il client e il suo scopo è couicare co lo skeleton che si trova lato server
+      - Ogi chiamata del client verso i metodi remoti genera una comuicazione fra stub e skeleton
+    
+    - **Skeleton**: Si occupa di effettuare invocazione del metodo richiesto, ricevere il valore restituito e comunicarlo allo stub
+
+    - **Interfaccia remota**: Definizione dei metodi che il **server** vuole esporre verso il client
+
+    - I metodi remoti possono lanciare eccezioni
+  
+  - **Indirizzamento oggetto remoto**: Prevedere che ci sia un servizio disponibile che permetta di poter reperire a tempo di esecuzione l'indirizzo di un oggetto di cui sappiamo solo il nome
+
+  - **Informazioni utili**
+    - **Server**: Servesocket(9000)
+        - Porta 9000 per accettare la richiesta
+        - Poi si usa una altra porta fra quelle disponibili
+    
+    - **Client**: si usa una altra porta
+  
+    - **Accept**: Bloccante
+  
+## Java RMI
+- Applicazione Java che permette lo sviluppo di applicazioni distribuite
+  - **Invocazione trasparente di metodi remoti**: Meccanismo semplice per l'invocazione dei metodi remoti
+
+  - **Integrazione in Java**: Integrazione naturale con il linguaggio Java, per favorire u ambiente familiare allo sviluppatore
+    - **Garbage collector**: Gestione della memoria attraverso allocazione e deallocazione
+      - Oggetto è deallocato se finiscono i riferimenti a quell'oggetto
+  
+  - **Non-Trasparenza della natura locale/remota di un oggetto**: Esistono caratteristiche che non devono essere nascoste
+
+  - **Rendere minima la complessità fra client e server**
+
+  - **Preservare la sicurezza da Java**: Uso di **sandbox**, ovvero, un ambiente dedicato e controllato nel quale le operazioni che il programma può eseguire non risulatano pericolose
+    - **Linguaggio Java fortemente tipizzato**: Tutte le variabili hanno un tipo definito a tempo di compilazione e poche eseguite a run-time
+    - **Garbage collector**: Evitare di esaurire lo spazio di indirizzamento
+    - **Assenza puntatori**
+    - **Accesso alla memoria determinato in fase di esecuzione**: Evita che si possano conoscere in anticipo le zone di memoria degli oggetti
+    - **Limiti per array controllati a tempo di esecuzione**
+    - **Classloader**: Si occupa di caricare la classe a tempo di esecuzione, anche da remoto.
+    Carica le classi in un namespace separato in modo che le classi locali non vengano rimpiazzate.
+    Fa in modo che ogni classe abbia il proprio namespace separato in modo da non avere interferenze con le altri classi
+    - **Bytecode verifer**: Controlla che sia conforme alle specifiche del linguaggio
+    - **Security Manager**: Definisce i confini della sandbox.
+    Viene interpellato dalla macchina virtuale per ciascuna azione potenzialmente pericolosa fornendo autorizzazioni sulla base della policy dell'utente.
+    Viene caricato a tempo di esecuzione
+
+- **Modalità di invocazione**: 
+  - **Unicast**: Da un client verso un server
+  - **Multicast**: Verso diversi server
+
+## **Il modello a oggetti distribuiti di Java RMI**
+- **Struttura delle classi di Java RMI**:
+  - **java.rmi e java.rmi.server**: Contengono il meccanismo basilare di funzionamento delle invocazioni remote
+  - **java.rmi.activation**: Per oggetti attivabili
+  - **java.rmi.dgc**: Per la Distributed Garbage Collection
+  - **java.ri.registry**: Per il servizio di localizzazione
+
+- **Interfacce ed eccezione remote**: L'interfaccia remota deve estendere java.rmi.remote, ovvero un interfaccia marker (vuota).
+Ogni metodo descritto nell'interfaccia remota deve soddisfare le seguenti condizioni:
+  - Deve dichiarare esplicitamente eccezione **java.rmi.RemoteException**
+  - I parametri remoti di un metodo devono essere dichiarati tramite la propria interfaccia remota, non utilizzando la classe dell'implementazione remota
+
+- **Implementazioni remote**: Si può procedere in due modi:
+  - Oggetto derivi da java.rmi.UnicastRemoteObject ereditando di conseguenza il comportamento di java.rmi.RemoteObject e java.rmi.RemoteServer
+
+  - La classe deriva il comportamento da qualche altra classe e quindi vi è la necessità di occuparsi di esportare l'oggetto e di implementare la semantica di alcune operazioni di Object
+
+## Meccanismo di invocazione remota
+- **Riferimenti remoti**: Nel modello distribuito gli oggetti client iteragiscono con un oggetto detto stub che espone localmente esattamente le stesse interfaccie remote definite dall'oggetto remoto
+
+- **Localizzazione e invocazione di oggetti remoti**: Per poter invocare il metodo di un oggetto remoto, l'oggetto client deve avere a disposizione il riferimento remoto.
+Quest'ultimo può essere reperito in due metodi:
+  - **Risulatato di altre invocazione di metodi**
+  - **Servizio di directory**: Sfrutta meccanismo di name server nella classe java.rmi.Naming, che fornisce metodi per ricercare (lookup()), registrare (bind(), unbind(), rebind()) ed elencare (list()).
+  Questo tool si può sfruttare pure come tool da linea di comando (rmiregistry)
+
+- **Passaggio di parametri**: Unn metodo remoto può dichiarare solo parametri o valori restituiti che siano **serializzabili**.
+  - Un oggetto locale passato come parametro o restituito come valore da un invocazione remota viene passata per copia.
+  - Se invece viene passato un oggetto remoto, viene trasmesso solo un **riferimento remoto (stub)**, non una copia dell’oggetto.
+  In questo modo RMI assicura **l’integrità referenziale**: tutte le JVM coinvolte condividono lo stesso riferimento remoto verso quell’oggetto, non copie separate.
+
+## La differenza fra il modello a oggetti locale e quello remoto
+- Modifica necessaria ad alcuni metodi della classe Object per il contesto distribuito attraverso java.rmi.server.RemoteObject ridefinendo equals(), hashCode(), toString()
+- I client di oggetti remoti non iteragiscono con la implementazione dell'oggetto remoto ma solo con la interfaccia remota
+- Gestione dei tipi permette casting Java di un oggetto remoto ad una qualsiasi delle interfaccie remote supportate
+- Invocazione di metodo remote forzano il programmatore a dover gestire esplicitamente i fallimenti di invocazioni di metodi remoti
+
+## La architettura di Java RMI
+- **I tre layer della architettura**:
+# Appunti in classe
+
+il class loader può scaricare anche da remoto
+
+name server rmi.registry
+
+reflection runtime manipolazione completa di tutto, ma ha un livello di complessità alto
+
+fino 3.3.2 con approfondimenti successivi
+
+3.4.1 3.5.4 3.4.3
+
+4.1 4.2  4.3
+
+o c'è la freccia fra helloclient e helloimpt non sono collegati essendo remoti e non essendoci uno strato software che le collega
+
+logger utile per fare logging
+
+oggetto remoto in esecuzione lato server
+
+jar fai i dile zip con estensione jar con manifest
+
+javac compila bytecode
+
+java macchina virtuale
+
+new project java with ant-> java application
+
+nei .class del progetto devo copiare il path del bin della jdk
+
+lancio rmi registry attraverso cd
+
+build
+
+C:\Users\samue\Documenti\NetBeansProjects\HelloWordRMI\build\classes>"C:\Program Files\Java\jdk-1.8\bin\rmiregistry.exe" 1099

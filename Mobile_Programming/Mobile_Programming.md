@@ -54,3 +54,7 @@
 
 ## Android Studio Debugger
   - Permette di eseguire l'app di debug
+
+## Appunti lezione 7/10/25
+Stato diverso dal metodo
+se ruoti testo rimane nel widget, ma non rimane nelle variabili

@@ -85,3 +85,13 @@
 # Fare parte laboratorio
 
 # Appunti 06/10/25
+Requirements Elicitation
+i requisiti non funzionali devono avere la possiilità di verificarlo
+fino esempio casi uso
+
+scenario completo e di tutto, va bene la ridondanza simile esempio, si può fare copia e incolla in base a quello che succede
+documentare scenario che permette di capire i casi d'uso, es non scenario di casi s'uso di per sè, quelli più significativi che fanno capire cosa fa l'applicazione
+
+se i casi d'uso sono uguali devono avere la stessa implementazione
+
+gestore account-> permette di far diventare un utente un nuovo gestore es
