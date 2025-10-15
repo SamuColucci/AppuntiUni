@@ -58,3 +58,14 @@
 ## Appunti lezione 7/10/25
 Stato diverso dal metodo
 se ruoti testo rimane nel widget, ma non rimane nelle variabili
+
+## Appunti lezione 14/10
+Intent-> oggetto astratto per lanciare activity
+
+Android stesso sceglirà la activity attraverso un modo implicito
+
+Extras parte di un activity composta da un bundle(coppia chiave valore)
+
+?q query per ricercare
+
+quiz per risolvere precedente se index=0 metti quesito corrente=num -1

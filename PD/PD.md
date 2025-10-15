@@ -176,7 +176,7 @@ Imponeva la sincronia delle invocazioni bloccando il client fino a quando il ser
     - **Limiti per array controllati a tempo di esecuzione**
     - **Classloader**: Si occupa di caricare la classe a tempo di esecuzione, anche da remoto.
     Carica le classi in un namespace separato in modo che le classi locali non vengano rimpiazzate.
-    Fa in modo che ogni classe abbia il proprio namespace separato in modo da non avere interferenze con le altri classi
+    Fa in modo che ogni classe abbia il proprio namespace separato in modo da non avere interferenze con le altri classi. Può scaricare anche da remoto
     - **Bytecode verifer**: Controlla che sia conforme alle specifiche del linguaggio
     - **Security Manager**: Definisce i confini della sandbox.
     Viene interpellato dalla macchina virtuale per ciascuna azione potenzialmente pericolosa fornendo autorizzazioni sulla base della policy dell'utente.
@@ -224,39 +224,100 @@ Quest'ultimo può essere reperito in due metodi:
 - Invocazione di metodo remote forzano il programmatore a dover gestire esplicitamente i fallimenti di invocazioni di metodi remoti
 
 ## La architettura di Java RMI
-- **I tre layer della architettura**:
-# Appunti in classe
+- **I tre layer della architettura**: Strutturato in tre layer 
+  - **Stub/Skeleton**: comprende stub lato client e skeleton lato server
+    - **Stub**:
+      - Inzia la connessione con la macchina virtuale remota, chiamando il remote reference layer
+      - Effettua il marshalling verso uno stream di marshal
+      - Attende il risulato della invocazione
+      - Effettua l'unmarshalling dei valori restituiti
+      - Restituisce il valore verso l'oggetto client che ha richiesto la invocazione
 
-il class loader può scaricare anche da remoto
+    - **Skeleton**: Incaricato di effettuare il dispatching verso l'oggetto remoto
+      - Quando riceve una invocazione in entrata effettua unmarshalling del remoto reference layer dei parametri per l'invocazione
+      - Invoca il metodo sulla implementazione che si trova nella sua JVM
+      - Effettua il marshalling del valore restituito verso chi ha invocato il metodoà
+    
+    - Vengono creati dall'RMI compiler rmic
 
-name server rmi.registry
+  - **Remote Reference Layer**: Specifica il comportamento della invocazione e la semantica del riferimento permettendo di interfacciare il livello di trasporto con quello di stub/skeleton
+    - **Invocazione unicast**: Un singolo client e un singolo server, implementata da Java RMI
+    - **Invocazioni multicast**: Singolo client fa richiesta ad una batteria di server al fine di garantire la ridondanza
+    - **Invocazione di oggetti attivabili**: Invocazioni potrebbbero essere effettuate da un oggetto remoto che è persistente, ovvero attivo se arrivano invocazioni
+    - **Invocazione con riconnessione**: Invocazioni alternativese se l'oggetto remoto non risponde
+  - **Transport Layer**: Si occupa della connessione e della sua gestione, gestione di una tabella degli oggetti remoti che risiedono nello spazio di indirizzamento
+  - **Passi compiuti da Java RMI**: 
+    - Client invoca un metodo su un oggetto server remoto, facendo uso dello stub
+    - Lo stub implementa l'interfaccia remota dell'oggetto remotoe inoltra la richiesta all'oggetto server attraverso il remote reference layer del client
+    - Il remote reference layer del client si occupa di gestire la semantica delle invocazione remota lato client
+    - Il livello di trasporto si occupa si stabilire la connessione con la macchina remota e della successiva gestione della connessione, curando il dispatching (recapito) delle invocazioni verso gli oggetti remoti
+    - Il livello di reference del server si occupa di inoltrare la richiesta allo skeleton e di curare la semantica delle invocazioni lato server
 
-reflection runtime manipolazione completa di tutto, ma ha un livello di complessità alto
+## Distributed Garbage Collector
+  - Tiene traccia di tutti i riferimenti all'oggetto remoto che risultano essere attivi
+  - Al termine delle invocazioni il client invia un messaggio di dereferenziazione dell'oggetto e quindi passabile di eliminazione alla prossima invocazione della garbage collector
+  - Per evitare problemi di memory leak nel caso di un malfunzionamento viene introdotto un meccanismo di lease
+    - **Meccanismo di lease**: Ogni riferimento che viene assegnato al client ha un tempo di vita specificato
+  
+## Caricamento dinamico delle classi
+- L'oggetto remoto può trovarsi nella situazione in cui non conosce esattamente come è strutturata la classe di cui l'oggetto è istanza
+- Per evitare questo problema si fa il marshalling degli oggetti per la trasmissione, venendo annotati con il codebase di un server WWW da dove è possibile trovare la definizione della classe
+- Quando viene effettuato l'unmarshalling dell'oggetto il Classloader cerca di risolvere il nome della classe nel suo contesto e in caso non sia possibile viene acceduta la definizione della classe per poter ricreare l'oggetto all'altro capo della cominucazione
 
-fino 3.3.2 con approfondimenti successivi
+## Il meccanismo di marshalling usato da Java RMI
+- **Marshalling**: permette di effettuare una serializzazione modificando la semantica dei riferimenti remoti e aggiungendo informazioni all'oggetto
+- Specializzazione del meccanismo di serializzazione per il marshalling avviene modificando tre metodi della classe **ObjectOutputStream**
+  - **Il metodo replaceObject()**
+  - **Il metodo enableReplaceObject()**: Restituisce un boolenao e stabbilisce se la istanza deve oppure no specializzare il meccanismo di serializzazione
+  - **Il metodo annotateClass()**: Permette di aggiungere informazioni addizionali sulla classe
 
-3.4.1 3.5.4 3.4.3
+## Il processo di creazione di un programma Java RMI
+- **Definizione interfaccia remota**:
+  - Deve derivare dalle interface mark-up Remote
+  - Tutti i metodi remoti devono lanciare la eccezione java.rmi.RemoteExcpetion
 
-4.1 4.2  4.3
+- **Implementazione del server**: Un oggetto remoto in Java deve essere istanza di una classe
+  - Implementi una o più interfacce remote
+  - Derivi da java.rmi.UnicastRemoteObject
 
-o c'è la freccia fra helloclient e helloimpt non sono collegati essendo remoti e non essendoci uno strato software che le collega
+- **Compilazione con lo stub compiler rmic**: Viene eseguito sul file .class del nostro server e genera lo stub
 
-logger utile per fare logging
+- **Servizio di naming**: Chiamato **rmiregistry**, viene lanciatp prima di eseguire il server, in quanto fra le prime operazioni il server farà in modo di registrarsi presso il servizio di naming con un etichetta
+  - Deve essere lanciato dalla directory dove è contenuto il .class dello stub
 
-oggetto remoto in esecuzione lato server
+- **Esecuzione del server**: Scelta della policy abbastanza complessa
+  - Tutto permesso: 
+  ```Java
+  grant(){
+    permission java.security.AllPermision;
+  };
+  ```
+  - Dobbiamo fornire su linea di comando alla macchina virtuale la indicazione del file di policy da seguire tramite
+  ```Java
+  java -Djava.security.policy=policyallxxx
+  ``` 
+- **Registrazione del server sul servizio di naming**: Registrazione del server sul servizio di naming attraverso metodi del package java.rmi.Naming
 
-jar fai i dile zip con estensione jar con manifest
+- **Implementazione del client**: I servizi di java.rmi.Naming permettono di ottenere un riferimento remoto ad un oggetto remoto
 
-javac compila bytecode
+## Sicurezza e policy del Security Manager
+- **Security Manager**: Delimita i confini della sandbox, una area protetta i cui confini sono ben definiti e precisi
+- **Il file di policy** specifica esplicitamente le possibili vie di uscita dalla sandbox
+- RMI fornisce un proprio Security Manager, sottoclasse di SecurityMnager, chiamato **RMISecurityManager**
+```Java
+  System.setSecurityManager(new SecurityManager());
+``` 
+```Java
+  //oppure
+  java -Djava.security.manager=java.rmi.RMISecurityManager
+``` 
 
-java macchina virtuale
-
-new project java with ant-> java application
-
-nei .class del progetto devo copiare il path del bin della jdk
-
-lancio rmi registry attraverso cd
-
-build
-
-C:\Users\samue\Documenti\NetBeansProjects\HelloWordRMI\build\classes>"C:\Program Files\Java\jdk-1.8\bin\rmiregistry.exe" 1099
+## Informazioni utili sull'Esempio di Helloword
+- javac compila bytecode
+- java macchina virtuale
+- Tip Netbeans:
+  - new project java with ant-> java application
+  - nei .class del progetto devo copiare il path del bin della jdk
+  - lancio rmi registry attraverso cd nel .class del progetto
+  - build
+  - C:\Users\samue\Documenti\NetBeansProjects\HelloWordRMI\build\classes>"C:\Program Files\Java\jdk-1.8\bin\rmiregistry.exe" 1099

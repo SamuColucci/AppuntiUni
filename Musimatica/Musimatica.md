@@ -63,3 +63,19 @@ L'ottava è divisa in 12 intervalli detti semitoni uguali
 - Una scala musicale è una sequenza di suoni con altezza crescente che partono da una determinata nota e arrivanno all'ottava successivo, identificata da una sequenza di <em>n</em> interi positivi
 
 $$\sum_{i=1}^{n} s^i=12$$
+
+
+## Appunti
+
+somma -> prodotto
+sottrazione -> divisione 
+per trovare numeri della scala
+3/2*3/2=9/4
+(9/4)/2=9/8
+2/(3/2)=4/3
+4/3 * 5/4=5/3
+
+distanza es 5/4 / 9/8 = 10/9
+
+scala quinte se >2 divido per due perchè fuori ottava
+temperamento finito

@@ -82,16 +82,70 @@
         - Tipi denotate con un nome non sottolineato
         - Diagrammi sono i grafi
 
-# Fare parte laboratorio
+## Requirements Elicitation
+- **Software Lifecycle**: Insieme delle attività e delle relazioni al fine di sviluppare un prodotto software
 
-# Appunti 06/10/25
-Requirements Elicitation
-i requisiti non funzionali devono avere la possiilità di verificarlo
-fino esempio casi uso
+- **Requirements Elicitation**: Definizione del sistema in termini comprensibili al cliente
 
-scenario completo e di tutto, va bene la ridondanza simile esempio, si può fare copia e incolla in base a quello che succede
-documentare scenario che permette di capire i casi d'uso, es non scenario di casi s'uso di per sè, quelli più significativi che fanno capire cosa fa l'applicazione
+- **Requirements Analysis**: Specifica tecnica del sistema in termini comprensibili dallo sviluppatore
 
-se i casi d'uso sono uguali devono avere la stessa implementazione
+- **Problem Statement**: Sviluppato dal cliente come una descrizione del problema da affrontare nel sistema
+    - **Current situation**: Il problema da risolvere, un problema nel sistema corrente
+        - **Cambio nel dominio dell'applicazione**
+        - **Cambio nel dominio delle soluzioni**
 
-gestore account-> permette di far diventare un utente un nuovo gestore es
+    - **Descrizione di uno o più scenari**: Esempi di uso del sistema in termini di una serie di interazioni fra l'utente e il sistema, una descrizione testuale dell'uso del sistema
+        - **As-is scenario**: L'utente descrive la situazione corrente
+        - **Visionary scenario**: L'utente descrive il fututo sistema
+        - **Evaluation scenario**: Attività dell'utente in base a quale il sistema deve essere valuatato
+        - **Training scenario**: Istruzioni step-by-step che guidano un nuovo utente attraverso il sistema
+        - **Scenario-Based Design**: Deve essere iterattivo e ciascuno scenario deve essere considerato come un documento di lavoro da migliorare e modificare quando cambiano i requisiti, i criteri del cliente o la situazione di distribuzione
+    
+    - **Use Cases**: Insieme di eventi del sistema, includendo interazioni con gli attori
+        - **Graficamente**: Ovale
+        - **Attori**: Descrivono attore coinvolto nel caso d'uso
+        - **Entry condition**
+        - **Flusso di eventi**
+        - **Exit condition**
+        - **Eccezioni**: Descrivono cosa succede se qualcosa va male
+        - **Special Requirements**: Lista dei requisiti non funzionali e dei constraints
+        - **Use case Relationships**:
+            - **Dipendenze**:
+                - **Include**: Un caso d'uso usato da un altro caso d'uso, descrive una funzione come aggregazioni di casi d'uso
+                - **Extends**: Un caso d'uso esteso da un altro caso d'uso
+            - **Generalization**: Un caso d'uso astratto con differente specializzazione, il figlio eredita il comportamento del padre e può aggiungere o sovrascrivere alcuni comportamenti
+    - **Use Case Model**: Insieme di tutti i casi d'uso che specificano le funzioni del sistema
+
+    - **Requirements**:
+        - **Requisiti funzionali**: Descrivono le interazioni fra il sistema e l'ambiente indipendente dall'implementazione
+        - **Requisiti non funzionali**: Aspetti visibili dal sistema non direttamente correlati al comportamento funzionale, con possibilità di test degli stessi
+            - **FURPS+**: 
+                - **Usability**: Facilità con cui l'utente può imparare a usare, preparare input e interpretare l'output del sistema o delle componenti
+                - **Reliability**: Rappresenta la capacità del sistema o delle componenti di svolgere le funzioni richiesta in condizioni stabili per un periodo di tempo specificato
+                - **Performance**: Requisiti riguardo tempo di risposta, tempo di risposta, disponibilità e accuratezza
+                - **Supportability**: Facilità riguardo le modifiche al sistema, adattabilità e manutenibilità
+        - **Constraints (pseudo requirements)**: Imposti dal cliente dell'ambiente nel quale il sistema opera
+            - **FURPS**:
+                - **Implementation requirements**: Vincoli di implementazione del sistema come strumenti, linguaggi di programmazione
+                - **Interface requirements**: Vincoli imposti da sistemi esterni
+                - **Operation Requirements**: Vincoli all'amministratore o alla gestione del sistema
+                - **Packaging requirements**: Vincoli sulla consegna effettiva del sistema
+                - **Legal requirements**: Vincoli riguardo licenze, regolamenti e certificati
+        - **Requirements validation criteria**:
+            - **Correttezza**: Rappresenta il punto di vista del cliente
+            - **Completezza**: Tutti i possibili scenari
+            - **Consistenza**: Assenza contraddizione fra requisiti funzionali e non funzionali
+            - **Realismo**: Requisiti possono essere implementati e consegnati
+            - **Tracciablità**: Ogni funzione del sistema può essere tracciata in un insieme di requisiti funzionali
+        - **Types of Requirements Elicitation**:
+            - **Greenfield Engineering**: Lo sviluppo parte da zero, estraendo i requisiti dall'utente finale e dal cliente, attivato dall'esigenza dell'utente
+            - **Re-engineering**: Re-design o reimplementare partendo da un sistema esistente, attivato da un technology enabler
+            - **Interface Engineering**: Provvede i servizi di un sistema esistente in un nuovo ambiente, attivato da un technology enabler o esigenze di mercato
+        - **Managin requirements elicitation**: 
+            - Negoziare con il cliente (Joint Application Design -aka JAD)
+            - Mantenere la tracciabilità
+    - **Project Schedule**: Maggiori traguardi che implicano l'interazione con i clienti includendo deadline del sistema da consegnare
+
+    - **Target environment**: Ambiente nel quale il sistema che viene consegnato deve compire una serie di test di sistema
+
+    - **Client Acceptance Criteria**: Criteri per i test di sistema
