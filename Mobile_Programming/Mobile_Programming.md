@@ -51,9 +51,88 @@
 - **TableLayout**: Organizza gli elementi in righe e colonne
 - **GridView**: Visualizza un insieme di elementi e da un Adapter che fornisce gli elementi da inserire nel GridView
 - **List View**: Visualizza un insieme di elementi organizzati in una lista e la Adpater fornisce gli elementi da inserire nel List View
+  - Elementi memoriazzati in un array
+  - **Adapter**: Fornisce gli elementi da visualizzare in base allo scorrimento effettuato dall'utente
+  - **Semplice**: Ogni elemento è una stringa
+  - **Personalizzato**: Ogni elemento ha un proprio layout con dei sottoelementi
+  - **Personalizzato con click multiplo**: Si possono cliccare i singoli elementi
+    - **Listener ad-hoc**: setTag e getTag
 
 ## Android Studio Debugger
   - Permette di eseguire l'app di debug
+
+## Ciclo di vita
+  - **Attività non esiste**:
+    1. onCreate()
+    2. onStart()
+    3. onResume()
+  - **Attività in esecuzione**:
+    1. onPause()
+    2. onStop()
+    3. onDestroy(): Perdita dello stato
+  - **Attività non esiste**
+  <p align=center>
+    <img src="img/CicloVitaActivity.png" alt="CicloVitaActivity" width="200">
+  </p>
+
+  - **Quando l'utente preme il pulsante "Home"**
+    - onPause()
+    - onStop()
+  - **Quando si ritorna all'attività**
+    - onRestart()
+    - onStart()
+    - onResume()
+  - **Quando l'utente ruota il dispositivo**
+    - onPause()
+    - onStop()
+    - onDestroy()
+    - onCreate()
+    - onStart()
+    - onResume()
+
+  - **Si salva lo stato in onSaveInstanceState()**
+  - **Si recupera lo stato in onCreate()**
+
+## Ciclo di vita e cambio di configurazione
+  - **Configurazione device**
+    - Screen orientation
+    - Layout direction
+    - Avaible width, height
+    - Screen size
+    - Roud screen
+    - UI mode
+    - Keyboard availability
+  
+  - **Cambio di configuarazione**: Il sistema operativo distrugge e ricrea le attività in esecuzione, per permettere all'app di adattarsi meglio alla nuova configurazione
+    - **Per salvare lo stato**:
+      - onSaveInstanceState()
+      - ViewModel Class
+        - Oggetti persistenti
+    
+    - **Gestione cambiamento**: Attraverso il manifesto, in modo da non far distruggere l'activity ma eseguire il metodo onConfigurationChanged()
+  
+## Backstack
+  - Un attività può laciare più attività
+  - Classe Itent, per passare i dati all'attività che si lancia
+  - Task, insieme di attività con cui l'utente interagisce
+
+  - Più attività possono coesistere, **backstack**
+    - Se vengono lanciate nuove attività, l'attivita corrente viene messa nel backstack
+  
+  - Se un'attività può essere lanciata da più di un altra attività si possonno avere istanze multiple
+
+## Intent
+  - Permette di
+    - startActivity
+    - broadcastIntent
+      - Spedire l'intent in broadcast
+    - startService o bindService
+  
+  - **Composizione di un Intent**
+    - **Action**: L'azione da svolgere
+    - **Data**: I dati su cui operare espressi come URI
+    - **Category**: Informazioni aggiuntive sull'azione da eseguire
+    - **Type**: 
 
 ## Appunti lezione 7/10/25
 Stato diverso dal metodo
@@ -69,3 +148,5 @@ Extras parte di un activity composta da un bundle(coppia chiave valore)
 ?q query per ricercare
 
 quiz per risolvere precedente se index=0 metti quesito corrente=num -1
+
+## Appunti lezione 21/10

@@ -125,7 +125,7 @@
                 - **Performance**: Requisiti riguardo tempo di risposta, tempo di risposta, disponibilità e accuratezza
                 - **Supportability**: Facilità riguardo le modifiche al sistema, adattabilità e manutenibilità
         - **Constraints (pseudo requirements)**: Imposti dal cliente dell'ambiente nel quale il sistema opera
-            - **FURPS**:
+            - **FURPS+**:
                 - **Implementation requirements**: Vincoli di implementazione del sistema come strumenti, linguaggi di programmazione
                 - **Interface requirements**: Vincoli imposti da sistemi esterni
                 - **Operation Requirements**: Vincoli all'amministratore o alla gestione del sistema
@@ -149,3 +149,245 @@
     - **Target environment**: Ambiente nel quale il sistema che viene consegnato deve compire una serie di test di sistema
 
     - **Client Acceptance Criteria**: Criteri per i test di sistema
+
+## Project Organization and Communication
+- **Soft skills**:
+    - **Management**: Team meeting
+    - **Presentation**: Un grande aspetto del tuo progetto nella fase di sviluppo
+    - **Collaboration**: Negoziare requirements with the client and with members from your team and other teams
+    - **Technical writing**: Scrivere parte della documentazione del progetto
+
+- **Project components**:
+    - **Work product**: Qualsiasi oggetto prodotto dal progetto e vengono chiamati **deliverables**
+    - **Schedule**: Specifica quando il lavoro sul progetto deve essere terminato
+    - **Partecipant**: Qualsiasi persona che partecipa al progetto
+    - **Task**: Lavoro che deve essere svolto da un partecipante del gruppo per creare un prodotto di lavoro
+
+- **Project Communication**:
+    - **Planned (schedules) communication**: Aiuta a diffondere informazione che i partecipanti si aspetti usano
+        - **Problem inspection**
+        - **Status meetings**
+        - **Peer reviews**
+        - **Client and project reviews**
+        - **Release**
+    
+    - **Unplanned communication**: Aiuta a gestire le crisi e le necessità informative inaspettate
+        - **Requests for clarification**
+        - **Request for change**
+        - **Issue resolution**
+    
+    - **Communication mode**: Tipi di informazione scambiate che definiscono un oggetto e il suo scope
+    - **Communication mechanism**: Strumenti o procedure che possono essere usati per trasmettere informazioni
+
+- **Project Start Phase**:
+    - **Attend the kick-off meeting**: I partecipanti del progetto ascolatano i problemi da risolvere dal cliente e lo scope del sistema da sviluppare
+    - **Join team**: I partecipanti sono assegnati al team in base alle loro skill e ai loro interessi
+    - **Attend training session**: I partecipanti che non hanno le skill necessarie per la task ricevono un allenamento extra
+    - **Join commmunication infrastructure**: Deve supportare si attività pianificate che non
+    - **Extended communication infrastructure**: Addizionali bacheche e portali di gruppo vengono stabbiliti per il progetto
+    - **Attend first team status meeting**: Ai partecipanti del progetto viene insegnato a condurre status meeting, registrare informazioni di stato e diffonderlo agli altri membri
+    - **Understand the review schedule**: Il programma di revisione contiene una serie di obiettivi per counicare i risultati del progetto sotto forma di review al project manager e al cliente
+
+- **Team organization**:
+    - **Team**: Piccolo gruppo di partecipanti al progetto che svolgono la stessa task
+    - **Group**: Un insieme di persone a cui è assegnata una task comune, ma lavorano in modo indipendente senza nessuna necessità di comunicazione per completare la propria parte
+    - **Commitee**: Gruppo di persone che insieme recensiscono e criticano problematica e propongono azioni
+
+- **Interaction Types**:
+    - **Reporting**: Riportare informazioni sullo stato
+    - **Decision**: Usato per promuovere iniziative
+    - **Communication**: Usato per scambiare tutti gli altri tipi di informazioni necessarie per decisioni o status
+
+- **Hierarchical Organization**: Status e decision sono unidirezionali
+    - **Problem of Hierarchical Organization**: Molte decisioni tecniche hanno la necessità di essere svolte in locale, ma dipende dall'informazione di un altro sviluppatore in un altro team
+        - **Solution**: Scambio di informazioni attraverso una struttura aggiuntiva di comunicazione
+            - **Liaison**: Resposabile dello scambio di informazioni
+            - **Peer-based**: Gli sviluppatori possono comunicare direttamente con gli altri
+            - **Cross-functional team**: Non lavorano direttamente sul sottosistema
+
+- **Roles**: Definisce una serire di task tecniche e di gestione che ci si aspetta da un partecipante del team
+    - **Management roles**: Si occupa di organizzare ed eseguire il progetto entro i vincoli richiesti
+    - **Development roles**: Si occupa di specificare, disegnare e costrutire il sottosistema
+        - **Analista**
+        - **Architetto del sistema**
+        - **Object designer**
+        - **Implementatore**
+        - **Tester**
+    - **Cross-functional roles(Liaison)**: Si occupa della coordinazione dei team
+    - **Consultant roles**: Si occupa di dare temporaneo supporto in aree dove il progetto manca di esperti
+
+- **Tasks and Work Products**:
+    - **Task**: Un lavoro ben definito per unn ruolo
+        - Il project manager o il team leader assegna le task
+        - I gruppi con task correlate sono detti **activities**
+    - **Work product**: Oggetto risulato di una task
+    - Tutti i work product che vengono consegnati al cliente vengono detti **deliverable**
+
+- **Work Packages**: Presenta al suo interno la specifica da svolgere per completera un lavoro
+    - **Nome della task e la sua descrizione**
+    - **Risorse necessarie per la task**
+    - **Dipendenze di input e output**
+
+- **Schedule**: Mappa di task nel tempo, assegnando ad un ognuno inzio e fine
+    - **Gantt**: Grafico a barre in cui asse orizzontale rappresenta il tempo e l'asse verticale la liste delle differenti task da fare
+    - **PERT**: Grafo aciclico
+        - Inizio e durata della task servono per calcolare il percorso critico
+        - Percorso critico rappresenta la pianificazione più corta possiile 
+        - Le task sul percorso critico sono le più importanti, potendo causare un ritardo dell'intero progetto
+    - **Scheduled Communication Modes**:
+        - **Problem definition**: Presentare obiettivi, requisiti e vincoli
+        - **Project review**: Valutare lo stato e rivedere il modello del sistema, la decomposizione del sistema e l'interfaccia del sottosistema
+        - **Client review**: Dialogo con il cliente, per accettare cambiamenti dei requisiti
+        - **Peer Reviews**:
+            - **Walkthrough(Informal)**: Incrementare la qualità del sottosistema
+            - **Inspection(Formal)**: Si occupa di verificare la conformità dei requsiti
+        - **Status Review**: Trova deviziano dalla pianificazione e le corregge o identifica i problemi
+        - **Brainstorming**: Generare e valutare un grande numero di soluzioni al problema
+        - **Release**: Baseline dei risultati di ogni activity software sviluppata
+            - **Software Project Management Plan (SPMP)**
+            - **Requirements Analysis Document (RAD)**
+            - **System Design Document (SDD)**
+            - **Object Design Document (ODD)**
+            - **Test Manual (TM)**
+            - **User Manual (UM)**
+        - **Postmortem review**: Descrivere le lezioni apprese
+- **Modalità di comunicazione basata su eventi**
+    - **Richiesta di chiarimenti**
+    - **Richiesta di cambiamento riguardo un problema con annessa soluzione**
+    **Risoluzione problematiche**
+- **Meccanismi di comunicazine sincroni**
+    - **Hallway conversetion**: Conversazione non pianificata, richiesta di chiarimenti o di cambi
+        - **Pro**: Poco costosa ed efficace
+        - **Contro**: Si possono perdere informazioni essenziali, e possono esserci problemi di non comprensione
+    - **Meeting**: Conversazioni pianificate, revisione del cliente, del progetto, status, peer, postmortem, brainstorming, e risoluzione problematiche
+        - **Pro**: Efficace meccanismo per la risoluzione dei problemi
+        - **Contro**: Costi alti e difficoltà di gestione e di ottenere un reale risultato efficace
+        - **Roles**
+            - **Primary facilitator**: Responsabile dell'organizzazione del meeting e della guida dell'esecuzione
+                - Scrive l'agenda descrittiva degli oggetti e dello scope del meeting
+                - Distribuisce l'agenda agli altri partecipanti
+            - **Minute Taker**: Respondabile di registrare il meetin, identificare gli action item e le problematiche e le rilascia ai partecipanti
+            - **Time keeper**: Responsabile di tenere traccia del tempo
+    - **Questionari e intervista strutturate**: Definizione del problema e revisione postmortem
+        - **Pro**: Capace di chiarire problemi durante la raccolta dei requisiti ad un costo basso per l'utente
+        - **Contro**: Difficile da progettare
+    - **Groupware sincrono**: Conversazioni non pianificate, revisione del cliente, del progetto, status, peer, postmortem, brainstorming, e risoluzione problematiche
+        - **Pro**: Le persone comunicano nello stesso momento in luoghi differenti
+        - **Contro**: Difficoltà di coordinazione
+- **Meccanismi di comunicazione asincroni**
+    - **E-mail**: Release, cambio richiesta, brainstorming
+        - **Pro**: Ideale per comunicazioni o annunci basati su eventi
+        - **Contro**: Il contesto dell'email può essere frainteso, non letto o perso
+    - **Newsgroups**: Release, cambio richiesta, brainstorming
+        - **Pro**: Adatto a notificare e discutere con le persone che condividono un interesse comune
+        - **Contro**: Primitvo accesso di controllo
+    - **World Wide Web**: Release, cambio richiesta, inspection
+        - **Pro**: Fornisce all'utente un ipertesto
+        - **Contro**: Non supporta facilemente documenti che si evolvono rapidamente
+    - **Lotus Notes**: Gli utenti collaborano creando, condividendo e modificando documenti in uno spazio simile ad un database
+        - **Pro**: Provvede un eccellente controllo sul meccanismo di controllo e replica del database
+        - **contro**: Costoso e formato proprietario
+## Configuration Management
+- **Software Cofiguration Management**: Comprende le discipline e le tecniche di inizializzazione, valutazione e controllo del cambiamento del prodotto software durante e dopo il processo di software engineering
+- **Activities**
+    - **Configuration item identification**
+    - **Promotion management**
+    - **Release management**
+    - **Change management**
+    - **Branch management**
+    - **Variant management**
+- **Configuration Item**: Segmenti di codice del programma, ma ancge tutti i documenti coinvolti nello svilluppo
+    - **Requirements Analysis Document(RAD)**
+    - **System Design Document (SDD)**
+    - **Object Design Document (ODD)**
+    - **Unit test**
+    - **Source code**
+    - **Input data and data bases**
+    - **Test data**
+    - **Support software**
+- **Version**: Stato del configuration item, differenti versioni hanno differenti funzionalità
+- **Revision**: Corregge errori in una versione, ma non conivolge le funzionalità
+- **Release**: Una versione resa disponibile esternamente
+- **Baseline**: Una specifica o un prodotto che è stato approvato formalemente e che potrà servire per sviluppi futuri e può essere cambiato solo attraverso procedure formali
+    - **Developental baseline**: Coordina le engieering activities
+    - **Fuctinal baseline**: Ottiene le esperienze dei clienti con un sistema funzionale
+    - **Product baseline**: Coordina le vendite e il supporto clienti
+**Change management**: Un cambio di una richiesta crea una nuova release
+    - Cambio richiesto
+    - Cambio richiesto viene valutato in bbase agli obiettivi del progetto
+    - Dopo la revisione viene accettato o rifiutato
+    - Se accettato, viene assegnato ad uno sviluppatore e implementato
+    - La modifica viene verificata
+- **Controlling Changes**
+    - **Promotion**: Lo stato di svilppo interno al software viene modificato
+    - **Release**: Un cambiamento software viene reso visibile fuori dallo sviluppo dell'organizzazione
+- **SCM Directories**
+    - **Programmer's Directory**: Libreria per comtenere entità software appena create o modificate
+    - **Master Directory**: Si occupa di gestire la corrente baseline e di controllare i cambiamenti fatti ad essa, i cambiamenti devono essere autorizzati
+    - **Software Repository**: Archivio delle varie baseline rilasciate per uso generale
+- **Typical Configuration Management Roles**
+    - **Configuration Manager**: Responsabile di identificare i configuration item, definire porcedure di creazione promozione e rilascio
+    - **Chage control board member**: Responsabile di approvare o rfiutare un cambio di richiesta
+    - **Developer**: Crea promozioni causata da un cambio i richiesta o dalla normale attività di sviluppo
+    - **Auditor**: Responsabile di selezionare e valutare la prommozioni di rilascio e di garantire completezza e consistenza del rilascio
+
+- **Branch management**: Identifica uno percorso di sviluppo indipendente richiedendo una configuration management indipendente
+- **Variant management**: Versioni destinate ad esistere
+    - **Redundant teams**:
+        - Un team viene assegnato ad ogni variante
+        - Ad ogni team vengono forniti gli stessi requisiti e la responsabilità di completare design, impementazione e test delle varianti
+    - **Single project**: Progettare una decomposizione del sottosistema al fine di massimizzare il codice condiviso fra le varianti
+
+## Object Modeling
+- **Model**: Astrazione dei dettagli della realtà, in modo da permettere degli step più facili nel model per rappresentare i complessi elementi reali
+- **Activities during Object Modeling**
+    - **Class Identification**: Identifica i confini del sistema, le entità principali
+        - **Application domain approach**: Si chiede agli esperti del dominio dell'applicazione di identificare le astrazioni
+        - **Syntatic approach**: Inzia con i casi d'uso, estrae gli oggetti partecipanti dal flusso di eventi e usa anlisi sostantivo-verbo per identificare i componenti
+        - **Design patterns approach**: Usa un design pattern riutilizzabile
+        - **Component-based approach**: Identifica le soluzioni di classe esistenti
+    - **Finding Object**
+        - **Application knowledge**: Confronto con gli utenti finali e gli esperti per determinare l'astrazione del domionio dell'applicazione
+        - **Design knowledge**: Riutilizzabile astrazione nella soluzione del dominio
+        - **General world knowledge**
+        - **Formulazione di scenari e casi d'uso**
+    - **Finding Partecipant Objects**: Prendi uno scenario e guarda il suo flusso di eventi
+- **Object vs Class**
+    - **Class**: Descrive un gruppo di oggetti con proprietà simili
+    - **Object diagram**: Un notazione grafica per modellare oggetti, classi e relazioni
+        - **Class diagram**: Template per descrivere molte istanze di un dato
+            - Descrizione statica delle proprietà del sistema
+            - Usato dagli esperti dell'application domain e dagli sviluppatori
+                - **Application domain**: Problema del dominio
+                - **Application domain class**: Un astrazione del application domain
+                - **Solution domain**: Domini che aiutano nella soluzione del problema
+                - **Solution domain class**: Una astrazione introdotta per ragioni tecniche al fine di aiutare nella soluzione del problema 
+        - **Instance diagram**: Un particolare set di oggetti che si relazionano fra loro
+
+- **Object Types**
+    - **Entity Objects**: Rappresentano l'informazione persistente tracciata dal sistema
+    - **Boundary Objects**: Rappresentano l'interazione fra utente e sistema
+    - **Control Objects**: Rappresentano le attvità di controllo eseguita dal sistema
+- **Order of activities in modeling**
+    1. Class identification
+    2. Identification of attributes and operations
+    3. Identification of associations between classes
+    4. Identification of multiplicities
+    5. Identification of roles
+    6. Identification of constaints
+
+- **Analyst**: Interessato alle application classes, le associazioni fra le classi sono relazioni fra le astrazioni del dominio
+- **Designer**: Si concentra sulla soluzione del problema, descrive l'interfaccia delle classi e del sottosistema, favorendo usabilità e riusabilità dell'interfaccia
+- **Implementors**
+    - **Class implementor**: Implementa la classe, sceglie appropriate strutture dari e algoritmi e realizza l'interfaccia di classe in un linguaggio di programmazione
+    - **Class extender**: Estende le classi in sottoclassi, necessarie per nuovi problemi o per nuovi application domain
+    - **Class-user(Client)**: Il programmatore che usa classi esistenti, interessato solo nelle operazioni della classe e nelle sue precondizioni
+- **Operation**: Una funzione o una trasformazione applicata all'oggetto della classe
+- **Signature**: Numero e tipo di argomenti, tipo di risultato
+- **Method**: Implementazione di una operazione per la classe
+
+- **Analysis model**: Costruito durante la fase di analisi, contiene solo application domain class
+    - Comunicazione fra analisti, esperti del dominio dell'applicazione e utenti finali
+- **Object model**: Creato durante la fase di object design, contiene application solution e domain classes
+    - Comunicazione fra designers e implementatori
+## appunti

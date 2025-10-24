@@ -321,3 +321,43 @@ Quest'ultimo può essere reperito in due metodi:
   - lancio rmi registry attraverso cd nel .class del progetto
   - build
   - C:\Users\samue\Documenti\NetBeansProjects\HelloWordRMI\build\classes>"C:\Program Files\Java\jdk-1.8\bin\rmiregistry.exe" 1099
+
+## Java EE 7 at a Glance
+- **Introduzione Java EE**: Fornisce un modo standard per gestire le transazioni con Java Transaction API, messaggiare con Java Message Service, o la persistenza con Java Persistence API
+- **Architecture**: I Containers sono degli ambienti Java EE runtime che provvedono alcuni servizi per i componenti che hostano come life-cycle management, dependency injection, concurrency, ecc...
+- **Components**
+  - **Applets**: Applicazioni GUI che sono eseguite su un browser web
+  - **Applications**: Sono programmi che vengono eseguiti sul client
+  - **Web applications**: Sono eseguiti in un web container e risponde ad una richiesta HTTP da un web clients
+  - ***Enterprise applications**: Sono eseguiti in un EJB container
+    - **EJB**: Sono componenti container-managed per processare transazioni di logica di business
+- **Containers**: Nascondono
+## appunti
+pag 1-10 fino a jcpc compreso + A Brief History of Java EE
+packaging
+services
+annotation e deploymentd descriptor
+@Remote(ItemRemote.class) metodi remoti invocabili dell'interfaccia itemremote
+@Local(ItemLocal.class)
+
+Context and Dependency Injection
+23-24-25
+28-29-30-31-32-33-34-37(producers)-38-40-41
+inject tu non sai risolvere o non puoi risolvere un oggetto, quindi chiedi ad un altro di risorvere e quindi inietti la dipendenza
+si usa per evitare di creare due classi isbn e issn oppure passare al costruttore, ma per evitare ciò si fa inject
+se non è un bean si usa il producers altrimenti glassfish non funziona
+producers per tutti gli oggetti bean
+@Produces @ThirteenDigits
+ private String prefix13digits = "13-";
+ se faccio injet in un altro bean la stringa injectata avrà 13-
+
+ observ permette a componenti software di comunicare ma sullo stesso spazio di indirizzamento, nella stessa applicazione
+
+ fino a eventi compresi
+
+ ch 4 java persistence API
+ entity manager restituisce un istanza della classe
+ salta pag 113 e 114
+ 115 e 116 fino al codice in alto
+ poi pag 181
+ pag 183
