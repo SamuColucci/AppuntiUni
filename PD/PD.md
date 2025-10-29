@@ -329,9 +329,67 @@ Quest'ultimo può essere reperito in due metodi:
   - **Applets**: Applicazioni GUI che sono eseguite su un browser web
   - **Applications**: Sono programmi che vengono eseguiti sul client
   - **Web applications**: Sono eseguiti in un web container e risponde ad una richiesta HTTP da un web clients
-  - ***Enterprise applications**: Sono eseguiti in un EJB container
+  - **Enterprise applications**: Sono eseguiti in un EJB container
     - **EJB**: Sono componenti container-managed per processare transazioni di logica di business
-- **Containers**: Nascondono
+- **Containers**: Nascondono le complessità tecniche e migliorare la portabilità
+  - **Applet Containers**: Usa una modello di sicurezza sandbox nel quale il codice eseguito nella "sandbox" non è autorizzato ad uscirne, impedendo ad ogni codice scaricato in locale di accede al sistema locale delle risorse
+  - **The Cpplication Client Container(ACC)**: Include un set di classi Java, librerire e altri file al fine di permettere injection, security management e il servizio di naming verso l'applicazione Java SE
+    - Comunica con EJB con RMI-IIOP e con il web container attraverso HTTP
+  - **Web Container**: Fornisce i servizi di base per gestire ed eseguire le componenti web
+    - Responsabile di installare, inizializzare e invocare Servlet e supportare i protocolli HTTP e HTTPS
+  - **EJB Container**: Responsabile della gestione ed esecuzione dei bean enterprise che contengono le logiche di business della tua applicazione Java EE
+    - Crea una nuova istanza di EJB e ne gestisce il ciclo di vita e i servizi
+- **Services**: I container forniscono servizi di base per i loro componenti distribuiti
+  - **Java Transaction API**: Offre un servizio di demarcazione API usato dal container e dall'applicazione e offre un interfaccia fra il transaction manager e il resourse manager al livello di Service Provider Interface(SPI)
+  - **Java Persistence API**: Standard API per object-relational mapping(ORM)
+  - **Validation**: Fornisce funzionalitò di dichiarazione e convalida al livello di metodi e classi
+  - **Java Message Service**: Permette alle componenti asincrone di di comunicare
+  - **Java Naming and Directory Interface**: Usata per accedere al sistema di naming e alle directory del sistema
+  - **JavaMail**: Possibilità di inviare email
+  - **JavaBeans Activation Framework**: Fornisce un framework per gestire dati di differenti MIME
+  - **XML processing**: Supporto per fare parsing di documenti XML
+  - **JSON processing**: Permette alle applicazioni di generare, parsare, trasformare e fare query JSON
+  - **Java EE Connector Architecture**: Componenti che ti permettono di accedere da EIS a Java EE come database, mainframe
+  - **Security services**
+  - **Web services**: Supporto per SOAP
+  - **Dependency injection**
+  - **Management**
+  - **Deployment**
+  ![Services](img/servicesJavaEE.png)
+- **Packaging**: Per eseguire il deploy in un container, i componenti devono essere prima impacchettati in un formato standard di archivio
+![Packaging](img/Packaging.png)
+
+- **Annotaions and Deployment Descriptors**: Sfrutta il concetto di programmazione dichiarativa attraverso i Metadati al fine di dichiarare e modificare  i servizi e le informazioni ad essi associate insieme a classi Java, interfacce, costruttori, metodi
+  - I Metadati si possono dichiarare usando un deployment descriptor
+
+## Context and Dependency Injection
+- **Inversion of control(IoC)**: Il container prende il controllo del tuo business code e fornisce servizi tecnici
+- **Understanding Beans**
+  - **Managed Beans**: Sono oggetti gestiti da container che supportano una serie di sevizi di base come injection delle risorse, gestione ciclo di vita e interception
+  - **Beans**: Sono oggetti CDI che sono costruiti sulla base dei modelli Managed Bean
+- **Life-Cycle Management**: Se vuoi runnare un CDI bean in un container non puoi utilizzare la keyword new, per questo motivo hai bisogno di fare inject sul bean e il container si occupa di gestire il suo ciclo di vita
+![Cycle](img/ManCycle.png)
+- **Interception**: Sonno usati per interporsi nelle invocazione di metodi di business
+  - Vengono chiamati automaticamente dal container quando un metodo di un Managed Bean viene invocato
+- **@Injection**: Java EE è un ambiente gestito è il container a fare inject di un riferimento per conto proprio
+  - CDI dependency injection è l'abilità di fare inject di bean in altri modi sicuro
+- **Injection Points**: L'annotazione @Inject definisce un injection point che viene injectato durante l'instansazione del bean
+- **Default Injection**: Informa CDI a fare l'inject con la l'implementazione del bean di default
+![DefaulInjection](img/deafultInjection.png)
+- **Qualifiers**: Un qualifier rappresenta una semantica associata ad un tipo che viene soddisfatta da qualche implementazione di quel tipo
+![Qualifier](img/qualifier.png)
+- **Producers**: Permette di fare inject di CDI Bean in altri CDI bean. Di default non puoi fare inject di classi come java.utili.Date o java.lang.String o tipi primitivi perchè si trovano nel pacchetto nel file rt.jar e questo archivio non contiene un file bean.xml
+  - Se un archivio non ha il file bean.xml sotto META-INF, CDI non attiverà la scoperta dei bean e i POJO non verranno trattati come bean e di conseguenza non sarà possibile fare inject
+- **Disposer**: Alcuni metodi producono oggetti che richiedono una distruzione esplicita come connessioni Java Database Connectivity(JDBC), sessioni JMS, o entity manager
+  - La distruzione viene effettuata attraverso i metodi disposer con l'annotazione @Disposer
+    - Devono avere un parametro dispose dello stesso tipo e un qualifiers come il tipo di ritorno come il metodo produttore di ritorno
+    - Il metodo disposer viene chiamato in automatico quando il client context termina e il parametro riceve l'oggetto prodotto dal metodo produttore
+- **Scopes**: Non c'è un modo manuale per rimuovere un bean dal context
+  - **Application Scoped**: Compre l'intera durata dell'applicazione
+    - Il bean viene creato una volta per tutta la durata dell'applicazione e viene eliminato quando l'applicazione viene terminata
+  - **Session Scoped**: Si estende su più richieste HTTP o per numerose invocazioni per una singola sessione utente
+    - Viene cancellato quando la sessione termina
+  - **Request scope**: 
 ## appunti
 pag 1-10 fino a jcpc compreso + A Brief History of Java EE
 packaging
@@ -361,3 +419,13 @@ producers per tutti gli oggetti bean
  115 e 116 fino al codice in alto
  poi pag 181
  pag 183
+
+ bean che usa solo DI dependency managed bean
+ uso database diventa entity
+
+ 184-185-186-187-188-189-190-191-192
+ 192 fino a 201 da fare alla veloce
+ 201-202-203-204-205-206-207-208-209
+ 217-218-219-220-221-222-223-224
+
+ parametro ?c per esempio

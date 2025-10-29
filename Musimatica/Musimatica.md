@@ -79,3 +79,5 @@ distanza es 5/4 / 9/8 = 10/9
 
 scala quinte se >2 divido per due perchè fuori ottava
 temperamento finito
+score part wise per riga
+score time wise colonna

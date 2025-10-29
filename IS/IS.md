@@ -390,4 +390,155 @@
     - Comunicazione fra analisti, esperti del dominio dell'applicazione e utenti finali
 - **Object model**: Creato durante la fase di object design, contiene application solution e domain classes
     - Comunicazione fra designers e implementatori
+
+## Modeling with UML
+- **Modeling**: Astrazione della realtà
+- **System**: Una astrazione che descrive un sottoinsieme del sistema
+- **View**: Raffigura aspetti selezionati di un modello
+- **Notation**: Un insieme di regole grafiche e testuali per rappresentare una view
+- **Phenomenon**: Un oggetto nel mondo del dominio come lo percepisci
+- **Concept**: Descrive le proprietà comuni del fenomeno
+    - **Name**: Per distinguerlo dagli altri concetti
+    - **Purpose**: Proprietà che determinano se un fenomeno è membro di un concetto
+    - **Members**: Insieme dei fenomeni che fanno parte di un concetto
+- **Abstract Data Types & Classes**
+    - **Abstract Data Types**: Tipo speciale la cui implementazione è nascosta dal resto del sistema
+    - **Class**: Un astrazione nel contesto dei linguaggio object-oriented
+- **Application Domain**: Ambiente nel quale il sistema opera
+- **Solution Domain**: Le tecnologie disponibili per costruire il sistema
+- **UML(Unifed Modeling Language)**:  Uno standard per modellare software object-oriented. Per immagini vedere pdf UML
+    - **Use Case Diagrams**: Descrive il comportamento funzionale del sistema come visto dall'utente
+        - **Actor**: Rappresentano il ruolo, ovvero un tipo di utente del sistema
+            - Modella un entità esterna che comunica col sistema
+            - Ha un nome unico e una descrizione opzionale
+        - **Use Cases**: Rappresenta una sequenza di interazioni per un tipo di funzionalità
+            - Rappresenta una classe di funzionalità fornita dal sistema come flussi di eventi
+            - Nome unico
+            - Attori partecipanti
+            - Entry condition
+            - Flussi di eventi
+            - Exit condition
+            - Requisiti speciali
+        - **<< Extends >> Relationship**: Rappresenta casi eccezionali o raramente invocati
+            - I casi d'uso che rappresentano flussi eccezionali possono estendere più di un caso d'uso
+            - Direzione verso l'extended caso d'uso 
+        - **<< Include >> Relationship**: Comportamento escluso dal caso d'uso a fine di riutilizzo
+            - Verso il caso d'uso
+    - **Class Diagrams**: Descrive la struttura statica del sistema: Object, Attributes, Relations
+        - Usato per :
+            - Analisi Requisiti per modellare concetti del problema del dominio
+            - System Design per modellare un sottosistema e le interfacce
+            - Object Design per modellare le classi
+        - **Classes**: Rappresenta un concetto
+            - **Attributi**: Stato
+                - Hanno un tipo
+            - **Operazioni**: Comportamenti 
+                - Hanno una signature
+        
+        - **Instances**: Rappresenta un fenomeno
+            - Nome sottolineato e può contenere l'istanza della classe
+            - Rappresentati con il loro valore
+
+        - **Actor vs Instances**
+            - **Actor**: Un entità esterna al sistema che deve essere modellata, e deve interagire col sistema
+            - **Class**: Una astrazione che modella un entità nel dominio del problema, deve essere modellata all'interno del sistema
+            - **Object**: Una specifica istanza di una classe
+        - **Associations**: Relazione fra classi
+            - Mapping bidirezionale
+                - Per renderla monodirezionale, la freccia deve puntare verso il server role
+            - One-toone, many-to-many, one-to-many
+            - Descrive una serie di link
+            - **Associations Classes**: Associazioni che possono avere attribuiti ed operazioni attaccate a loro
+                - Può essere trasformata in una classe e semplici associazioni
+        - **Link**: Connesione fra due istanze di un oggetto
+            - Il link è una istanza di una associazione
+        - **Roles**: Il nome che identifica univocamente un estremità di una associazione
+            - Necessarie per associazioni fra due oggetti della stessa classe
+            - **Client Role**: Un oggetto che può operare su altri oggetti ma non può essere mai operato da altri oggetti
+            - **Server Role**: Un oggetto che non opera mai con altri oggetti, ma è sempre operato da altri oggetti
+            - **Agent Role**: Unn oggetto che può operare ed essere operato
+                - Spesso creato per svolgere un lavoro per conto di un attore o di un altro agente
+        - **Aggregation**: Speciale associozione che denota una gerarchia
+            - **Aggregate**: Padre
+            - **Componets**: Figli
+            - **Coposition**: Denotato da un diamante solido che indica che i components non posso esistere senza gli aggregati
+        - **Qualification**: Migliora le informazioni riguardo la multiplicità delle associazioni fra le classi, permettendo di ridurre 1-to-many a 1-1
+        - **Inheritance**: Le classi figlio ereditano gli attribuiti e le operazioni della classe padre
+        - **Package**: eccanismo per organizzare elementi in gruppi
+            - Un sistema complesso può essere decomposto in sottosistemi, dove ogni sottosistema è modellato come un pacchetto
+    - **Sequence Diagrams**: Descrive il comportamento dinamico fra gli attori e il sistema e fra gli oggetti e il sistema
+        - Classi rappresentate come colonne
+        - Messaggi raprresentati come frecce
+        - Activations rappresentati come rettangoli stretti
+        - Lifelines rappresentate come linee tratteggiate
+        <br><br>
+        - **Nested messages**: Freccia indica l'activation a cui è inviato il messaggio
+        - **DataFlow**: Frecce tratteggiate indicano il dataflow
+        - **Lifelines**: Indicato da frecce tratteggiate verticali
+        - **Iteration**: Denotato da * prima del messaggio
+        - **Condition**: Denotato dall'espressione booleana in [] prima del nome del messaggio
+        - **Creation**: Denotato da una freccia che punta all'oggetto
+        - **Destruction**: Denotato da una X alla fine della activation
+    - **Statechart Diagrams**: Descrive il comportamento dinamico di un oggetto individuale
+    - **Activity Diagrams**: modella il comportamento dinamico del sistema ,in particolare il workflow
+        - **Action state**: Non può essere decomposto
+        - **Activity state**: Può essere decomposto
+            - L'activity viene modellata da un altro activity diagram
+        - **Modeling Concurrency**: Sincronizzazione delle activity multiple
+        - **Swimlanes**: Divisione per denotare l'oggetto o il sottosistema che implementa l'azione
+    - **Implementation Diagrams**
+    - **Object Constraint Language**
+    <br><br>
+    - **Conventions**
+        - Rettangoli per classi e istanze
+        - Ovali per funzioni e casi d'uso
+        - Istanze denotate con un nome sottolineato
+        - Tipi denotati con nome non sottolineato
+        - Diagrammi sono grafi
+            - Nodi sono le entità
+            - Archi sono le relazioni fra le entità
+
 ## appunti
+pdf introductio uml
+non cancellare gli oggetti in fase di analisi
+a livello di creazione sono gli entity objects
+gli altri fate conto esistano già
+
+un evento per un oggetto è il messaggio ricevuto
+
+annulla operazione è inutile
+controlli login sul formmato non vanno fatti
+bastano username e password come controlli
+bbasta email non corretta sia per email già usata che non esistente
+sistema verifica che username e password siano corretti sono lo stesso evento->tesso caso d'uso
+
+mmettere tabella per tutti i formati dei parametri di input, referenziata nel documento
+Eccezioni basate sul tempo potrebbero essere utili per la registrazione
+Fare scenatio e caso d'uso per la registrazione
+
+specificare il tipo di notifica, no bisogna lasciare il sistema notifica l'utente
+
+tabella casi d'uso rende tutto più leggibile
+
+Eccezioni e flussi alternativi vanno messi insieme tanto non cambia nulla
+
+login il sistema controlla la coppia username e password, non separatamente
+se username non esiste, o corrisponde con password sbagliata messaggio a schermo ma rimane nella stessa pagina
+
+aggiunngere funzionalità utente registrato
+
+visualizzazione di un altro profilo è una funzionalità del visitatore non di un utente registrato
+su modifica password ho annulla operazione e ho salva
+
+scrivere dove vengono salvati i dati, es database, file system
+
+diagramma utente va fatto per lo scenario
+rifare disegni casi d'uso e aggiunta casi d'uso
+
+immagini da referenziare per i casi d'uso
+navigazione va bene pure fatta nel docummento finale
+far riferimento al mock up all'interno del caso d'uso
+
+cambio password gestibile con 
+
+messaggi di eerori o in una tabella o nel caso d'uso
