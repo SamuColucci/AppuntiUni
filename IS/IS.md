@@ -96,7 +96,7 @@
 
     - **Descrizione di uno o più scenari**: Esempi di uso del sistema in termini di una serie di interazioni fra l'utente e il sistema, una descrizione testuale dell'uso del sistema
         - **As-is scenario**: L'utente descrive la situazione corrente
-        - **Visionary scenario**: L'utente descrive il fututo sistema
+        - **Visionary scenario**: L'utente descrive il futuro sistema
         - **Evaluation scenario**: Attività dell'utente in base a quale il sistema deve essere valuatato
         - **Training scenario**: Istruzioni step-by-step che guidano un nuovo utente attraverso il sistema
         - **Scenario-Based Design**: Deve essere iterattivo e ciascuno scenario deve essere considerato come un documento di lavoro da migliorare e modificare quando cambiano i requisiti, i criteri del cliente o la situazione di distribuzione
@@ -217,7 +217,7 @@
     - **Consultant roles**: Si occupa di dare temporaneo supporto in aree dove il progetto manca di esperti
 
 - **Tasks and Work Products**:
-    - **Task**: Un lavoro ben definito per unn ruolo
+    - **Task**: Un lavoro ben definito per un ruolo
         - Il project manager o il team leader assegna le task
         - I gruppi con task correlate sono detti **activities**
     - **Work product**: Oggetto risulato di una task
@@ -308,8 +308,8 @@
 - **Version**: Stato del configuration item, differenti versioni hanno differenti funzionalità
 - **Revision**: Corregge errori in una versione, ma non conivolge le funzionalità
 - **Release**: Una versione resa disponibile esternamente
-- **Baseline**: Una specifica o un prodotto che è stato approvato formalemente e che potrà servire per sviluppi futuri e può essere cambiato solo attraverso procedure formali
-    - **Developental baseline**: Coordina le engieering activities
+- **Baseline**: Una specifica o un prodotto che è stato approvato formalmente e che potrà servire per sviluppi futuri e può essere cambiato solo attraverso procedure formali
+    - **Developental baseline**: Coordina le engineering activities
     - **Fuctinal baseline**: Ottiene le esperienze dei clienti con un sistema funzionale
     - **Product baseline**: Coordina le vendite e il supporto clienti
 **Change management**: Un cambio di una richiesta crea una nuova release
