@@ -81,3 +81,5 @@ scala quinte se >2 divido per due perchè fuori ottava
 temperamento finito
 score part wise per riga
 score time wise colonna
+
+test fino slide 35

@@ -377,6 +377,7 @@
     6. Identification of constaints
 
 - **Analyst**: Interessato alle application classes, le associazioni fra le classi sono relazioni fra le astrazioni del dominio
+    - **Tassonomia**: Gerarchia di associazioni
 - **Designer**: Si concentra sulla soluzione del problema, descrive l'interfaccia delle classi e del sottosistema, favorendo usabilità e riusabilità dell'interfaccia
 - **Implementors**
     - **Class implementor**: Implementa la classe, sceglie appropriate strutture dari e algoritmi e realizza l'interfaccia di classe in un linguaggio di programmazione
@@ -391,6 +392,150 @@
 - **Object model**: Creato durante la fase di object design, contiene application solution e domain classes
     - Comunicazione fra designers e implementatori
 
+## Dinamic Modeling
+- **Dynamic Diagrams**
+    - **Interaction**: Descrive il comportamento dinamico fra gli oggetti
+        - **Sequence Diagram**: Comportamento dinamico si una serie di oggetti distribuiti in una sequenza temporale
+            - Un diagramma di sequenza che rappresenta una descrizione grafica di oggetti che partecipano in un caso d'uso o in uno scenario usando una annotazione DAG(direct acyclic graph)
+            - Gli oggetti sono identificati come risultato di un modello dinamico
+            - **Heuristic**: Un evento ha sempre un mandate e un ricevitore
+                - La rappresentazione di un evento viene chiamata messaggio
+                - **Layout**
+                    - **1st Column**: Corrisponde all'attore che inizia il caso d'uso
+                    - **2nd Column**: Corrisponde ad un boundary object
+                    - **3rd Column**: Corrisponde ad un control object che gestisce il resto del caso d'uso
+                - **Creation**
+                    - I control object sono creati all'inizializzazione del caso d'uso
+                    - I boundary object sono creati dal control object
+                - **Access**
+                    - I boundary object accedono agli entity object
+                    - Gli entity object non devoo mai chiamare boundary o control object
+                        - Facilità di condivisione fra i casi d'uso
+                        - Entity object resiliente ai cambi indotti dalla tecnologia nei boundary object
+            - Derivati dal caso d'uso
+            - Due tipi di casi d'uso
+                - **Fork**: La maggior parte del comportamento dinamico è concentrato in un singolo oggetto, spesso un control object
+                    - Tutti gli altri object lo chiamano per domande o comandi diretti 
+                    - Operazioni possono cambiare ordine
+                    - Nuove operazioni possono essere inserite come risultato di nuovi requisiti
+                - **Stair Diagrams**: Comportamento dinamico distribuito
+                    - Ogni oggetti delega alcune responsabbilità agli altri oggetti
+                    - Ogni oggetto conosce solo pochi altri oggetti e sa quali oggetti possono aiutare con un comportamento specifico
+                    - Forte connessione fra le operazioni
+                    - Le operazioni verranno sempre eseguite nello stesso ordine
+        - **Collaboration Diagram**: Relazioni fra gli oggetti, non mostra il tempo
+    - **Statechart**: Descrive il comportamento dinamico dei singoli oggetti
+        - Descrive la risposta di un oggetto quando riceve uno stimolo esterno
+        - Grafo i cui nodi sono gli stati e i suoi archi diretti sono transizioni etichettate con nomi di eventi
+            - **Activity**: Operazioni che richiedono tempo per essere completate 
+                - Associate con stati
+            - **Action**: Operazioni istantanee
+                - Associate con eventi
+                - Associate con stati: Entry, Exit, Iternal Action
+        - Si riferisce agli eventi e allo stato di una classe
+            - Un object model con più oggetti richede più state diagrams
+        - **State**: Astrazione dell'aggregazione degli attributi della classe
+            - Rappresenta una classe di equivalenza di tutti gli attributi e link che non hanno bisogno di essere distinti per quanto riguarda la struttura di controllo del sistema
+            - Hanno una durata
+        - **Nested State Diagram**: Le attivity in stato sono composte da item denotati nello state diagrams di lower-level
+            - Il lower-level state diagram corrsisponde ad una sequenza di stati lower-state e eventi che sono invisibili nel diagramma higher-level
+            - Un insieme di nested state diagram denotano un superstate che è racchiuso in un box, chiamato contour
+                - **Superstates**: Evitare spaghetti model
+                    - Ridurre il numero di linee nello state diagram
+                    - Transizioni da altri stati al superstato entrano nel primo sottostrato del superstato
+                    - Transizioni verso altri stati da un superstato sono ereditati da tutti i sottostati (state inheritence)
+                        - Tranne nel caso delle transizioni che devono essere eseguite alla fine delle attività associate con lo stato
+                - **Modeling Concurrency**
+                    - **System concurrency**: Stato generale del sistema come aggregato di state diagrams, uno per ogni oggetto
+                        - Ogni state diagramm è eseguito in maniere concorrente con gli altri
+                    - **Object concurrency**: Un oggetto può essere partizionato in sottoinsieme di stati come se ciascuo di essi ha il suo sotto diagramma
+                        - Lo stato di un oggetto consiste in una serie di stati
+                            - Uno stato di ogni sottodiagramma
+                        - Gli state diagram sono divisi in sottodiagrammi attraverso linee tratteggiate
+        - **State Chart Diagram vs Sequence Diagram**
+            - **State Chart Diagrams**: Aiuta a identificare i cambiamenti di oggetti individuali nel tempo
+            - **Sequence Diagrams**: Aiuta a identificare le relazioni temporali fra gli oggetti nel tempo
+                - Aiuta ad identificare la sequenza di operazioni come risposta a uno o più eventi
+        - **Activity Diagram**: Tutti gli stati sono action state
+- **Dynamic Modeling**: Una collezione di statechart diagram, uno statechart diagram per ogni classe con un comportamento dinamico importante
+- **Event**: Un qualcosa che accade in un certo periodo di tempo
+    - **Causally related**: Prima o dopo
+    - **Causally unrelated**: Concorrentemente
+    - Manda informazioni da un oggetto ad un altro
+    - Posso essere raggruppati in una struttura gerarchica
+    - **Dynamic Modeling of User Interfaces**
+        - **Statechart diagrams**: Possono essere usata per il design della user interface (Navigation Path)
+        - **States**: Nomi degli screen
+            - Layout grafici cdegli screen associati con stati che aiuta quando si presenta il modello dinamico della user interface
+        - **Activities/Action**: Vengono mostrati come punti sotto il nome dello screen
+            - Spesso solo la exit action è mostrata
+        - **State Transition**: Risultato di una exit action
+            - Bottone cliccato
+            -  Menu selzionato
+            - Cursore mosso
+        ![Nav Path](img/navpath.png)
+        - **Tips**
+            - Costruire modelli dinamici solo per le classi che hanno un significativo comportamento dinamico
+            - Considerare solo gli attributi rilevanti, usando astrazioni se necessario
+            - Considerare la graularità dell'applicazione quando decidi action e activities
+            - Ridurre il disordine notazionale
+                - Provare a mettere action negli state boxes
+- **Model dominant**
+    - **Object model**: Il sistema ha oggetti in uno stato non banale
+    - **Dynamic model**: Il modello ha diversi tipi di eventi: Input, output, exception, errors
+    - **Functional model**: Il modello esegue trasformazioni complicate
+- **Dominance of models**
+    - **Compiler**: Modello funzionale più importante
+        - Il modello dinamico è banale perchè c'è solo un tipo di input e solo pochi tipi di output
+    - **Database systems**: L'object model più importante
+        - Il functional model è banale, perchè lo scopo della funzione è di solito salvare, organizzare o recuperare i dati
+    - **Spreadsheet program**: Modello funzionale più importante
+        - Il dynamic model è interessato se il programma autorizza la computazione di una cella
+        - L'object model è banale, perchè il valore dello spreadsheet sono banali e non possono essere strutturate ancora
+            - L'unico oggetto interessante è la cella
+- **Verification and Validation of models**
+    ![Verification](img/navpath.png)
+    - **Correctess, Completeness and Consistency**
+        - **Verification**: Controllo di equivalenza fra le trasformazioni di due model
+        - **Validation**: Comparazione di un model con la realtà
+            - Requisiti devono essere validati con il client e l'user
+            - **Techiques**: Formali e informali reviews
+        - **Requirements validation** invoca:
+            - **Correttezza**: Corretto se rappresenta il punto di vista del cliente
+                - Tutto ciò che viene modellato rappresenta un aspetto della realtà
+            - **Consistenza**: Identificazione di collegamenti fra le classi
+                - Denominazione di classi, attributi e metodi
+            - **Completezza**: Identificazione di associazioni sospese
+                - Identificazione del classi definite due volte
+                - Identificazione delle classi mancanti
+            - **Ambiguità**: Misspelling dei nomi
+                - Classi con lo stesso nome, ma differente significato
+            - **Realismo**: Il modello può essere implementato senza difficoltà
+- **Diagram Checklist for the RAD**
+    - Descrivere il modello del sistema con differenti viste
+        - Class diagram
+        - Use Case
+        - Sequence diagram
+        - State chart diagram
+    - Controllare l'equivalenza delle viewa
+    - Controllo sintattico
+        - Controllo per la consistenza dei nomi delle classi, attribuiti e metodi nei differenti sottosistemi
+        - Identificazione di associazioni sospese
+        - Identificazione del classi definite due volte
+        - Identificazione delle classi mancanti
+        - Classi con lo stesso nome, ma differente significato
+- **Project Agreement**: Rappresenta l'accettazione del modello di analisi da parte del cliente
+    - Cliente e sviluppatore convergono in una singola idea e concordano sulle funzionalità e le features che il sistema deve avere
+        - Lista dei requisiti prioritari
+            - **High priority(Core requirements)**: Affrontati durante l'analisi, il design e l'implementazione
+                - Dimostrata con successo durante l'accettazione del cliente
+            - **Medium priority(Optional requirements)**: Affrontati durante l'analisi, il design
+                - Di solito implementati e sviluppati durante la seconda fase dello sviluppo del sistema
+            - **Low priority(Fancy requirements)**: Affrontati durante l'analisi
+                - Illustra come il sistema dei funzionare nel futuro se non sono ancora disponibili le tecnologie richieste
+        - Processo di revisione
+        - Lista dei criteri che bisogna usare per accettare o rifiutare il sistema
+        - Programma e budget
 ## Modeling with UML
 - **Modeling**: Astrazione della realtà
 - **System**: Una astrazione che descrive un sottoinsieme del sistema
@@ -499,46 +644,22 @@
             - Archi sono le relazioni fra le entità
 
 ## appunti
-pdf introductio uml
-non cancellare gli oggetti in fase di analisi
-a livello di creazione sono gli entity objects
-gli altri fate conto esistano già
+non usare new dare un nome all'operazione
+non aggiungere nel class diagram i boundary control
 
-un evento per un oggetto è il messaggio ricevuto
+o propritari delle operazioni sono gli oggetti che ricevono i messaggi
 
-annulla operazione è inutile
-controlli login sul formmato non vanno fatti
-bastano username e password come controlli
-bbasta email non corretta sia per email già usata che non esistente
-sistema verifica che username e password siano corretti sono lo stesso evento->tesso caso d'uso
+fork unico control utile per in controllo delle informazioni
 
-mmettere tabella per tutti i formati dei parametri di input, referenziata nel documento
-Eccezioni basate sul tempo potrebbero essere utili per la registrazione
-Fare scenatio e caso d'uso per la registrazione
+Stair passo il controllo ad un control man mano a quello successivo
 
-specificare il tipo di notifica, no bisogna lasciare il sistema notifica l'utente
+slide 27 mancano condizioni tipo list empty or chnage >0 e anche per change per essere mutualmente esclusive data la mancanza di un evento
 
-tabella casi d'uso rende tutto più leggibile
+navigation path fatto a pezzi per semplicità per i vari casi d'uso con uno statechart diagram
 
-Eccezioni e flussi alternativi vanno messi insieme tanto non cambia nulla
+attribuiti derivati in uml atrraverso /
 
-login il sistema controlla la coppia username e password, non separatamente
-se username non esiste, o corrisponde con password sbagliata messaggio a schermo ma rimane nella stessa pagina
+cambiare casi d'uso
+se necessario login allora non va nell'include
 
-aggiunngere funzionalità utente registrato
-
-visualizzazione di un altro profilo è una funzionalità del visitatore non di un utente registrato
-su modifica password ho annulla operazione e ho salva
-
-scrivere dove vengono salvati i dati, es database, file system
-
-diagramma utente va fatto per lo scenario
-rifare disegni casi d'uso e aggiunta casi d'uso
-
-immagini da referenziare per i casi d'uso
-navigazione va bene pure fatta nel docummento finale
-far riferimento al mock up all'interno del caso d'uso
-
-cambio password gestibile con 
-
-messaggi di eerori o in una tabella o nel caso d'uso
+include indica che un caso d'uso include un flusso di eventi di un altro caso d'uso

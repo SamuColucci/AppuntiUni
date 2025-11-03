@@ -333,7 +333,7 @@ Quest'ultimo può essere reperito in due metodi:
     - **EJB**: Sono componenti container-managed per processare transazioni di logica di business
 - **Containers**: Nascondono le complessità tecniche e migliorare la portabilità
   - **Applet Containers**: Usa una modello di sicurezza sandbox nel quale il codice eseguito nella "sandbox" non è autorizzato ad uscirne, impedendo ad ogni codice scaricato in locale di accede al sistema locale delle risorse
-  - **The Cpplication Client Container(ACC)**: Include un set di classi Java, librerire e altri file al fine di permettere injection, security management e il servizio di naming verso l'applicazione Java SE
+  - **The Application Client Container(ACC)**: Include un set di classi Java, librerire e altri file al fine di permettere injection, security management e il servizio di naming verso l'applicazione Java SE
     - Comunica con EJB con RMI-IIOP e con il web container attraverso HTTP
   - **Web Container**: Fornisce i servizi di base per gestire ed eseguire le componenti web
     - Responsabile di installare, inizializzare e invocare Servlet e supportare i protocolli HTTP e HTTPS
@@ -389,7 +389,275 @@ Quest'ultimo può essere reperito in due metodi:
     - Il bean viene creato una volta per tutta la durata dell'applicazione e viene eliminato quando l'applicazione viene terminata
   - **Session Scoped**: Si estende su più richieste HTTP o per numerose invocazioni per una singola sessione utente
     - Viene cancellato quando la sessione termina
-  - **Request scope**: 
+    - Deve essere serializzabile
+  - **Request Scope**: Corrisponde and un singola richiesta HTTP o all'invocazione di un metodo
+    - Il bean viene creato per la durata dell'invocazione del metodo e viene scartato quando il metodo termina
+  - **Conversation Scope**: Si estende a più invocazioni nei limiti della sessione con un inizio e fine determinate dalle applicazioni
+    - Deve essere serializzabile
+  - **Dependent pseudo-scope**: Un dependent bean viene creato ogni volta che viene injectato e il riferimento è rimosso quando il target dell'inject è rimosso
+    - Non vengono mai condivisi tra differenti client o differenti injection point
+    - Ciclo di vita gestito da un altro bean
+- **Interceptors**: Permettono di aggiungere preoccupazioni trasversali ai tuoi bean
+  - **Constructor-level interceptors**: Associati con un costruttore della classe target
+  - **Method-level interceptors**: Associati con uno specifico metodo di business
+  - **Timeout method interceptors**: Si interpongono su un metodo di timeout con @AroundTimeout
+  - **Life-cycle callback**: Si interpongono con gli eventi di callback del ciclo di vita di una istanza target
+  - **Target Class Interceptors**: Scope dell'interceptor 
+  ![Interceptor](img/interceptor.png)
+  - **Life-Cycle Interceptors**: Con una annotazione di callback puoi informare il container a invocare un metodo durante una certa fase di vita
+    - Ti permettono di isolare parte del codice in una classe e invocarlo quando l'evento di life-cycle è attivato
+  - **Interceptor Binding**: Annotazione @InterceptorBinding che lega la classe interceptor ad un bean con nessuna diretta dipendenza fra le due classi
+- **Decorators**: Prendere una classe e wrappare un altra classe attorno ad essa
+  - Quando chiami una classe decoratore passi attraverso il decoratore che circando la classe target prima di arrivare alla classe target stessa
+  - Aggiungono addizionale logica ai metodi business
+- **Events**: Permettono ai bean di interagire senza una dipendenza nel tempo di compilazione
+  - Eventi sono lanciati dagli **event producer** e sottoscritto dagli event observers
+    - Un observer è un bean con uno o più metodi observer
+      - Ognuno dei metodi observ prende un evento di uno specificato tipo come parametro che viene annotato con @Observers
+      - I metodi observer viene notificato su un evento se l'evento object corrisponde il tipo di evento e qualifier opzionale
+- **Transaction Support in Managed Beans**: Con la declarative transaction su una classe o un metodo enterprise bean, il container può creare una nuova transaction(REQUIRED, REQUIRES_NEW), eredita da una esistente (SUPPORT), o lancia una eccezione se la transazione non è stata ancora creata (MANDATORY)
+  - Il container intercetta la chiamata al metodo corrispondente e si interpone le operazioni necessarie per inizializzare, sospendere o completare le transazioni JTA
+  - **javax.transaction.Transactional annotation**: Fornisce all'applicazione l'abilità di controllare i confini della transazione su un CDI Managed Beans
+  - Questo fornisce la semantica degli attribuiti della transazione EJB nella CDI senza dipendenza su un altro servizio EJB come RMI o tempo di servizio
+## Java Persistence API
+- **Entity**: Sono oggetti che vivono brevemente in memoria e in modo persistente nel database
+  - ORM permette la manipolazione delle entity
+  - Annotazione @javax.persistence.Entity che permette al provider di riconscere la classe come una classe persistente e non solo come un POJO
+  - Annotazione @javax.persistence.Id deve denotare una semplice chiave primaria
+  - Entità della classe devono avere un costruttore no-arg pubblico o protetto
+  - Non deve essere una enum o una interfaccia
+  - Non deve essere final
+  - La classe enity deve implementare Serializable
+- **Object-Relation Mapping**: Permettono di delegare a tool esterni o a framworrk le azioni necessarie per creare una corrispondenza fra oggetti e tabelle, permettendo allo sviluppatore l'uso delle entità invece delle tabelle
+  - I metadati descrivono il mapping e premettono al provider della persistenza di riconoscere una entity e di interpretare il mapping
+  - @Entity per modificare il comportamento di default
+    - Nome della entity è mappato al nome di una tabella relazionale
+    - Nome degli attribuiti è mappato al nome di una colonna
+      - @Column per cambiare il default mapping
+  ![ORM](img/orm.png)
+- **Querying Entities**: javax.persistence.Entity è l'API responsabile di gestire le entity, permettendo di leggere, modificare ed eseguire operazioni CRUD e anche complesse query con JPQL
+![Querying](img/querying.png)
+- **Persistet Unit**: Indica all'entity manager il tipo di database da usare e i parametri della connessione definiti nel persistence.xml
+- **Entity Life Cycle and Callbbacks**: Le Entity sono classi POJOs, quando l'entity manager gestisce le POJOs, loro hanno una chiave persistente e il database sincronizza il loro stato, quando non sono gestite sono semplici classi Java
+  - Le operazioni sono persisting, updating, removing, loading e hanno un pre e post evento
+![Entity Life](img/Enitylife.png)
+
+## Object-Relational Mapping
+- **Elementary Mapping**
+  - **Table**: Si stabilisce per default che il nome della entity e della tabella sia uguale
+  - **@Table**: @javax.persistence.Table permette di cambiare il valore di default legato ad una tabella
+    - **@UniqueConstraint**: Puoi definire vincoli addizionali in aggiunta a @Table
+  - **@SecondaryTable**: Permette di condividere dati attraverso tabelle multiple o tabelle secondarie attraverso @SecondaryTable
+  - **@Id and @GeneratedValue**: Una chiave primaria deve corrispondere ad un singolo attributo di una classe entity
+    - **@Id**: Denota una chiave primaria javax.persistence.Id
+    - Quando crei una entiy il valore del suo identificatore viene generato in automatico dall'applicazione o automaticamente dal persistence provider atraverso **@GeneratedValue**
+      - **SEQUENCE**: Uso sequenza SQL
+      - **IDENTITY**: Identificare la colonna
+      - **TABLE**: Indica al persistence provider di memorizzare il nome della sequenza e il suo corrente valore in una tabella, incrementando il valore ogni singola volta che una nuova istanza dell'entity è persistente
+- **Relationship Mapping**
+  - **Entity Relationships**: La cardinalità fra due entity può essere:
+    - @OneToOne
+      - In JPA una chiave esterna di una colonna è chiamata join column
+      - @JoinColumn permette di modificare il mapping della chiave esterna
+    - @OneToMany
+    - @JoinTable permette di modificare il mapping della chiave esterna
+    - @ManyToOne
+    - @ManyToMany
+    - Ogni annotazione può essere usata in modo monodirezionale e bidirezionale
+## Argomenti extra esame
+- **Fetching Relationships**: Puoi ottimizzare il caricamento dei dati dal database quando l'entity è letta (eagerly) o viene acceduta (lazily)
+- **@OrderBy**: Permette ordinamento dinamico, quando recuperi l'associazione
+- **@OrderColumnn**: Permette di mantenere la lista ordnniata in una colonna separata inn cui è memorizzato l'indice
+  - **EAGER**: Porta tutti i dati nella memoria usando un piccola ammontare di accessi al database
+  - **LAZY**: Controlli quale oggetto viene caricato, ma non hai accesso al database in qualsiasi momento
+- **Inheritance Mapping**: @Inheritance usata sulla entity root per indicare le strategie di mapping per se stessa e per le classi foglia
+  - JPA permette alle classi figli di sovrascrivere gli attribuiti della classe radice
+  ![Inheritace](img/inheritance.png)
+  - **Single-Table-per-Class Hierarchy Strategy**: Default inheritace mapping
+    - Tutte le entity sono mappate ad una singola tabella
+    - **@DiscriminatorColumn**: Permette di cambiare il nome del datatype
+- **Joined-Subclass Strategy**: Ogni entity viene mappate sulla sua tabella
+  - Entity root è mappata alla tabella che definisce la chiave primaria usata da tutte le tabella della gerarchia
+- **Table-per-Concrete-Class Strategy**: Tutti gli attributi dell'entity root sono appati alle colonne delle tabelle delle entity figli
+- **@Ovveride Atrributes**: @AttributeOverride per fare override del mapping della colonna
+- **Abstract Entity**: Una entity che non può essere direttamente istanziato con la new keyword
+- **Nonentity**: Classi transient, ovvero POJOs
+  - Permettono di definire una comune struttura dati per le entity foglia
+- **Mapped Superclass**: Non sono gestite dal persistence provider e fornisce informazioni sulla inheritence attraverso @MappedSuperclass
+## Managing Persistent Object
+- **Entity Manager**: Gestisce lo stato e il ciclo di vita delle entities in un cotesto persistente
+  - Crea e rimuove istanze di entity persistenti e trova entities in base alla loro chiave primaria
+  - Locka entities per proteggerle da accessi concorrenti
+  - Entities diventano managed grazie al entity manager quando hai bisogno di caricare o inserire dati nel database
+  - Entity managed permette di eseguire operazioni persistenti e si sincronizza automaticamente con il database
+  - Quando una entity è detached ritorna un POJO
+  - Interfaccia javax.persistence.EntityManager permette alla API di manipolare le entity
+  - Configurazione legata alla factory che lo crea
+  - **Obtaining a Entity Manager**
+    - In un ambiente Java EE per ottenere un entity manager si usa l'annotazione @PersistenceContext oppure attraverso un lookup JNDI, il cui ciclo di vita viene gestito dal container
+- **Persistency Context**: Unn insieme di istanze di managed entity gestite in un dato momento per una data transazione
+  - Solo una istanza della entity con la stessa identità persistente può esistere nel persistence contex
+  - Entity manager aggiorna o consulta il persistence context ogni volta che il metodo dell'interfaccia javax.persistence.EntityManager viene chiamato
+  - Di default gli oggetti vivono nel contesto persistente per la duranta della transazione
+  - **Persistence Unit**: Detta le impostazioni per connettere il database alla lista di entity che devono essere gestiste nel contesto persistente
+    - File XML persistence.xml in META-INF definisce la persistence unit
+  ![Persistence Context](img/persistencecontext.png)
+- **Manipulating Entities**: Quando manipoli singole entities, l'interfaccia EntityManager può essere vista come un Data Access Object(DAO) che permette operazioni CRUD sulle entity
+- **Persisting an Entity**: Inserire dati nel database quando i dati non esistono già
+  - Crea una new entity settando i valori degli attributi
+  - Lega le entity dove ci sono le associazioni
+  - Chiama EntityManager.persist()
+- **Finding by ID**
+  - EntityManager.find() -> ritorna la entity altrimenti null
+  - EntityManger.getReference()
+     - Recupera un riferimento ad una entity ma non i suoi dati
+- **Removing an Entity**
+  - EntityManager.remove()
+  - Una volta rimossa, la entity è eliminata dal database, scollagata dall'entity manager e non può essere sincronizzata più con il database
+- **Orphan removal**: Per la consistenza dei dati gli orphans non sono desiderabili potendo avere righe non referienzate a nessuna altra tabella
+  - Con JPA puoi il peristence provider a rimuovere automaticamente gli orphans
+- **Syncronizing with the Database**
+  - **Flushing an Entity**
+    - EntityManager.flush()
+    - Il peristence provider può esplicitamente forzare la flush dei dati nel database ma non committa la transazione
+  - **Refreshing an Entity**
+    -  EntityManager.refresh()
+    - Usato per sincronizzare i dati nel lato opposto della flush, sovreascrive lo stato corrente della entity managed con i dati del database
+- **Context of the Persistence Context**: Il persistence context contiene le entity managed
+  - Con l'innterfaccia EntityManager puoi controllare se un entity viene managed, è detach, oppure pulire tutte le entity dal pesistence context
+    - **Contains**
+      - EntityManager().contains() -> ritorna un Booleanche ti permette di controllare se una istanza di una entity è al momento managed dall'entity manager nel corrente persistence context
+    - **Clear and Detach**
+      - **Clear**: clear() -> rende tutt le le entities managed in detached
+      - **Detach**: detach(Object entity) -> Rimuove l'entity passata dal peristence context
+    - **Merging an Entity**: Le entity detached non sono più associate nel persistent context, ma continuano a vivere
+      - Per riassociarle al peristent context hai bisogno di riassociarle attraverso con em.mmerge(customer) all'interno della transazione
+    - **Updating an Entity**: Se le'entity è managed la sincronizzazione è automatica altrimenti hai bisogno di eseguire una merge
+    - **Cascading Events**: Quando una operazione viene eseguita su un entity si propaga a tutte le sue associazioni
+### JPQL
+- **JPQL**: Usato per definire ricerche su enities persistenti indipendentemente dal database sottostante
+  - Query language che usa entities o collezioni di entities
+  ```java
+  SELECT <select clause>
+  FROM <from clause>
+  [WHERE <where clause>]
+  [ORDER BY <order by clause>]
+  [GROUP BY <group by clause>]
+  [HAVING <having clause>]
+  }
+  ```
+  - **Select**
+    ```java
+    SELECT [DISTINCT] <expression> [[AS] <identification variable>]
+    expression ::= { NEW | TREAT | AVG | MAX | MIN | SUM | COUNT }
+    ```
+      - Un costruttore può essere usato nella SELECT e ritorna una istanza della classe inizializzata con il risultato della query
+  - **From**: Definisci le entity dichiarando variabili identificative
+  - **Where**: Espressione condizionale per restringere il risultato
+  - **Binding Parameter**: Permette cambiamento dinamico dei parametri atraverso parameter-binding sintax
+    - **Positional Parameters**: Usano ? seguito da un intero 
+    - **Named Parameters**: Sono designati da identificatori di stringhe che hanno come prefisso :
+  - **Subqueries**: Una SELECT query con un espressione condizionale WHERE o con una clausola HAVING
+    - il risultato viene controllato e interpretato nell'espressione condizionale della main query
+  - **Order By**: Clausola che si applica a tutte le entities o ai valori ritornati da una SELECT in ordine
+  - **Group By**: Aggragazione dei valori risultati in base a delle proprietà 
+  - **Having**: Definisce un filtro applicabile dopo che il risulato della query è stato raggruppato
+  - **Bulk Delete**: Permette di eleminare un gran numero di entities in una solo operazione
+    ```java
+    DELETE FROM <entity name> [[AS] <identification variable>]
+    [WHERE <where clause>]
+    ```
+  - **Bulk Update**: 
+    ```java
+      UPDATE <entity name> [[AS] <identification variable>]
+      SET <update statement> {, <update statement>}*
+      [WHERE <where clause>]
+    ```
+- **Queries**: Esistono 5 tipi di queries
+  - **Dinamic queries**: Vengono definite al volo in base alle esigenze dell'applicazione
+    - EntityManager.createQuery(String JPQLquery) -> ritorna un oggetto Query
+  - **Named queries**: Si differenziano dalle dinamic queries essendo statiche e non modificabili
+    - @NamedQueries
+    - EntityManager.createNamedQuery() -> ritorna una query o un TypeQuery
+  - **Criteria API**: javax.persistence.criteria permette di scrivere query in maniere object-oriented
+    ```java
+      CriteriaBuilder builder = em.getCriteriaBuilder();
+      CriteriaQuery<Customer> criteriaQuery = builder.createQuery(Customer.class);
+      Root<Customer> c = criteriaQuery.from(Customer.class);
+      criteriaQuery.select(c).where(builder.equal(c.get("firstName"), "Vincent"));
+      Query query = em.createQuery(criteriaQuery).getResultList();
+      List<Customer> customers = query.getResultList();
+    ```
+  - **Native queries**: Hanno come parametro uno statement SQL e ritorna una istanza Query per eseguire quello statement
+    - Non sono portabili da un database ad un altro
+    - Il risultato viene convertito in automatico in una entity
+    - @NamedNativeQuery
+  - **Stored procedure queries**: Salvate nel database ed eseguite in esso
+    - @NamedStoredProcedureQuery
+    - Migliore performance dovita alla precompilazione della stored procedure
+    - Codice statico
+    - Riduce l'ammontare di dati passato nella rete
+    ![Query](img/query.png)
+  - getResultList() -> Restituisce una lista di risultati
+  - getSingleResult() -> Restituisce un singolo risultato
+    - Lancia NonUniqueResultException se è stato trovato più di un risultato
+  - executeUpdate() -> Eseguire la bulk query e ritorna il numero di righe coinvolte nella query
+  - setParameters() -> Settare i parametri prima di eseguire una query
+  - Flush indica al persistence provider come gestire i cambiamenti e le query in sospeso
+    - AUTO
+    - COMMIT.AUTO
+  - setLockMode(LockModeType) -> Permetteno una lettura ripetibile
+- **Entity Life Cycle**: Quando una entity viene istanziata è solo un POJO per la JVM e può essere usata come un normale oggetto dall'applicazione
+  - Quando l'entità diventa persistente viene definita managed e viene automaticamente sincronizzato con il database sottostante
+  - Quando crei una nuova istanza di una entity usa l'operatore new
+    - Per renderlo persistente usi EntityManager.persist() diventano un entity managed e viene sincronizzato con il database
+    - Un altro modo per rendere l'entity managed è caricarlo dal database usando EntityManger.find() oppure creare una query JPQL
+    - Puoi chiamare EntityManager.remove() per non essere più managed e effettua la sua rimozione dal database
+      - L'oggetto continua a vivere fino a quando il garbage collector non lo elimina
+      - Puoi fare la reattach attraverso EntityManager.merge() per rendere nuovamente 
+  ![Entity Life Cycle](img/EntityLifeCycle.png)
+- **Callbacks**: Ogni ciclo di vita ha dei "pre" e "post" event che possono essere intercettati dall'entity manager per invocare un metodo di business
+  - Prima di inserire una entity nel database l'entity manager chiama un metodo annotato come @PrePersist
+    - Se non lancia l'eccezione viene reso persistente
+    - Viene invocato il metodo annotato come @Postpersist
+    - Non puoi avere due @PrePersist nella stessa entity
+  - Un metodo annotato con @PostLoad viene chiamato quando una entity è caricato dal database
+  - Un metodo può lanciare solo unchecked (runtime) exception
+  - Un metodo può invocare JDI, JDBC, JMS, e EJB ma non può invocare nessun Entity Manager o operazioni Query
+  - Se un metodo è specificato nella superclasse verrà invocato prima del metodo della classe figlio
+  ![Callback](img/Callback.png)
+  ![Callback2](img/Callback2.png)
+-  **Listeners**: Entity listeners sono usati per estrarre le logiche di business in una classe separata e condividerle fra le entity
+  - Un POJO nel quale puoi definire uno o più metodi life-cycle callback
+  - Classe deve avere il costruttore no-arg
+  - Se invocato sul metodo deve avere accesso allo stato della entity e deve avere il tipo del parametro compatibile con l'entity
+  - @EntityListeners
+    - Quando ce ne sono più di uno il persistence provider li itera uno ad uno
+  - Un metodo può lanciare solo unchecked (runtime) exception
+  - I listeners definiti nella superclasse vengono invocati prima di quelli nella classe figlio
+
+## Enterprise JavaBeans
+- **Understanding Enterprise JavaBean**: Sono componenti server-side che incapsulano la logica di business  e si occupa delle transazioni e della sicurezza
+  ![EJB](img/EJB.png)
+- **EJB Container**: Ambiente runtime che fornisce
+- **Type of EJBs**: Un session bean può essere di vari tipi
+  - **Stateless**: Non contiene nessuna conversazione di stato fra i metodi e un istanza può essere usata per qualsiasi client
+    - Usato per task che si concludono con una singola chiamata di un metodo
+  - **Staful**: Contengono uno stato di conversazione, deve essere mantenuto fra i metodi per un singolo utente
+  - **Singleton**: Un bean singolo condiviso fra client e sopporta accesso concorrente
+    - Il container deve assicurarsi che una sola istanza esista per una intera applicazione
+  - **Message-driven beans**:  Sono usati per essere integrati con sistemi esterni ricevendo messaggi asincroni usando JMS
+  - Gli EJB possono essere usati come endpoint per servizi web
+- **Services Given by the Container**
+  - **Remote client communication**: EJB client può invocare metodi remoti attraverso protocolli standard
+  - **Dependency injection**: Il container può fare diverse inject in un EJB
+  - **State management**: Per stateful session bean, il container gestisce il loro stato in modo trasparente
+  - **Pooling**: Per bean stateless e MDBs, il container crea un pool di istanze che possono essere condivisi da client multipli
+  - **Component life cycle**: Il container è responsabile della gestione del ciclo di vita di ogni componente
+  - **Messaging**: Il container permette al MDBs di ascoltare la destinazione e consuma i messaggi senza troppi JMS plumbing
+  - **Transaction management**: Con un declarative trasaction management, EJB può usare annotazioni per informare il container sulla policy di transazione che bisogna usare
+  - **Security**: Classi o accessi livello metodi possono essere specificati da EJBs per rinforzare le autorizzazioni user e role
+  - **Concurrency support**: Tranne per i Singleton, quando qualche dichiarazione di concorrenza è necessario, tutti gli altri tipo di EJB sono di natura thread-safe
 ## appunti
 pag 1-10 fino a jcpc compreso + A Brief History of Java EE
 packaging
@@ -429,3 +697,27 @@ producers per tutti gli oggetti bean
  217-218-219-220-221-222-223-224
 
  parametro ?c per esempio
+
+30/10
+bean su rete stateful
+solo quando è estremamente necessario essendo altamento oneroso
+
+costruttore senza parametri daro che deve essere istanziato dal container
+
+bean singleton va sincronizzato
+
+creao java bean module remote
+modulo api da distribuire sui client
+
+interfaccia remota serve sia sul server che sul client
+crei un altro modulo in cui metti le interfacce remote
+
+aggiungere glassfish/lib/gf-client. jar nella cartella di glassfish
+
+appunti 31/10
+capitolo 8 Session Beans Life Cycle
+Authorization fino a putting it all together
+
+capitolo 9 transaction
+introduzione
+transaction support in EJBs fino a 301
