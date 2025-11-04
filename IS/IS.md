@@ -35,8 +35,8 @@
     - **Modelli basati su prototipo**: Utilizzo di un prototipo per accertarsi di aver compreso bene le sue richieste e per valutare la fattiblità, e in seguito alla fase di utilizzo del prototipo si passa alla produzione della versione definitiva, il prototipo deve essere **gettato**
         - **Mock-ups**: Produzione completa interfaccia utente
         - **Breadboards**: Produce feedback su come implementare le funzionalità
-        - **Prototipazione "throw-away"**: Lo sviluppo si avvia con la parte dei requisiti meno compresa
-        - **Prototipazione "esplorativa"**: Lavorare a stretto contatto con il committente e avviando la svilluppo con la parte meglio compresa
+        - **Prototipazione "throw-away"**: Lo sviluppo si avvia con la parte dei requisiti meno compresa, serve a comprendere i requisiti e poi viene gettata
+        - **Prototipazione "esplorativa"**: Lavorare a stretto contatto con il committente e avviando la svilluppo con la parte meglio compresa evolvendo nel prodotto
     
     - **Sviluppo evolutivo**: Utilizzato per sistemi con un ciclo di vita breve, hanno tuttavia delle problematiche relative alla perdità di visibilità del processo, richieste competenze specifiche nell'uso di linguaggi di prototipazione
         - **Sviluppo incrementale**: Il sistema viene decomposto in sottosistemi che vengono implementati, testati, rilasciati, installati e messi in manutenzione con priorità diverse.
