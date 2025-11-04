@@ -26,7 +26,7 @@
 
         - Alcune fasi possono essere solo verificati solo attraverso la validation
     
-    - **Modello a V**: Fasi a sinistra collegate a quelle a destra, i test eseguiti a destra vengono pianificati a sinistra e se si trova un errore si rivedono le attività della fase a sinistra
+    - **Modello a V**: Fasi a sinistra di sviluppo collegate a quelle a di test a destra, i test eseguiti a destra vengono pianificati a sinistra e se si trova un errore si rivedono le attività della fase a sinistra
 
     - **Trasformazioni formali**: Sequenza di passi che trasforma formalmente una specifica in una implementazione, tuttavia presente porblematiche relative ai costi elevati, competenze e skill specifici e il committente non è in grado di capire le specifiche formali
 
@@ -34,7 +34,7 @@
 
     - **Modelli basati su prototipo**: Utilizzo di un prototipo per accertarsi di aver compreso bene le sue richieste e per valutare la fattiblità, e in seguito alla fase di utilizzo del prototipo si passa alla produzione della versione definitiva, il prototipo deve essere **gettato**
         - **Mock-ups**: Produzione completa interfaccia utente
-        - **Breadboards**: Produce feedback su come implementare le funzionalità
+        - **Breadboards**: Produce feedback su come implementare le funzionalità, sottoinsiemi di funzionalità critiche per valutare vincoli pesanti come carichi elevati o tempi di risposta.
         - **Prototipazione "throw-away"**: Lo sviluppo si avvia con la parte dei requisiti meno compresa, serve a comprendere i requisiti e poi viene gettata
         - **Prototipazione "esplorativa"**: Lavorare a stretto contatto con il committente e avviando la svilluppo con la parte meglio compresa evolvendo nel prodotto
     
