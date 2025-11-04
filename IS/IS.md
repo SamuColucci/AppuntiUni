@@ -1,6 +1,6 @@
 # Ingegneria del Software
 ## Informazione di base Ingegneria del Software
-- **Processo**: Un particolare metodo per fare qualcosa costituito da unna sequenza di passi che coinvolgono attività, vincoli e risorse
+- **Processo**: Un particolare metodo per fare qualcosa costituito da una sequenza di passi che coinvolgono attività, vincoli e risorse
 - **Sistemi software**:
     - **Upper-CASE**: Strumenti che supportano le attività delle fasi di analisi e specifica dei requisiti e progettazione di un processo software
     - **Lower-CASE**: Strumenti che supportano attività delle fasi finali del processo quali programming, testing e debugging
@@ -22,7 +22,7 @@
     - **V&V e Retroazione(Feedback)**: 
         - **Verification**: si occupa di stabilire la corrispondenza fra un software e la sua specifica.
         - **Validation**: si occupa di stabilire l'appropriatezza di un prodotto software alla sua missione operativa
-        - **Feedback**: possono essere innviate ad una qualsiasi delle fasi precedenti
+        - **Feedback**: possono essere inviate ad una qualsiasi delle fasi precedenti
 
         - Alcune fasi possono essere solo verificati solo attraverso la validation
     
@@ -60,9 +60,9 @@
     - **Members**
 - **Abstract data type**: Tipo speciale la cui implementazione rimane nascosta al resto del sistema
 - **Class**: Una astrazione nel contesto dei linguaggi object-oriented
-- **Application Domain**: ambiente nel quale il sistema opera
+- **Application Domain**: Ambiente nel quale il sistema opera
 - **Solution Domain**: Le tecnologie disponibile dalla build del sistema
-- **UML(Unified Modeling Language)**: Uno standard per modellare software obbject-oriented
+- **UML(Unified Modeling Language)**: Uno standard per modellare software object-oriented
     - **Use case Diagrams**: Descrive il comportamento funzionale come viene visto dall'utente
         - **Actor**: Modella una esterna entità che comunica col sistema, e ha un nome unico e una descrizione opzionale
         - **Use Case**: Rappresenta una funzionalità di una classe provvista dal sistema come un flusso di eventi
@@ -122,7 +122,7 @@
             - **FURPS+**: 
                 - **Usability**: Facilità con cui l'utente può imparare a usare, preparare input e interpretare l'output del sistema o delle componenti
                 - **Reliability**: Rappresenta la capacità del sistema o delle componenti di svolgere le funzioni richiesta in condizioni stabili per un periodo di tempo specificato
-                - **Performance**: Requisiti riguardo tempo di risposta, tempo di risposta, disponibilità e accuratezza
+                - **Performance**: Requisiti riguardo tempo di risposta, disponibilità e accuratezza
                 - **Supportability**: Facilità riguardo le modifiche al sistema, adattabilità e manutenibilità
         - **Constraints (pseudo requirements)**: Imposti dal cliente dell'ambiente nel quale il sistema opera
             - **FURPS+**:
@@ -141,7 +141,7 @@
             - **Greenfield Engineering**: Lo sviluppo parte da zero, estraendo i requisiti dall'utente finale e dal cliente, attivato dall'esigenza dell'utente
             - **Re-engineering**: Re-design o reimplementare partendo da un sistema esistente, attivato da un technology enabler
             - **Interface Engineering**: Provvede i servizi di un sistema esistente in un nuovo ambiente, attivato da un technology enabler o esigenze di mercato
-        - **Managin requirements elicitation**: 
+        - **Managing requirements elicitation**: 
             - Negoziare con il cliente (Joint Application Design -aka JAD)
             - Mantenere la tracciabilità
     - **Project Schedule**: Maggiori traguardi che implicano l'interazione con i clienti includendo deadline del sistema da consegnare
@@ -154,7 +154,7 @@
 - **Soft skills**:
     - **Management**: Team meeting
     - **Presentation**: Un grande aspetto del tuo progetto nella fase di sviluppo
-    - **Collaboration**: Negoziare requirements with the client and with members from your team and other teams
+    - **Collaboration**: Negoziare requisiti con il cliente e con i membri del tuo team o di altri teams
     - **Technical writing**: Scrivere parte della documentazione del progetto
 
 - **Project components**:
@@ -186,7 +186,7 @@
     - **Join commmunication infrastructure**: Deve supportare si attività pianificate che non
     - **Extended communication infrastructure**: Addizionali bacheche e portali di gruppo vengono stabbiliti per il progetto
     - **Attend first team status meeting**: Ai partecipanti del progetto viene insegnato a condurre status meeting, registrare informazioni di stato e diffonderlo agli altri membri
-    - **Understand the review schedule**: Il programma di revisione contiene una serie di obiettivi per counicare i risultati del progetto sotto forma di review al project manager e al cliente
+    - **Understand the review schedule**: Il programma di revisione contiene una serie di obiettivi per comunicare i risultati del progetto sotto forma di review al project manager e al cliente
 
 - **Team organization**:
     - **Team**: Piccolo gruppo di partecipanti al progetto che svolgono la stessa task
@@ -201,13 +201,13 @@
 - **Hierarchical Organization**: Status e decision sono unidirezionali
     - **Problem of Hierarchical Organization**: Molte decisioni tecniche hanno la necessità di essere svolte in locale, ma dipende dall'informazione di un altro sviluppatore in un altro team
         - **Solution**: Scambio di informazioni attraverso una struttura aggiuntiva di comunicazione
-            - **Liaison**: Resposabile dello scambio di informazioni
+            - **Liaison**: Responsabile dello scambio di informazioni
             - **Peer-based**: Gli sviluppatori possono comunicare direttamente con gli altri
             - **Cross-functional team**: Non lavorano direttamente sul sottosistema
 
-- **Roles**: Definisce una serire di task tecniche e di gestione che ci si aspetta da un partecipante del team
+- **Roles**: Definisce una serire di task tecniche e di gestione che ci si aspetta vengano completate da un partecipante del team
     - **Management roles**: Si occupa di organizzare ed eseguire il progetto entro i vincoli richiesti
-    - **Development roles**: Si occupa di specificare, disegnare e costrutire il sottosistema
+    - **Development roles**: Si occupa di specificare, disegnare e costruire il sottosistema
         - **Analista**
         - **Architetto del sistema**
         - **Object designer**
@@ -229,7 +229,7 @@
     - **Dipendenze di input e output**
 
 - **Schedule**: Mappa di task nel tempo, assegnando ad un ognuno inzio e fine
-    - **Gantt**: Grafico a barre in cui asse orizzontale rappresenta il tempo e l'asse verticale la liste delle differenti task da fare
+    - **Gantt**: Grafico a barre in cui l'asse orizzontale rappresenta il tempo e l'asse verticale la liste delle differenti task da fare
     - **PERT**: Grafo aciclico
         - Inizio e durata della task servono per calcolare il percorso critico
         - Percorso critico rappresenta la pianificazione più corta possiile 
@@ -240,8 +240,8 @@
         - **Client review**: Dialogo con il cliente, per accettare cambiamenti dei requisiti
         - **Peer Reviews**:
             - **Walkthrough(Informal)**: Incrementare la qualità del sottosistema
-            - **Inspection(Formal)**: Si occupa di verificare la conformità dei requsiti
-        - **Status Review**: Trova deviziano dalla pianificazione e le corregge o identifica i problemi
+            - **Inspection(Formal)**: Si occupa di verificare la conformità dei requisiti
+        - **Status Review**: Trova deviazioni dalla pianificazione e le corregge o identifica i problemi
         - **Brainstorming**: Generare e valutare un grande numero di soluzioni al problema
         - **Release**: Baseline dei risultati di ogni activity software sviluppata
             - **Software Project Management Plan (SPMP)**
@@ -266,7 +266,7 @@
             - **Primary facilitator**: Responsabile dell'organizzazione del meeting e della guida dell'esecuzione
                 - Scrive l'agenda descrittiva degli oggetti e dello scope del meeting
                 - Distribuisce l'agenda agli altri partecipanti
-            - **Minute Taker**: Respondabile di registrare il meetin, identificare gli action item e le problematiche e le rilascia ai partecipanti
+            - **Minute Taker**: Responsabile di registrare il meeting, identificare gli action item e le problematiche e le rilascia ai partecipanti
             - **Time keeper**: Responsabile di tenere traccia del tempo
     - **Questionari e intervista strutturate**: Definizione del problema e revisione postmortem
         - **Pro**: Capace di chiarire problemi durante la raccolta dei requisiti ad un costo basso per l'utente
@@ -286,7 +286,7 @@
         - **Contro**: Non supporta facilemente documenti che si evolvono rapidamente
     - **Lotus Notes**: Gli utenti collaborano creando, condividendo e modificando documenti in uno spazio simile ad un database
         - **Pro**: Provvede un eccellente controllo sul meccanismo di controllo e replica del database
-        - **contro**: Costoso e formato proprietario
+        - **Contro**: Costoso e formato proprietario
 ## Configuration Management
 - **Software Cofiguration Management**: Comprende le discipline e le tecniche di inizializzazione, valutazione e controllo del cambiamento del prodotto software durante e dopo il processo di software engineering
 - **Activities**
@@ -296,46 +296,46 @@
     - **Change management**
     - **Branch management**
     - **Variant management**
-- **Configuration Item**: Segmenti di codice del programma, ma ancge tutti i documenti coinvolti nello svilluppo
+- **Configuration Item**: Segmenti di codice del programma, ma anche tutti i documenti coinvolti nello svilluppo
     - **Requirements Analysis Document(RAD)**
     - **System Design Document (SDD)**
     - **Object Design Document (ODD)**
     - **Unit test**
     - **Source code**
-    - **Input data and data bases**
+    - **Input data and databases**
     - **Test data**
     - **Support software**
 - **Version**: Stato del configuration item, differenti versioni hanno differenti funzionalità
 - **Revision**: Corregge errori in una versione, ma non conivolge le funzionalità
 - **Release**: Una versione resa disponibile esternamente
 - **Baseline**: Una specifica o un prodotto che è stato approvato formalmente e che potrà servire per sviluppi futuri e può essere cambiato solo attraverso procedure formali
-    - **Developental baseline**: Coordina le engineering activities
-    - **Fuctinal baseline**: Ottiene le esperienze dei clienti con un sistema funzionale
+    - **Developmental baseline**: Coordina le engineering activities
+    - **Fuctional baseline**: Ottiene le esperienze dei clienti con un sistema funzionale
     - **Product baseline**: Coordina le vendite e il supporto clienti
-**Change management**: Un cambio di una richiesta crea una nuova release
+- **Change management**: Un cambio di una richiesta crea una nuova release
     - Cambio richiesto
-    - Cambio richiesto viene valutato in bbase agli obiettivi del progetto
+    - Cambio richiesto viene valutato in base agli obiettivi del progetto
     - Dopo la revisione viene accettato o rifiutato
     - Se accettato, viene assegnato ad uno sviluppatore e implementato
     - La modifica viene verificata
 - **Controlling Changes**
-    - **Promotion**: Lo stato di svilppo interno al software viene modificato
+    - **Promotion**: Lo stato di sviluppo interno al software viene modificato
     - **Release**: Un cambiamento software viene reso visibile fuori dallo sviluppo dell'organizzazione
 - **SCM Directories**
-    - **Programmer's Directory**: Libreria per comtenere entità software appena create o modificate
+    - **Programmer's Directory**: Libreria per contenere entità software appena create o modificate
     - **Master Directory**: Si occupa di gestire la corrente baseline e di controllare i cambiamenti fatti ad essa, i cambiamenti devono essere autorizzati
     - **Software Repository**: Archivio delle varie baseline rilasciate per uso generale
 - **Typical Configuration Management Roles**
-    - **Configuration Manager**: Responsabile di identificare i configuration item, definire porcedure di creazione promozione e rilascio
+    - **Configuration Manager**: Responsabile di identificare i configuration item, definire procedure di creazione promozione e rilascio
     - **Chage control board member**: Responsabile di approvare o rfiutare un cambio di richiesta
     - **Developer**: Crea promozioni causata da un cambio i richiesta o dalla normale attività di sviluppo
-    - **Auditor**: Responsabile di selezionare e valutare la prommozioni di rilascio e di garantire completezza e consistenza del rilascio
+    - **Auditor**: Responsabile di selezionare e valutare la promozioni di rilascio e di garantire completezza e consistenza del rilascio
 
 - **Branch management**: Identifica uno percorso di sviluppo indipendente richiedendo una configuration management indipendente
 - **Variant management**: Versioni destinate ad esistere
     - **Redundant teams**:
         - Un team viene assegnato ad ogni variante
-        - Ad ogni team vengono forniti gli stessi requisiti e la responsabilità di completare design, impementazione e test delle varianti
+        - Ad ogni team vengono forniti gli stessi requisiti e la responsabilità di completare design, implementazione e test delle varianti
     - **Single project**: Progettare una decomposizione del sottosistema al fine di massimizzare il codice condiviso fra le varianti
 
 ## Object Modeling
@@ -343,11 +343,11 @@
 - **Activities during Object Modeling**
     - **Class Identification**: Identifica i confini del sistema, le entità principali
         - **Application domain approach**: Si chiede agli esperti del dominio dell'applicazione di identificare le astrazioni
-        - **Syntatic approach**: Inzia con i casi d'uso, estrae gli oggetti partecipanti dal flusso di eventi e usa anlisi sostantivo-verbo per identificare i componenti
+        - **Syntatic approach**: Inzia con i casi d'uso, estrae gli oggetti partecipanti dal flusso di eventi e usa analisi sostantivo-verbo per identificare i componenti
         - **Design patterns approach**: Usa un design pattern riutilizzabile
         - **Component-based approach**: Identifica le soluzioni di classe esistenti
     - **Finding Object**
-        - **Application knowledge**: Confronto con gli utenti finali e gli esperti per determinare l'astrazione del domionio dell'applicazione
+        - **Application knowledge**: Confronto con gli utenti finali e gli esperti per determinare l'astrazione del dominio dell'applicazione
         - **Design knowledge**: Riutilizzabile astrazione nella soluzione del dominio
         - **General world knowledge**
         - **Formulazione di scenari e casi d'uso**
@@ -409,7 +409,7 @@
                     - I boundary object sono creati dal control object
                 - **Access**
                     - I boundary object accedono agli entity object
-                    - Gli entity object non devoo mai chiamare boundary o control object
+                    - Gli entity object non devono mai chiamare boundary o control object
                         - Facilità di condivisione fra i casi d'uso
                         - Entity object resiliente ai cambi indotti dalla tecnologia nei boundary object
             - Derivati dal caso d'uso
@@ -448,7 +448,7 @@
                 - **Modeling Concurrency**
                     - **System concurrency**: Stato generale del sistema come aggregato di state diagrams, uno per ogni oggetto
                         - Ogni state diagramm è eseguito in maniere concorrente con gli altri
-                    - **Object concurrency**: Un oggetto può essere partizionato in sottoinsieme di stati come se ciascuo di essi ha il suo sotto diagramma
+                    - **Object concurrency**: Un oggetto può essere partizionato in sottoinsieme di stati come se ciascuno di essi ha il suo sotto diagramma
                         - Lo stato di un oggetto consiste in una serie di stati
                             - Uno stato di ogni sottodiagramma
                         - Gli state diagram sono divisi in sottodiagrammi attraverso linee tratteggiate
@@ -609,7 +609,7 @@
             - **Coposition**: Denotato da un diamante solido che indica che i components non posso esistere senza gli aggregati
         - **Qualification**: Migliora le informazioni riguardo la multiplicità delle associazioni fra le classi, permettendo di ridurre 1-to-many a 1-1
         - **Inheritance**: Le classi figlio ereditano gli attribuiti e le operazioni della classe padre
-        - **Package**: eccanismo per organizzare elementi in gruppi
+        - **Package**: Meccanismo per organizzare elementi in gruppi
             - Un sistema complesso può essere decomposto in sottosistemi, dove ogni sottosistema è modellato come un pacchetto
     - **Sequence Diagrams**: Descrive il comportamento dinamico fra gli attori e il sistema e fra gli oggetti e il sistema
         - Classi rappresentate come colonne
