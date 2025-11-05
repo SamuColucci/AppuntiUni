@@ -12,7 +12,7 @@
         - **Studio di fattibilità**: Stabilire se avviare il progetto individuando le scelte necessarie e dà in output il documento di fattibilità
         - **Analisi dei requisiti**: Descrivere le funzionalità e le caratteristica che l'applicazione deve avere e dà in output il documento di specifica dei requsiti
         - **Progettazione**: Definire una struttura opportuna per il sofotware e dà in output il documento di specifica del progetto
-        - **Programmazione e test di unità**: ogni modulo viene codificato nel linguaggio scelto e testato
+        - **Programmazione e test di unità**: Ogni modulo viene codificato nel linguaggio scelto e testato
         - **Integrazione e test di sistema**: Comporre moduli nel sistema globale, verificare il corretto funzionamento del sistema, α-test e β-test
         - **Deployment**: Distribuzione software
         - **Manutenzione**: Evoluzione del software
@@ -184,7 +184,7 @@
     - **Join team**: I partecipanti sono assegnati al team in base alle loro skill e ai loro interessi
     - **Attend training session**: I partecipanti che non hanno le skill necessarie per la task ricevono un allenamento extra
     - **Join commmunication infrastructure**: Deve supportare si attività pianificate che non
-    - **Extended communication infrastructure**: Addizionali bacheche e portali di gruppo vengono stabbiliti per il progetto
+    - **Extended communication infrastructure**: Addizionali bacheche e portali di gruppo vengono stabiliti per il progetto
     - **Attend first team status meeting**: Ai partecipanti del progetto viene insegnato a condurre status meeting, registrare informazioni di stato e diffonderlo agli altri membri
     - **Understand the review schedule**: Il programma di revisione contiene una serie di obiettivi per comunicare i risultati del progetto sotto forma di review al project manager e al cliente
 
@@ -327,7 +327,7 @@
     - **Software Repository**: Archivio delle varie baseline rilasciate per uso generale
 - **Typical Configuration Management Roles**
     - **Configuration Manager**: Responsabile di identificare i configuration item, definire procedure di creazione promozione e rilascio
-    - **Chage control board member**: Responsabile di approvare o rfiutare un cambio di richiesta
+    - **Change control board member**: Responsabile di approvare o rfiutare un cambio di richiesta
     - **Developer**: Crea promozioni causata da un cambio i richiesta o dalla normale attività di sviluppo
     - **Auditor**: Responsabile di selezionare e valutare la promozioni di rilascio e di garantire completezza e consistenza del rilascio
 
