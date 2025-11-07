@@ -149,4 +149,7 @@ Extras parte di un activity composta da un bundle(coppia chiave valore)
 
 quiz per risolvere precedente se index=0 metti quesito corrente=num -1
 
-## Appunti lezione 21/10
+## Appunti lezione 6/11
+fillafter true permette all'animazione di non tornare allo stato iniziale alla fine
+
+object animator serve per cambiare le coordinate reali dell'oggetto invece del cambio solo grafico di animation

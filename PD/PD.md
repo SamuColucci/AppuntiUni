@@ -76,7 +76,7 @@ Imponeva la sincronia delle invocazioni bloccando il client fino a quando il ser
 
 - **Legge di Moore**: numero transistor raddopia ogni 2 anni 
 
-- **Thermal Noise**: Effetto della termodinamica che disturba la crescita secondo la legge di Moore e conseguete difficoltà di raffreddamento dei troppi transistorù
+- **Thermal Noise**: Effetto della termodinamica che disturba la crescita secondo la legge di Moore e conseguete difficoltà di raffreddamento dei troppi transistor
 
 - **Accesso in memoria**
   - **SingleCore**: Un singolo thread accede alla memoria
@@ -95,7 +95,7 @@ Imponeva la sincronia delle invocazioni bloccando il client fino a quando il ser
     - **Interrupt**: Indicazione al fine di fermare il thread e far fare qualcosa altro e lancia l'eccezione **InterruptedException**
     - **Join**: Attende il completamento di un altro thread
   
-  - **Comunicazione fra Thread**: Comunicano condividendo acceso ai campi e ai campi che contengono riferimenti ad oggetti.
+  - **Comunicazione fra Thread**: Comunicano condividendo acceso ai campi che contengono riferimenti ad oggetti.
   Per risolvere il problema interferenza di thread e inconsistenza della memoria è necessaria la sincronizzazione
 
   - **Problema accesso concorrente**: La race condition dipende dall'ordine di esecuzione di diversi thread, tuttavia questi errori rendono difficile il debugging
@@ -103,8 +103,8 @@ Imponeva la sincronia delle invocazioni bloccando il client fino a quando il ser
 - **Informazioni utili**
   - Ogni thread viene mappato ad un core, thread vivono all'interno del processo che li sta usando
   - Ogni applicativo ha un main thread
-  - JVM è un porgramma capace di eseguire altri programmi scritti in java, è una specifica che può essere implemantata in una macchina virtuale java
-  - Java non ha riferimenti fisica, ma gestisce i riferimenti relativi alla posizione java
+  - JVM è un programma capace di eseguire altri programmi scritti in java, è una specifica che può essere implemantata in una macchina virtuale java
+  - Java non ha riferimenti fisici, ma gestisce i riferimenti relativi alla posizione java
 
 - **Legge di Amdahl**: Lo speedup che si ottiene eseguendo il programma <em>X</em> su <em>n</em> processori, dove <em>p</em> è la parte di <em>X</em> che si può parallelizzare è:
 
@@ -112,9 +112,9 @@ Imponeva la sincronia delle invocazioni bloccando il client fino a quando il ser
 
 - Per velocizzare un programma non basta investire sull'hardware ma è assolutamente necessario e molto più cost-effective impegnarsi a rendere la parte parallela predominante rispetto alla parte sequenziale
 - **Sincronizzazione**: Risolve il problema di interferenza fra thread e di incosistenza alla memoria
-  - **Metodo synchronnized**: Costrutto Java che evita che due esecuzioni dello stesso metodo sullo stesso oggetto siano interfogliate, sospendendo gli altri thread che invocano lo stesso metodo synchronnized, quando il thread esce dal metodo e si stabbilisce una relazione di **happen-before**
+  - **Metodo synchronized**: Costrutto Java che evita che due esecuzioni dello stesso metodo sullo stesso oggetto siano interfogliate, sospendendo gli altri thread che invocano lo stesso metodo synchronnized, quando il thread esce dal metodo e si stabilisce una relazione di **happen-before**
   - **Lock intrinsichi**: entità associata ad ogni oggetto e garantisce sia accesso esclusivo sia accesso consistente
-  - **Azioni Atomiche**: Azioni che non sono innterrompibili e si completano del tutto
+  - **Azioni Atomiche**: Azioni che non sono interrompibili e si completano del tutto
   - **Deadlock**: Si verifica quando due thread sono in attesa uno dell'altro
   - **Starvation**: Si verifica quando un thread non riesce a acquisire un accesso ad una risorsa condivisa
   - **Livelock**: I thread rispondono alle azione di un altro thread
@@ -131,13 +131,13 @@ Imponeva la sincronia delle invocazioni bloccando il client fino a quando il ser
     - Classe **Socket**
   
 - **Stream**: La comunicazione fra client e server avviene attraverso la scrittura e la lettura di stream associati con il socket
-  - **ObjectInputStream**: Fornisce meccanismo di deserializzazione quando si riceve un oggetto precedentemente serializzato con **ObjectInputStream**
+  - **ObjectInputStream**: Fornisce meccanismo di deserializzazione quando si riceve un oggetto precedentemente serializzato con **ObjectOutputStream**
     - Gli oggetti che possono essere trasmessi su questo stream devoo implementare interfaccia Serializable o Externalizable
   
  - **Oggetto remoto**: Adottiamo il principio dell'astrazione introducedo uno **strato software** al fine di nascondere al programmatore il lavoro necessario all'invocazione di metodi remoti
     - **Strato software** composto da **stub** e **skeleton**
-    - **Stub**: Oggetto che si trova sul client e rappresenta l'oggetto server verso il client e il suo scopo è couicare co lo skeleton che si trova lato server
-      - Ogi chiamata del client verso i metodi remoti genera una comuicazione fra stub e skeleton
+    - **Stub**: Oggetto che si trova sul client e rappresenta l'oggetto server verso il client e il suo scopo è comunicare con lo skeleton che si trova lato server
+      - Ogni chiamata del client verso i metodi remoti genera una comuicazione fra stub e skeleton
     
     - **Skeleton**: Si occupa di effettuare invocazione del metodo richiesto, ricevere il valore restituito e comunicarlo allo stub
 
@@ -236,7 +236,7 @@ Quest'ultimo può essere reperito in due metodi:
     - **Skeleton**: Incaricato di effettuare il dispatching verso l'oggetto remoto
       - Quando riceve una invocazione in entrata effettua unmarshalling del remoto reference layer dei parametri per l'invocazione
       - Invoca il metodo sulla implementazione che si trova nella sua JVM
-      - Effettua il marshalling del valore restituito verso chi ha invocato il metodoà
+      - Effettua il marshalling del valore restituito verso chi ha invocato il metodo
     
     - Vengono creati dall'RMI compiler rmic
 
@@ -262,7 +262,7 @@ Quest'ultimo può essere reperito in due metodi:
 ## Caricamento dinamico delle classi
 - L'oggetto remoto può trovarsi nella situazione in cui non conosce esattamente come è strutturata la classe di cui l'oggetto è istanza
 - Per evitare questo problema si fa il marshalling degli oggetti per la trasmissione, venendo annotati con il codebase di un server WWW da dove è possibile trovare la definizione della classe
-- Quando viene effettuato l'unmarshalling dell'oggetto il Classloader cerca di risolvere il nome della classe nel suo contesto e in caso non sia possibile viene acceduta la definizione della classe per poter ricreare l'oggetto all'altro capo della cominucazione
+- Quando viene effettuato l'unmarshalling dell'oggetto il Classloader cerca di risolvere il nome della classe nel suo contesto e in caso non sia possibile viene acceduta la definizione della classe per poter ricreare l'oggetto all'altro capo della comunicazione
 
 ## Il meccanismo di marshalling usato da Java RMI
 - **Marshalling**: permette di effettuare una serializzazione modificando la semantica dei riferimenti remoti e aggiungendo informazioni all'oggetto
@@ -721,3 +721,8 @@ Authorization fino a putting it all together
 capitolo 9 transaction
 introduzione
 transaction support in EJBs fino a 301
+
+capitolo 13
+persistenza messaggi garantita dal broker
+
+skip controlling acknowledgment
