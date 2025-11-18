@@ -450,6 +450,7 @@ Quest'ultimo può essere reperito in due metodi:
     - Un observer è un bean con uno o più metodi observer
       - Ognuno dei metodi observ prende un evento di uno specificato tipo come parametro che viene annotato con @Observers
       - I metodi observer viene notificato su un evento se l'evento object corrisponde il tipo di evento e qualifier opzionale
+      - Permette a componenti software di comunicare ma sullo stesso spazio di indirizzamento, nella stessa applicazione
 ### **Transaction Support in Managed Beans**
 - Con la declarative transaction su una classe o un metodo enterprise bean, il container può creare una nuova transaction(REQUIRED, REQUIRES_NEW), eredita da una esistente (SUPPORT), o lancia una eccezione se la transazione non è stata ancora creata (MANDATORY)
   - Il container intercetta la chiamata al metodo corrispondente e si interpone le operazioni necessarie per inizializzare, sospendere o completare le transazioni JTA
@@ -743,62 +744,303 @@ Quest'ultimo può essere reperito in due metodi:
     - Un session bean può avere local interface, remote interface o nessuna interfaccia
   ![EJBLite](img/anatomiaejb.png)
 ### Bean Class
+- Classe annotata con @Stateless, o con @Stateful o con @Singleton o con equivalente XML nel deployment descriptor
+- Deve implementare i metodi dell'interfaccia
+- Deve essere definita pubblic e non final o abstract
+- Non deve definire il metodo finalize()
+- Metodi di business non devono iniziare con ejb e non possono essere final o static
+- Gli argomenti e i metodi di ritorno devono essere tupi RMI legali
+### Remote, Local, and No-Interface Views
+![EJBviews](img/viewsejb.png)
+- **Business Interface**: Definisce una serie di metodi che devono essere disponibili per client application
+  - **@Remote**: Denota una business interface remote
+    - Parametri dei metodi sono passati per valore e necessitano di essere serializzabili come parte del protocollo RMI
+  - **@Local**: Denota una business interface locale
+    - Parametri dei metodi sono passati per riferimento dal client al bean
+  - Non puoi segnare la stessa interfaccia con con più di una annotazione
+  - Senza interfaccia è una variante della local view che espone tutti i metodi di business publici senza usare business interface separate
+### Web Service Interface
+  - Stateless bean posso essere invocati da remoto come SOAO web services oppure RESTful web services
+    - SOAP -> @WebService
+    - RESTful -> @Path
+### Portable JNDI Name
+- Specifica il codice che può essere portabile
+```java
+java:<scope>[/<app-name>]/<module-name>/<bean-name>[!<fully-qualified-interface-name>]
+```
+- **< Scope >**: Serie di namespaces standard che mappano i vari scopi dell'applicazione Java EE
+  - **global**: Permette ai componenti in esecuzione al di fuori dell'applicazione Java EE di accedere ad un namespace specificicato
+  - **app**: Permette ai componenti in esecuzione all' interno dell'applicazione Java EE di accedere ad un namespace specificicato
+  - **module**: Permette ai componenti in esecuzione all' interno dell'applicazione Java EE di accedere ad un namespace specificicato da un modulo
+  - **comp**: Namespace privato e specifico di un componente e non accessibile da altri componenti
+- **< app-name >**: Richiesto se il session bean è inpacchettato con un ear o war file
+- **< module-name >**: Nome del modulo nel quale il session bean è inpacchettato
+  - Di default da riferimento all'archivio base senza estensioni
+- **< bean-name >**: Nome del session bean
+- **< fully-qualified-interface-name >**: Nome completo di ogni interfaccia di business definita
+  - Per una view no-interface il nome può essere il nome completo della classe bean
+### Stateless Bean
+- Task completate in una singola chiamata di un metodo
+- **Service Stateless**
+  - Indipendenti
+  - Autosufficienti
+  - Non richiedono informazioni o stato da una richiesta ad un altra
+- Possono essere raggruppati e condivisi fra diversi client
+- Per ogni stateless EJB il container tiene un certo numero di istanze in memoria e li condivide fra i client
+  - Ogni istanza è equivalente alle altre
+- Quando il client invoca un metodo su uno stateless bean, il container pernde una istanza dal raggruppamento e la assegna al client
+  - Quando la richiesta finisce, l'instanza ritorna al raggruppamento per essere riusata
+
+![Statelessbean](img/statelessbean.png)
+- Vive nel container e per questo può usare i servizi del container fra cui l'injection
+- Spesso hanno una serie di metodi di business correlati
+- Possono supportare un gran numero di client, minimizzando le risorse richieste
+
+### Stateful Beans
+- Preservano lo stato di conversazione
+- Usati per task che richiedono una serie di passi, in cui ogni passo ha bisogno dello stato del precedente
+- Quando il client invoca un bean stateful nel server, l'EJB container deve fornire la stessa istanza per ogni successiva invocazione del metodo
+- Non possono essere riusati da altri client
+![Statefulbean](img/statefulbean.png)
+- **Passivation and activation**: Il container per evitare un grande ingombro della memoria temporaneamente rimuovi gli stateful bean dalla memoria prima della prossima richiesta che li riporta in memoria nuovamente
+  - **Passivation**: Processo di rimozione di una istanza dalla memoria e salvarla nella locazione persistente al fine di liberare memoria e rilasciare risorse
+  - **Activation**: Processo al fine di ripristinare uno stato e applicarlo ad una istanza
+  - Gestiti in automatico dal container
+- Assicurasi che il bean venga rimosso in modo da ridurre il consumo di memoria
+  - **@StatefulTimeout**: Assegna un vlore di timeout che indica la durata nella quale il bean deve rimanere in idle prima che venga rimosso dal container
+### Singleton
+- Un session bean che può essere istanziato una sola volta per applicazione
+- Fornisce un punto globale di accesso
+- Va sincronizzato
+![Singleton](img/singleton.png)
+- **Cluster**: Gruppo di container che lavorano insieme
+  - Ogni container ha la sua istanza del singleton
+#### Startup Inizialization
+- Per evitare latenza dovuta alla prima chiamata di un bean, puoi chiedere al container di inizializzare un bean all'avvio attraverso @Startup
+#### Chaining Singletons
+- Quando hai una serie di bean puoi esplicitare l'ordine di inizializzazione
+- **@DependsOn**: Contiene una o più stringhe
+  - Ognuna specifica il nome del singleton bean target
+#### Concurrency
+- Concorrenza di accesso al bean singleton controllata tramite @ConcurrencyManagement in due modi
+  - **Container-managed concurrency(CMC)**: Il container controlla l'accesso concorrente all'istanza del bean basandosi sui metadati
+  - **Bean-managed concurrency(BMC)**: Il container permette il pieno controllo concorrente e demanda la responsibilità di sincronizzazione al bean
+  - CMC è usata di default
+### Packaging
+- EJB necessitano di essere impacchettati prima di essere deployare in container runtime
+  - Una volta impacchettati questi artefatti in un file jar, puoi deployare direttamente nel container
+- ![Packaging](img/packagingEJB.png)
+- EJB Lite possono essere direttamente impacchettati nel web module (war file)
+- Se hai bisogno di usare una piena specifica EJB devi impacchettare tutto nel jar
+### Deploying an EJB
+- I session bean sono componenti container-managed
+- Il container gestisce ogni sorta di servizi permettendoti di concentrarti sul business code
+  - Il lato negativo è che devi sempre eseguire il tuo EJB nel container
+- **Embeddable API**: Permette a un client di istanziare un EJB container che viene runnata con la sua JVM
+  - EJBContainer contiene una factory method per creare una istanza del container
+    - createEJBContainer()
+### Invoking Enterprise Java Beans
+- Per invocare un metodo su un session bean, un client non può direttamente istanziare un bean
+  - Necessita di un riferimento a un bean
+  - Può essere ottenuto via dependency injection oppure lookup JNDI
+    - Dependency injection permette a un container di automaticamento inject una riferimento a un EJB in tempo di deploy
+#### Invoking with Injection
+- Java EE usa differenti annotazioni
+  - Risorse -> @Resource
+  - Entity Manager -> @PersistenceContext
+  - Web Services -> @WebServiceRef
+- Dependecy injection è solo possibile con un ambiente gestito
+- Se il session bean implementa una serie di interfacce, il client deve specificare a quale si vuole riferire
+#### Invoking with CDI
+- Per invocare un metodo su un EJB richiede annotazione @EJB per ottenere un un riferimento injectato al client
+#### Invoking with JNDI
+- I session bean possono essere ricercati usando JNDI
+```java
+    Context ctx = new InitialContext();
+    ItemRemote itemEJB = (ItemRemote) ctx.lookup("java:global/cdbookstore/ItemEJB!org.agoncal.book.javaee7.ItemRemote");
+```
+## Callbacks and Authorization
+### Session Beans Life Cycle
+- Il client ottiene un riferimento ad un session bean attraverso dependency injection o lookup JNDI
+- Il container crea l'istanza e poi la distrugge, quindi responsabile di gestire il ciclo di vita del bean
+#### Stateless and Singleton
+- Non mantengono lo stato della conversazione con un client dedicato
+- Entrambi permettono accesso da tutti i client
+  - Stateless lo fa per istanza
+  - Singleton provvedono accesso concorrente ad una singola istanza
+- Stesso ciclo di vita
+  1. Il ciclo di vita di uno stateless o di un singleton session bean inizia quando un client richiede un riferimento un bean
+      - In caso di un singleton, può iniziare quando il container è bootstrapped attraverso @Startup
+      - Il container crea una nuova istanza del session bean
+  2. Se la nuova istanza creata usando una dependency injection attraverso annotazione o deployment descriptor
+      - Il container fa inject di tutte le risorse necessarie
+  3. Se l'istanza ha un metodo annotato con @PostContruct, il container lo invoca
+  4. L'istanza del bean processa la chiamata invocata dal client e sta in ready mode per processare future chiamate
+      - Stateless bean rimane in ready mode fino a quando il container non libera lo spazio nel pool
+      - Singleton rimane in ready mode fino a quando il container non viene spento
+  5. Il container non necessita più l'istanza
+      - Invoca il metodo annotato con @PreDestroy e termina il ciclo di vita dell'istanza del bean
+
+  ![Life Cycle](img/lifesingletonstateless.png)
+- Quando un client fa il deploy di un bean stateless, il container crea una serie di istanze e le aggiunge al pool
+  - Quando il client chiama un metodo su un bean stateless, il container seleziona una istanza dal pool, delega l'invocazione del metodo all'istanze e lo ritorna al pool
+    - Quando il container non ha più bisogno dell'istanza la distrugge
+- Per un singleton bean, la creazione dipende se è stato istanziato con @Startup o no, oppure dipende da un altro singleton che è stato creato in precedenza @DependsOn
+  - Se si crea il singleton a tempo di deploy
+  - Altrimenti viene creata una istanza quando il client invoca un metodo di business
+  - Istanza distrutta quando il server viene spento
+#### Stateful
+- Mantengono lo stato di conversazione con il client
+- Il container genera un istanza e l'assegna solo ad un client
+  - Ogni richiesta fatta dal client viene passata sempre la stessa istanza
+- **Passivation**: Il container serializza una istanza del bean su un supporto di archiviazione permanente
+- **Activation**: Processo nel quale l'istanza del bean è necessario nuovamente al client, inverso della passivation
+  - Container deserializza il bean dallo spazio di archiviazione permanente e lo riattiva in memoria
+    - Attributi del bean devono essere serializzabili
+- Ciclo di vita
+  1. Il ciclo di vita inizia quando il client richiede un riferimento ad un bean
+      - Il container crea una nuova istanza del session bean e la salva in memoria
+  2. Se la nuova istanza creata fa uso di dipendency injection o deployment descriptor, il container fa inject di tutte le risorse necessarie
+  3. Se l'istanza ha un metodo annotato con @PostConstruct lo invoca
+  4. Il bean esegue le chiamate e rimane in memoria, aspettando successive richieste dal client
+  5. Se il client rimane in idle per un periodo di tempo, il container invoca, se esiste, il metodo annotato con @PrePassivate e passiva il bean nello spazio di archiviazione permanente
+  6. Se il client invoca un bean passivato, il container attiva il bean e invoca, se esiste, il metodo annotato con @PostActivate
+  7. Se il client non invoca l'istanza del bean passivato per il periodo di timeout della sessione l'istanza del bean viene distrutta
+  8. Alternativamente al punto 7, se il client chiama un metodo annotato con @Remove, il container invoca, se esiste, il metodo annotato con @PreDestroy e termina il ciclo di vita dell'istanza del bean 
+
+  ![Life Cycle](img/lifecyclestateful.png)
+- @Stateful(passivationCapable=false) -> disattivare defaul activation/passivation
+#### Callbacks
+- Il cambio di uno stato ad un altro per quanto riguarda i cambiamenti dei bean può essere intercettato dal container al fine di invocare metodi con una determinata annotazione
+  ![Callbacks](img/callbacks.png)
+- **Il metodo callback**
+  - Non deve avere nessun parametro e deve essere void
+  - Non deve lanciare checked exception, ma solo runtime exception
+    - Lancio di un eccezione a runtime annulla l'intera transazione
+  - Il metodo non deve essere static o final
+  - Può avere annotazioni multiple, ma solo una per ogni tipo
+  - Può accedere alle voci di un ambiente del bean
+- Tipicamente utilizzate per allocare o rilasciare risorse
+- Il container mantiene lo stato della conversazione, che può richiedere onerose risorse come connessioni col database
+  - Connessioni col database condivise fra le chiamate e rilasciate quando il bean è in idle
+- Dopo aver creato una istanza di uno stateful bean, il container fa inject del riferimento di un datasource di default
+  - Il container chiama il metodo annotato con @PostConstruct che crea una connessione col database
+    - Se il container passiva l'istanza chiama il metodo annotato con @PrePassivate al fine di chiudere la connessione col database
+### Authorization
+- Gestiti dal web tier il principale e i suoi ruoli sono passati al EJB tier che controlla se l'utente autenticato è autorizzato ad accedere ad un metodo in base al suo ruolo
+- Con dichiarative autorizzazioni accesso controllato dal EJB container
+- Con programmate autorizzazioni accesso è controllato nel codice usando JAAS API
+#### Declarative Authorization
+- Definite usando annotazioni o xml deployment descriptor
+- Comporta
+  - Dichiarazione di ruoli
+  - Assegna permessi ad un metodo
+  - Cambia temporaneamente la sicurezza di una identity
+  ![Authorization Declarative](img/authorizationdecl.png)
+#### Programmatic Authorization
+- Maniera selettiva per permettere o bloccare accessi ad un ruolo o al principale
+- SessionContext definisce due metodi relativi alla sicurezza
+  - **isCallerInRole()**: Ritorna un booleano e testa se il caller ha dato un security role
+  - **getCallerPrincipal()**: Ritorna il java.security.Principal che identifica il caller
+
+![Putting al together](img/callbackauthorization.png)
+## Transactions
+### Understanding Transaction
+- Le transazioni sono usate per assicurarsi che i dati vengano tenuti in uno stato consistente
+  - Operazioni logiche che devono essere performate in modo atomico, chiamate **unit of work**
+  - Devono essere eseguite sia in modo sequenziale che parallelo
+  - Ogni operazione deve avere successo al fine di garantire il successo della transazione
+  - Devono garantire affidabilità, robustezza e rispettare le proprietà ACID
+#### ACID
+  ![ACID](img/ACID.png)
+#### Read Conditions
+- Descrivono cosa può accadere quando duo o più operazioni operano sullo stesso dato nello stesso tempo
+  - **Dirty reads**: Un transazione legge un cambiamento non commitato fatto da una transazione precedente
+  - **Repeatable reads**: I dati letti sono gli stessi se letti di nuovo nella stessa transazione
+  - **Phantom reads**: Nuovi record sono aggiunti al database e sono visibili da transazioni iniziate prima dell'inserimento
+    - Le query includeranno i record aggiunti dalle altre transazioni dopo che la loro transazione è iniziata
+#### Transaction Isolation Levels
+- Tecniche usate per controllare come le transazioni accedono ai dati in maniera concorrente
+  - **Read uncommitted**: Transazione può leggere un dato non committato
+    - Dirty, nonrepeatable e phantom read
+  - **Read committed**: Transazione non può leggere dati non committati
+    - Nonrepeatable e phantom read
+  - **Repeatable read**: Transazione non può cambiare il dato letto da una differente transazione
+    - Phantom read
+  - **Serializable**: Transazione ha lettura esclusiva
+    - Altre trasazioni non possono leggere o modificare gli stessi dati
+#### JTA Local Transaction
+- Transazione usando una singola risorsa
+- **Transaction manager**: Gestisce le operazioni transazionali
+  - Crea le transazioni per l'applicazione, informa il gestore delle risorse che sta partecipando ad una transazione e conduce il commit o il rollback sul gestore delle risorse
+  - **Resource manager**: Responsabile di gestire le risorse e registrarle nel transaction manager
+  - **Resource**: Archivio persistente dal quale puoi leggere o scrivere
+#### Distributed Transaction and XA
+- Transazione usando multiple risorse
+  ![ACID](img/distributedtransaction.png)
+- Per avere una transazione affidabile fra le varie risorse, il transaction manager deve usare un XA resource manager interface
+  - Meccanismo two-phase commit per assicurasi che tutto le risorse sono committate o rollback particolari transazioni in modo simulataneo
+  ![XA](img/XA.png)
+- JTS implementa la specifica Object Management Group (OMG) Object Transaction Service (OTS) che permette al transaction manager di partecipare ad una transazione distribuita attraverso il protocollo Internet Inter-ORB Protocol (IIOP)
+  ![JTS](img/JTS.png)
+### Transaction Support in EJBs
+- EJB container è un transactional manager che supporta JTA
+- Di default EJB model è stato progettato per gestire le transazioni
+  - Questo comportamento è chiamato container-managed transaction (CMT)
+#### Container-Managed Transaction
+- EJB container fornisce la gestione delle transazioni al session bean e al MDBs, settando anche i confini delle transazioni
+  ![Transaction Container](img/transactioncontainer.png)
+- Puoi cambiare il comportamento attraverso i meta dati
+  ![CMT](img/CMT1.png)
+  ![CMT](img/CMT2.png)
+
+## Messaging
+- Message-oriented middleware (MOM) è un software che consente lo scambio di messaggi asincroni fra sistema eterogenei
+  - Il produttore e il consumatore non devono essere disponibili nello stesso tempo per comunicare
+    - Usano un buffer intermedio
+### Understanding Messaging
+- Quando un messaggio è inviato, il software che memorizza il messaggio e lo spedisce viene chiamato provider
+  - Colui che invia i messaggi è chiamato producer, e la destinazione dove il messaggio è memorizzato è chiamato destination
+    - La componente che riceve è chiamata consumer
+  ![MOM](img/messaging.png)
+
+- In Java EE, la API che gestisce questi concetti è chiamato Java Message Service (JMS)
+- Quando vengono eseguiti in un EJB container, Message-Driven Beans (MDBs) possono essere usati per ricevere messaggi in un modo gestito da un container
+  - **Provider**: JMS è solo un API, quindi necessita un'implementazione sottostante per instradare messaggi, ovvero il provider
+    - Il provider gestisce il buffering e la consegna dei messaggi
+  - **Clients**: Un client è una qualsiasi applicazione Java o componente che produce o consuma un messaggio da/verso il provider
+  - **Messages**: Oggetti che il client invia o riceve dal provider
+  - **Administered objects**: Un broker di messaggi deve fornire oggetti administered al client tramite ricerca JNDI o injection
+    ![Messaging Architecture](img/messagingarchitecure.png)
+- Il messagin provider consente comunicazione asincrona fornendo una destinazione dove i messaggi possono essere trattenuti fino a quando loro devono essere mandate al client
+#### The point-to-point (P2P) model
+- In questo modello, la destinazione utilizzata per trattenere i messaggi è chiamata queue
+    - Un client mette un messaggio nella coda e un altro client riceve il messaggio
+      - Quando il messaggio è acknowledged, il message provider rimuove il messaggio dalla coda
+- Un messaggio viaggia da un singolo producer ad un singolo consumer
+  - Il sender può produrre più di un messaggio e li manda alla coda e il receiver può consumarli quando vuole
+  ![P2P](img/p2p.png)
+- La coda può avere più di un consumatore, ma quando un messaggio dalla coda nessun altro consumer può riceverlo
+  ![Multiple Receivers](img/p2pconsumer.png)
+#### The publish-subscribe (pub-sub) model
+- La destinazione è chiamata topic
+    - Quando usi una messaggistica publish/subscribe, un client pubblica un messaggio su un topic e tutti gli iscritti a quel topic ricevono il messaggio
+- Un singolo messaggio è mandato da un singolo producer a una serie di potenziali consumer
+  - I consumers sono chiamati subscribers perchè prima neccessitano di fare la subscribe di un topic
+  ![Pub-sub](img/pub-submodel.png)
+- Presenta timing dependency fra publisher e subscribers
+- Multipli subscribers possono consumare lo stesso messaggio
+  ![Multiple Subscribers](img/multiplesubscribers.png)
+#### Administered Objects
+- Configurati in modo amministrativamente
+- Il messagge provider permette a questi oggetti di essere configurati e li rende disponibile nel namespace JNDI
+  - Come JDBC datasources, administered objects sono creati una sola volta
+  - **Connection factories**: Usato dal client per creare una connessione alla destinazione
+  - **Destinations**: Punti di distribuzioni di messaggi che ricevono, trattengono e distribuiscono messaggi
+    - Destinazioni possono essere code (P2P) o topic (pub-sub)
+#### Message-Driven Beans
+
 ## appunti
-pag 1-10 fino a jcpc compreso + A Brief History of Java EE
-packaging
-services
-annotation e deploymentd descriptor
-@Remote(ItemRemote.class) metodi remoti invocabili dell'interfaccia itemremote
-@Local(ItemLocal.class)
-
-Context and Dependency Injection
-23-24-25
-28-29-30-31-32-33-34-37(producers)-38-40-41
-inject tu non sai risolvere o non puoi risolvere un oggetto, quindi chiedi ad un altro di risorvere e quindi inietti la dipendenza
-si usa per evitare di creare due classi isbn e issn oppure passare al costruttore, ma per evitare ciò si fa inject
-se non è un bean si usa il producers altrimenti glassfish non funziona
-producers per tutti gli oggetti bean
-@Produces @ThirteenDigits
- private String prefix13digits = "13-";
- se faccio injet in un altro bean la stringa injectata avrà 13-
-
- observ permette a componenti software di comunicare ma sullo stesso spazio di indirizzamento, nella stessa applicazione
-
- fino a eventi compresi
-
- ch 4 java persistence API
- entity manager restituisce un istanza della classe
- salta pag 113 e 114
- 115 e 116 fino al codice in alto
- poi pag 181
- pag 183
-
- bean che usa solo DI dependency managed bean
- uso database diventa entity
-
- 184-185-186-187-188-189-190-191-192
- 192 fino a 201 da fare alla veloce
- 201-202-203-204-205-206-207-208-209
- 217-218-219-220-221-222-223-224
-
- parametro ?c per esempio
-
-30/10
-bean su rete stateful
-solo quando è estremamente necessario essendo altamento oneroso
-
-costruttore senza parametri daro che deve essere istanziato dal container
-
-bean singleton va sincronizzato
-
-creao java bean module remote
-modulo api da distribuire sui client
-
-interfaccia remota serve sia sul server che sul client
-crei un altro modulo in cui metti le interfacce remote
-
-aggiungere glassfish/lib/gf-client. jar nella cartella di glassfish
-
 appunti 31/10
 capitolo 8 Session Beans Life Cycle
 Authorization fino a putting it all together
@@ -811,3 +1053,24 @@ capitolo 13
 persistenza messaggi garantita dal broker
 
 skip controlling acknowledgment
+
+## appunti esame
+creao java bean module remote
+modulo api da distribuire sui client
+
+interfaccia remota serve sia sul server che sul client
+crei un altro modulo in cui metti le interfacce remote
+
+aggiungere glassfish/lib/gf-client. jar nella cartella di glassfish
+ejb deve essere stateless
+
+non va fatto inject entity manager se non ho il producer, quindi va fatto @persistentcontext
+
+entity costruttore vuoto
+
+client rmi -> interfaccia remota
+
+la stringa per il lookup deve essere quella con remote
+non serve scriverla per forza basta scrivere che uso la stringa con remote -> stringa corrispondente all'interfaccia remota
+
+bean.xml con discovery mode all
