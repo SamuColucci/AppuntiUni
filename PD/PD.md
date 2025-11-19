@@ -1039,6 +1039,270 @@ java:<scope>[/<app-name>]/<module-name>/<bean-name>[!<fully-qualified-interface-
   - **Destinations**: Punti di distribuzioni di messaggi che ricevono, trattengono e distribuiscono messaggi
     - Destinazioni possono essere code (P2P) o topic (pub-sub)
 #### Message-Driven Beans
+- Gli MDBs sono consumer di messaggi asincroni che sono eseguiti all'interno del EJB container
+- Sono stateless, permettendo al container di avere numerose istanze, eseguite concorrentemente, per processare messaggi ricevuti da vari producers
+- MDBs ascoltano la destinazione e quando arriva un messaggio, lo consumano e lo processano
+### Java Messaging Service API
+- Fornisce alle applicazioni la capacità di creare, mandare, ricevere e leggere messaggi asincroni
+- Fornisce una serie di interfaccie e classi che permettono ai programmi di comunicare con altri message provider
+
+![JMS Interface](img/JMSinterface.png)
+
+#### Classic API
+- Permette comunicazione asincrona fra i client fornendo una connessione al provider e una sessione dove i messaggi possono essere creati, mandati o ricevuti
+- I messaggi possono contenere testo o altri tipi di oggetti
+
+![JMS Classic API](img/JMSClassicAPI.png)
+
+#### Connection Factory
+- Oggetti amministrati che permettono ad un'applicazione di connettersi al provider creando un oggetto **Connection** in maniera programmatica
+- javax.jms.ConnectionFactory è un interfaccia che incapsula i parametri di configurazione che devono essere definiti dall'amministratore
+- Per usare oggetti amministrati, il client ha bisogno di fare un lookup JNDI
+
+```java
+    Context ctx = new InitialContext();
+    ConnectionFactory ConnectionFactory =(ConnectionFactory) ctx.lookup("jms/javaee7/ConnectionFactory");
+```
+
+- ConnectionFactory Interface
+```java
+    public interface ConnectionFactory {
+    Connection createConnection() throws JMSException;
+    Connection createConnection(String userName, String password) throws JMSException;
+    JMSContext createContext();
+    JMSContext createContext(String userName, String password);
+    JMSContext createContext(String userName, String password, int sessionMode);
+    JMSContext createContext(int sessionMode);
+}
+```
+
+#### Destination
+- Un oggetto amministrato che contiene specifiche informazioni di configurazione del provider come l'indirizzo di destinazione
+- Nascosta al client JMS attraverso l'interfaccia javax.jms.Destination
+
+```java
+    Context ctx = new InitialContext();
+    Destination queue = (Destination) ctx.lookup("jms/javaee7/Queue");
+
+```
+#### Connection
+- javax.jms.Connection che viene creato attraverso createConnection() del connection factory, incapsula una connessione a un provider JMS
+- Thread-safe e progettate per essere condivisibili
+
+```java
+    Connection connection = connectionFactory.createConnection();
+```
+
+- Prima che un ricever consuma i messaggi devi chiamare il metodo coonection.start()
+
+- Se devi fermare temporaneamente la ricezione dei messaggi senza chiudere una connessione devi chiamare il metodo connection.stop()
+
+- Per chiudere una connessione, che chiude anche le sessioni e i suoi producers e consumers bisogna utilizzare il metodo connection.close()
+
+#### Session
+- Puoi creare una session attraverso il metodo createSession()
+- Un sessione fornisce un context transazionale nel quale una serie di messaggi che possono essere mandati o ricevuti sono raggruppati in unità di lavoro atomiche
+
+```java
+    Session session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);
+```
+- Primo parametro specifica se la sessione è transazionale
+  - true indica che la richiesta di invio dei messaggi non viene realizzato fino al commit della sessione oppure la sessione è chiusa
+  - false indica che il messaggio viene inviato appena il metodo send() viene invocato
+- Il secondo parametro indica che la sessione fa i automatico acknowledges dei messaggi quando sono ricevuti con successo 
+
+- Una sessione (javax.jms.Session) fornisce un single-thread context per mandare e ricevere un messaggio
+
+#### Messages
+- Oggetti che incapsulano informazioni e si dividono in tre parti
+  - **Header**: Contiene informazioni standard per identificare e instradare il messaggio
+    - Coppie nome-valore predefinite
+    - Ogni campo ha associato dei metodi getter e setter definiti nell'interfaccia javax.jms.Message
+
+    ![JMS Header](img/Headerjms.png)
+
+  - **Properties**: Coppie nome-valore che l'applicazione può impostare o leggere
+    - Permettono di filtrare i messaggi in base a dei valori delle proprietà
+    - Simili agli header, ma creati dall'applicazione in modo esplicito, al fine di permettere di aggiungere header aggiuntivi
+  - **Body**: Contiene il messaggio e può avere una serie di formati (text, byte, object. ecc...)
+    ![JMS Message](img/typemessagesjms.png)
+
+    - Estendere l'interfaccia javax.jms.Message permette di creare il tuo formato di messaggio
+    - Quando un messaggio viene ricevuto, il suo body è read-only
+
+#### Simplified API
+- Tre nuove interfacce che dipendono dal ConnectionFactory e le altre classsiche API ma lasciano il codice boilerplate
+- Grazie alla nuova eccezione JMSRuntimeException il codice per mandare e ricevere messaggi è più facile
+  ![JMS Simplified API](img/JMSSimplifiedAPI.png)
+
+##### JMSContext
+- Attiva una connessione a un JMS provider e un single-thread context per mandare e ricevere messaggi
+- Interfaccia principale e unisce Session e Connection
+- JMSContext può essere creato dall'applicazione con una serie di chiamate createContext su una ConnectionFactory e poi chiuso
+  - Oppure, può essere injectato se l'applicazione è in esecuzione su un container
+  ![JMSContext](img/JMSContext.png)
+
+- I messaggi possono essere mandati sia in maniera sincrona che asincrona
+##### JMSProducer
+- Oggetto creato da un JMSContext che è usato per mandare messaggi a una coda o a un topic
+- Usato per mandare messaggio per conto del JMSContext
+- Un istanza di un JMSProducer viene creata chiamando createProducer su un JMSContext
+
+  ![JMSProducer](img/JMSProducer.png)
+
+##### JMSConsumer
+- Oggetto creato da un JMSContext che è usato per ricevere messaggi mandati a una coda o un topic
+- Viene creato usando uno dei metodi di createConsumer passando una coda o un topic
+- Un client può ricevere messaggi sincroni e asincroni
+- Per i messaggi asincroni, il client può registrare un oggetto MessageListeners con un JMSConsumer
+  - Quando il messaggio arriva, il provider lo spedisce grazie alla chiamata del metodo onMessage del MessageListener
+  ![JMSConsumer](img/JMSConsumer.png)
+### Writing Message Producers
+#### Producing a Message outside a Container
+- Ottieni una connection factory e una coda usando lookup JNDI
+- Crea un oggetto JMSContext usando una connection factory
+- Crea un javax.jms.JMSProducer usando l'oggetto JMSContext
+- Inzia il messaggio usando la coda attraverso il metodo JMSProducer.send()
+  ![JMSMessageProduce](img/producingjmsinsidecontainer.png)
+#### Producing a Message inside a Container
+@Resource può essere usata per iniettare una riferimento a quella risorsa da parte del container
+
+#### Producing a Message inside a Container with CDI
+- javax.jms.JMSConnectionFactory può essere usata per specificare il nome del lookup JNDI della ConnectionFctory usata per creare il JMSContext
+  - Se omessa usa quella di default
+### Writing Message Consumers
+- Il client può consumare il messaggio in due modi
+   ![Message Consumer](img/messageconsumer.png)
+
+#### Synchronous Delivery
+- Un consumer sincrono deve avviare un JMSContext, aspettare fino all'arrivo di un nuovo messaggio, e richiedere il messaggio arrivato usando uno dei metodi receive()
+  - Ottieni una connection factory e un topic usando un lookup JNDI
+  - Crea un JMSContext usando la connection factory
+  - Crea un javax.jms.JMSConsumer attraverso l'oggetto JMSContext
+  - Esegue un ciclo e chiama il metodo receive() sull'oggetto consumer
+    - Il metodo receive() si blocca se la query è vuota e aspetta l'arrivo di un messaggio
+#### Asynchronous Delivery
+- Basato sulla gestione di eventi
+- Un client può registrare un oggetto che implementa l'interfaccia MessageListener
+  - Un message listener è un oggetto che agisce come un gestore di eventi asincrono per i messaggi
+- Quando un messaggio arriva, il provider lo spedisce chiamndo il metodo del listener onMessage()
+  - In questo modo non c'è bisogno di un loop indefinito per ricevere un messaggio
+- Step che descrivono il processo usato per creare un listener di messaggi asincroni
+  - La classe implementa l'interfaccia javax.jms.MessageListener, che definisce il solo metodo onMessage()
+  - Ottieni una connection factory e un topic usando il lookup JNDI o injection
+  - Crea un javax.jms.JMSConsumer usando l'oggetto JMSContext
+  - Chiama il setMessageListener(), passando l'istanza dell'interfaccia MessageListener
+  - Implementa il metodo onMessage() e processa il messaggio ricevuto
+    - Ogni volta che un messaggio arriva, il provider invoca il metodo, passando il messaggio
+
+### Reliability Mechanisms
+- JMS definisce una serie di livelli di affidabilità per assicurarsi che il messaggio sia spedito, anche se il provider crasha o è in caricamento o se la destinazione è piena di messaggi da eliminare
+#### Filtering Messages
+- Header e properties permettono di eseguire la selezione
+- I producers impostano uno o una serie di valori property o campi header, e il consumer specifica il criteria di selezione usando una espressione di selezione
+  - Solo i messaggi che rispettano il selettore vengono consegnati
+- Message selector assegna il ruolo di filtraggio dei messaggi al JMS provider
+#### Setting Message Time-to-Live
+- Inserire un time-to-live permette al provider di rimuovere un messaggio dalla destinazione quando diventa obsoleto, usando JMSProducer API o JMSExpirationù
+  - JMSProducer ha un metodo setTimetoLive()
+#### Specifying Message Persistence
+- **Persistence Delivery**: Assicura che il messaggio è consegnato a solo un consumer
+  - Più affidabile, ma alti costi in performance
+- **Nonpersistent Delivery**: Un messaggio venga consegnato al massimo una volta
+#### Controlling Acknowledgment
+- Una fase di acknowledgment può essere inizializzata sia dal JMS provider che dal client
+![Controlling Acknowledgment](img/controllingack.png)
+
+- In una sessione transazionale, acknowledgment avviene in automatico quando una transazione viene committata
+  - Se un transazione viene annullata, tutti i messaggi consumati vengono riconsegnati
+- In una sessione non transazionale, acknowledgment deve essere specificato
+  - **AUTO_ACKNOWLEDGE**: La sessione automaticamente riconosce la ricezione di un messaggio
+  - **CLIENT_ACKNOWLEDGE**: Un client riconosce un messaggio attraverso la chiamata Message.acknowledge()
+  - **DUPS_OK_ACKNOWLEDGE**: Indica alla sessione di riconoscere in modo differito la consegna dei messaggi
+    - Può portare ad una duplicazione dei messaggi se il JMS provider fallisce
+      - Se un messaggio è stato riconsegnato, il provider imposta il valore del campo del header del JMSRedelivered a true
+
+#### Creating Durable Consumers
+- JMS API fornisce un modo per tenere i messaggi nel topic fino a quando tutti i consumer subscribed non li ricevono
+  - Permette al consumer di poter essere offline alcune volte e quando si riconnette riceve il messaggio
+- Ongi durable consumer ha un ID unico
+
+#### Setting Priorities
+- Puoi usare un livello di priorità per istruire a spedire i messaggi urgenti prima
+  - JMS definisce un valore di priorità che va da 0 a 9
+  - Puoi specificarlo attraverso setPriority() del JMSProducer
+
+### Writing Message-Driven Beans
+- Un MDBs è un consumer asincrono che viene invocato dal container come risultato dell'arrivo di un messaggio
+- Non hanno stato e vengono eseguiti nel container EJBB
+  - Il container ascolta la destinazione e delega le chiamate all'arrivo del messaggio
+- Il container gestisce i messaggi in arrivo fra le multiple istanze del MDBs che non hanno uno speciale codice multithreading
+- Quando un nuovo messaggio raggiunge la destinazione, un istanza MDB è recuperato dal pool per gestire il messaggio
+- Un MDB implementa l'interfaccia MessageListener e il metodo onMessage()
+
+#### Anatomy of an MDB
+- Implementano interfaccia javax.jms.MessageListener
+- Necessitano un full stack Java EE
+- Classe deve essere annotato con javax.ejb.MessageDriven o con un XML equivalente nel deployment descriptor
+- La classe deve implementare, direttamente o indirettamente, l'interfaccia MessageListener
+- La classe deve essere pubblica, e non deve essere final o abstract
+- La classe deve avere un costruttore no-arg che il container userà per creare l'istanza del MDB
+- La classe non deve definire il metodo finalize()
+
+- Se vuoi modificare la configurazione JMS puoi usare @MessageDriven e @ActivationConfigProperty
+
+#### @MessageDriven
+- Serve per riconoscere che la classe è un MDB
+
+#### @ActivactionConfigProperty
+- Le properties possono essere impostate con @ActivactionConfigProperty
+![@ActivationConfigProperty](img/@ActivationConfigProperty.png)
+
+### Dependency Injection
+- MDBs possono usare dependency injection per ottenere il riferimento di una risorsa come un JDBC datasource, EJBs, o altri oggetti
+
+### MDB Context
+- L'interfaccia MessageDrivenContext fornisce accesso al contesto di runtime che il container fornisce per un istanza MDB
+  - Il container passa il MesageDrivenContext all'istanza, che rimane associata per il ciclo di vita al MDB, dando al MDB la possibilità di annullare una transazione, ottenere l'utente principale, ecc...
+  - Estende javax.ejb.EJBContext
+  ![MessageDrivenContext Interface](img/MessageDrivenContextInterface.png)
+
+### Life Cycle and Callback Annotations
+- Ciclo di vita uguale a uno stateless bean
+  - Il container crea un istanza e inietta tutte le risorse se presenti
+    - Il container chiama il metodo @PostConstruct se presente e MDB è pronto a consumare messaggi in arrivo
+      - @PreDestroy chiamato quando il container è rimosso dal poll o distrutto 
+![Life Cycle](img/lifecycle.png)
+
+### MDB as a Consumer
+- MDB possono essere consumer sincroni, ma questa cosa non è consigliata, dato che se il container inizia a prendere varie istanze e vanno tutte in un loop infinito, il pool potrebbe diventare vuoto, stessa cosa se inizia a generare causando problemi di memoria
+![MDB as Consumer](img/MDBasConsumer.png)
+
+### MDB as a Producer
+- Gli MDBs possono essere usati come producer di messaggi, attraverso JMS API
+
+### Transaction
+- I messaggi non sono rilasciati al consumer fino a quando la transazione non viene committata
+- Il container inizia la transazione prima di onMessage() e la committa quando il metodo ritorna
+- Gli MDBs non possono essere eseguiti nel context transazionale del client
+  - MDBs ascolatano una destinazione e consumano il messaggio, non hanno un client
+  - Non vi è context passato dal il client al MDB
+![Transaction MDB](img/transactionMDB.png)
+
+- Nei CMTs, MDBs possono usare @javax.ejb.TransactionAttribute sui metodi di business con due attributi
+  - **REQUIRED**: Il container passa il contesto della transazione con l'invocazione
+    - Il container tenta di completare il commit della transazione qjuando il metodo del message listener è completato
+  - **NOT_SUPPORTED**: Se MDB invoca altri enterprise beans, il container non passa il contesto transazionale con l'invocazione
+
+### Handling Excpetions
+- JMSException è un eccezione checked
+- JMSRunTimeException è un eccezione unchecked
+- **Application exception**: Eccezione checked che estendono Exception e non causano il rollback del container
+- **System exception**: Eccezioni unchecked che estendono RuntimeException e causano rollback del container
+- Se il rollback è necessario la chiamata a setRollBackOnly() deve essere esplicitata
+
+### Putting It All Together
+![Putting It All Together](img/puttingtogetherMessage.png)
 
 ## appunti
 appunti 31/10
