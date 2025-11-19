@@ -465,7 +465,7 @@ Quest'ultimo può essere reperito in due metodi:
   - Entità della classe devono avere un costruttore no-arg pubblico o protetto
   - Non deve essere una enum o una interfaccia
   - Non deve essere final
-  - La classe enity deve implementare Serializable
+  - La classe entity deve implementare Serializable se l'entity deve essere passata per valore
 ### **Object-Relation Mapping**
 - Permettono di delegare a tool esterni o a framworrk le azioni necessarie per creare una corrispondenza fra oggetti e tabelle, permettendo allo sviluppatore l'uso delle entità invece delle tabelle
   - I metadati descrivono il mapping e premettono al provider della persistenza di riconoscere una entity e di interpretare il mapping
