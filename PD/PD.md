@@ -1337,4 +1337,74 @@ client rmi -> interfaccia remota
 la stringa per il lookup deve essere quella con remote
 non serve scriverla per forza basta scrivere che uso la stringa con remote -> stringa corrispondente all'interfaccia remota
 
-bean.xml con discovery mode all
+bean.xml con discovery mode 
+
+nel module principale ci sarà jpa, databasepopulatore bean, entity
+
+rivedere query massimo minimo e raggruppamento
+
+getter e setter si possono omettere attraverso commento uso ide attraverso costruttore automatico getter e setter
+
+@Localbean può essere omesso allo scritto e messo solo nel progetto
+
+module api ha tutte le api del mio programma
+
+persistente.mxl va fatto a casa non all'esame
+
+si può usare ejb o l'entity manager per il dbproducer con em.persist...
+
+nel lookup basta scrive il remote senza intero path global:/...
+
+progetto api con tutte interfaccie remote
+
+ejb module con producer populator entità e ejb
+
+un client che implementa quello richiesto
+
+mdb per jms 
+
+observ viene invocata ogni volta che viene fatta la fire su un event
+
+messaggio jms e eventi per notificare
+
+messagge wrapper può essere messso in api
+
+api warpper individuo e remote
+
+qualifier per il messaggio
+
+
+- ejb module
+  - entity
+    - xlrootelement -> per renderlo soap
+  - persistence xml
+  - bean xml
+  - ejb remote
+    - @Remote
+  - ejb
+    - stateless localbean e webservice
+    - inject entity manager
+    - verifica metodo e nel caso fare inject evento e lanciare la fire nel metodo se richiesto
+  - database producer
+  - database populator
+  - interceptor
+    - vedere cosa può servire al ivocation cotenxt
+    - aggiunta al file bean
+  - producer di messaggi nuova applicazione java
+  - message wrapper
+
+- ejb module api per tutto quello che serve nei client come interfaccia remota e entity e wrapper cos' da importarlo sia sul ejb che nei client
+
+- scrivere vado sulla console di glassfish e aggiugo topic e context nella prova
+
+@MessageDriven(
+        mappedName = "jms/javaee7/Topic",
+)
+basta questo
+
+per rendere un mdb producder fare la stessa cosa del client
+fare come sulla foto per i due topic comunicanti
+
+fare attenzioni sui producer e i consumer
+
+mdb da producer devi usare @resource per i connection factory e destination

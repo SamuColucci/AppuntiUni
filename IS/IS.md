@@ -642,7 +642,151 @@
         - Diagrammi sono grafi
             - Nodi sono le entità
             - Archi sono le relazioni fra le entità
+## System Design
+### Decomposing the System
+- **Design window**: Tempo nel quale le decisioni di design devono essere fatte
+- Unire le distanze fra il sistema desiderato e quello esistente in modo gestibile
+- Modelliamo il sistema al fine di essere sviluppato come una serie di sottosistemi
+![System Design](img/systemdesign.png)
 
+- **Subsystem (UML: Package)**: Collezione di classi, associazioni, operazioni, eventi e vincoli che sono interrelati
+- **(Subsystem) Service**: Insieme di operazioni previste dal sottosistema che hanno uno scopo comune
+    - **Seed per i service**: Casi d'uso del sottosistema
+- **Subsystem interface**: Specifica il flusso di interazione e informazione dai/ai limiti del sottosistema, ma non nel sottosistema
+    - Deve essere ben definita è piccola
+    - Insieme di operazioni comuni tipate
+    - Definita nel Object Design
+    - Chiamata anche API
+
+#### Choosing Subsystem 
+- Per quanto riguarda il criterio di selezione del sottosistema, si preferisce che la maggior parte delle interazioni siano all'interno dei sottosistemi e non nei confini degli stessi
+
+- **Subsystem Interface Object**: Fornisce un servizio
+    - Un insieme di metodi pubblici forniti dal sottosistema
+    - Tutti i suoi metodi sono descritti nel **Subsystem interface**
+    - Usa un **Faced pattern**
+#### Coupling and Cohesion
+- Riduzione della complessità durante il cambiamento
+- **Coesion**: Misura le dipendenze fra le classi
+    - **High cohesion**: Le classi nel sottosistema svolgono task simili e sono collegate fra di loro via associazione
+    - **Low cohesion**: Molte classi varie e ausiliari, senza associazioni
+- **Coupling**: Misura le dipendenze fra i sottosistemi
+    - **High coupling**: Cambiamenti in un sottosistema ha un grande impatto negli altri sottosistemi
+    - **Low coupling**: Un cambiamento in un sottosistema non ha un impatto sugli altri sottosistemi
+- Un sottosistema deve avere massima coesione e minimo accoppiamento
+
+#### Partitions and Layers
+- Servono per ottenere un basso valore di accopiamento
+- **Partitions**: Divide il sistema in una serie di indipendenti sottisistemi che forniscono servizi sullo stesso livello di astrazione
+- **Layer**: Un sottosistema che fornisce un servizio a un layer superiore
+    - Dipende solo da layer di livelli inferiori
+    - Non ha conoscenza dei layer superiori
+##### **Heuristic**
+    - Non più di 7+/-2 sottosistemi
+    - Non più di 4+/-2 layer
+
+##### Relationship between Subsystem
+- **Layer relationship**: Layer A chiama il/dipende dal Layer B
+    - Chiama -> runtime
+    - Dipende -> tempo di compilazione
+- **Partition relationship**: I sottosistemi hanno una conoscenza, ma non approfondita degli altri sottosistemi
+
+#### How to use the result from the RAD
+- **Requisiti non funzionali** -> **Design Goal Defination**
+- **Functional model** -> **Decomposizione del sistema**
+- **Object model** -> **Hardware/Software mapping** e **Persistent data management**
+- **Dynamic model** -> **Concurrency**, **Global resource handling** e **Software control**
+- **Decomposition** -> **Boundary conditions**
+
+- I requisiti non funzionali danno delle indicazioni per quanto riguarda l'uso dei Design Pattern
+
+#### List of Design Goal and Relationship
+![Design Goal](img/listdesigngoal.png)
+![Design Goal](img/relationshipdesigngoal.png)
+
+#### Virtual Machine
+- Un sistema deve essere sviluppato come una serie ordinata di macchine virtuali, ognuna costruita sulla base di quella sottostante
+
+- Astrazione che fornisce una serie di attributi e operazioni
+- Sottosistema che connette i livelli superiori e inferiori delle macchine virtuali attrverso delle relazioni per fornire servizi
+
+- Possono implementare due tipi di architettura software
+    - Aperta
+    - Chiusa
+
+##### Closed Architecture (Opaque Layering)
+- Tutti i layer possono solo invocare operazioni dei layer immediatamente sottostanti
+- Alta mnutenibilità e flessibilità
+
+##### Open Architecture (Transparent Layering)
+- Tutti i layer possono invocare operazioni da i layer sottostanti
+- Efficenza Runtime
+
+#### Properties of Layered System
+- Gerarchici, al fine di ridurre la complessità
+- Chiuso più portabile
+- Aperti più efficiente
+- Se un sottosistema è un layer, è chiamato virtuale machine
+
+#### Patterns for software architecture
+##### Client/Server
+- Uno o più server forniscono servizi per instanziare sottosistemi, chiamati client
+- Client conoscono le interfacce del server
+- Server non necessita di conoscere l'interfaccia del client
+- Risposte immediate
+- Gli utenti interagiscono con il client
+- Spesso usati nel sistema database
+- Funzioni performata dal client:
+    - Personalizzare l'interfaccia utente
+    - Processamento dei dati front-end
+    - Avvio di chiamate remote dal server
+    - Accesso al server databbase nella netowrk
+- Funzioni performate dal database server:
+    - Gestione dati centralizzata
+    - Integrità dei dati e consistenza del database
+    - Sicurezza del database
+    - Operazioni concorrenti
+    - Processi centralizzati
+
+- **Service Portability**: Server può essere installato su varie macchine e sistemi operativi e funziona in vari ambienti network
+- **Trasparency, Location-Trasparency**: Il server può essere distribuito, ma deve fornire un singolo servizio logico all'utente
+- **Perfomance**
+    - **Client**: Deve essere personalizzabile per attività interattive che richiedono un'intensa visualizzazione
+    - **Server**: Deve fornire operazioni di CPU intense
+- **Scalability**: Il server deve avere capacità di riserva per gestire un grande numero di client
+- **Flexibility**: Il sistema deve essere usabile per una varietà di interfacce utente e device
+- **Reliability**: Il sistema deve sopravvivere al problemi sui i link di comunicazione e sui 
+
+- **Problem**
+    - Non forniscono comunicazione peer-to-peer
+
+##### Peer-to-Peer
+- Generalizzazione del Client/Server
+- I client possono essere server e i server possono essere client
+- Più difficoltà a causa della possibilità del deadlock
+
+##### OSI model Packages and their Responsability
+- **Physical layer**: Rappresenta l'interfaccia hardware al network
+    - Ti permettono di mandare e ricevere bit su un canale
+- **Datalink layer**: Permettono di mandare e ricevere frame senza errori usando il servizio di un layer fisico
+- **Network**: Responsabile della trasmissione e dell'instradamento dei dati nella network
+- **Transport**: Responsabile della trasmissione affidabile da un capo all'altro
+- **Session**: Responsabile per l'inizializzazione di una connessione
+- **Presentation**: Esegue servizi di trasformazione dei dati
+- **Application**: Il sistema che stai progettando
+
+##### Repository Architectural Style
+- Sottosistema accede e modifica dati da una singolo struttura dati
+- Sottosistema sono debolemente accoppiate
+- Il flusso di controllo è dettato dalla repository centrale o dal sottosistema
+
+##### Model/View/Controller
+- **Model**: Responsabile della conoscenza dell'applicazione del domani
+- **View**: Responsabile di mostrare gli oggetti dell'applicazione del dominio all'utente
+- **Controller**: Responsabile della sequenza di interazioni con l'utente e notificare la visualizzazione delle modifiche nel model
+- Sottosistema model implementa la struttura dati centrale, il sottosistema controller detta esplicitamente il controllo di flusso
+
+### Addressing Design Goal
 ## appunti
 non usare new dare un nome all'operazione
 non aggiungere nel class diagram i boundary control
@@ -663,3 +807,46 @@ cambiare casi d'uso
 se necessario login allora non va nell'include
 
 include indica che un caso d'uso include un flusso di eventi di un altro caso d'uso
+
+## Appunti system design 
+in persistent data management la progettazione degli schemi o del databse oin un file apparte o in direttamente in object design
+
+al 99% non abbiamo nuovi casi d'uso nel system design
+
+un sottosistema corrisponde ad un oggetto
+tipi user registry
+
+i servizi non sono le operazioni, ma un gruppo di operazioni coese
+    il modulo che si occupa del catalogo del prodotto avrà modfica, inserimento cancellazioni come operazioni
+        il servizio è la gestione del prodotto
+
+    diverso + òa gestione degli utenti
+    utente registrato vede logout
+    mentre utente non registrati vedrà login e logout
+    quindi 2 servizi diversi
+
+    servizio di banning e unbanning offerto al moderatore, offerto dal servizio degli utenti
+
+    servizio autenticazione ha login e logout
+
+    recupera password si può fare con un fogglietto in sede fisica per evitare complicazioni di sviluppo
+
+    hardware software appig vuole deployement diagram
+
+    per OCL preferibile usare le operazioni e non gli attributi
+
+    object design
+    scegliamo cosa implementare un sottoinsieme
+    facciamo dei componente diagram invece dei sequence diagram
+    class oppure collaboration si possono usare anche per qualcuna delle funzionalità e casi d'uso
+
+    progettazione del database SENZA er
+
+    specifica interfaccie in termini di pre post condizione anche in java doc
+    negli execption possiamo mettere la precondizione nel caso non si rispetta i parametri classe padre
+
+    prima partizionamento e poi dividere nei layer
+
+    per il progetto implemenatare sotto sistemi essenziali tipo login e gestione ordine
+
+    non si controlla post condizione , dato che si fa  al fine di controllare post condizione e invariate
