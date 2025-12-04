@@ -787,6 +787,405 @@
 - Sottosistema model implementa la struttura dati centrale, il sottosistema controller detta esplicitamente il controllo di flusso
 
 ### Addressing Design Goal
+#### Concurrency
+- Identificare thread concorrenti e problemati di indirizzo concorrente
+- Tempo di risposta e performance come design goal
+- **Thread**: Un thread di controllo è un insieme di diagrammi di stato nel quale un singolo oggetto è attivato alla volta
+    - Un thread rimane nello state diagram fino a quando un oggetto manda un evento ad un altro oggetto e aspetta per un altro evento
+    - **Splitting**: Un oggetto esegue un invio non bloccante di un evento
+- Due oggetti sono concorrenti se ricevono eventi nello stesso momento senza interazione
+- Oggetti concorrenti devono essere assegnati a differenti thread di controllo
+- Oggetti con mutua esclusione devono essere inseriti in un singolo thread di controllo
+- La concorrenza può essere implementata
+    - Fisica concorrenza
+    - Logica concorrenza
+
+#### Hardware Software Mapping
+##### Mapping the Objects
+- **Processor issues**
+- **Memory issues**:
+- **I/O issues**
+
+##### Mapping the Subsystem Associations
+- **Physical connectivity**: Descrive la connettività fisica del hardware
+- **Logical connectivity**: Descrive la connettività logica, identificando associazioni che non sono direttamente collegate con una connessione fisica
+
+##### Questions
+- Connettività fra le unità fisiche: Alberi, star, matrici e ring
+- Appropriato protocollo di comunicazione fra i sottosistemi deve essere in funzione della larghezza di banda, latenza e all'affidabilità richiesta
+
+##### Connectivity in Distributed System
+- Se l'architettura è distribuita dobbiamo descrive l'architettura network
+    - Mezzo trasmissivo
+    - Qualità del servizio e protocollo usato
+    - Interazioni asincrono, sincrone o bloccanti
+    - Larghezza di banda richiesta
+
+##### Drawing Subsystem in UML
+- Il system design deve modellare strutture statiche e dinamiche
+###### Component Diagram
+- Un grafo di componenti connesse da un relazione di dipendenza
+- Mostra dipendeza fra componenti software
+    - Codice sorgente
+    - Librerie
+    - File eseguibile
+- Le dipendenze sono mostrate con una linea tratteggiata dal componente client al componente fornitore
+
+- Uso di linee tratteggiate alla corrispondente UML interface
+
+![Component Diagram](img/componentdiagram.png)
+
+###### Deployment Diagram
+- Utilizzato per mostrare un system design dopo le scelte di decomposizione del sottosistema, Concorrenza e Mapping Hardware/Software
+
+- Grafo di nodi connessi da associazioni di comunicazione
+    - Nodi mostrati come 3-D box
+    - Nodi possono contenere istanze di componenti
+    - Componenti possono contenere oggetti
+![Deployment Diagram](img/DeploymentDiagram.png)
+
+#### Data Management
+- Alcuni oggetti necessitano di essere persistenti
+    - Fornisce dei punti di separazione fra i sottosistemi con delle interfacce ben definite
+- Un oggetto persistente può essere realizzato attraverso
+    - **Data Structure**: Può essere volatile
+    - **Files**: Poco costoso, semplice e permenente nello spazio di archiviazione
+        - Basso livello per lettura e scrittura
+        - Applicazioni devono aggiungere codice per fornire un giusto livello di astrazione
+    - **Database**: Potente e facile da portare
+        - Supporta scrittura e lettura multipla
+##### Database Management System
+- Contiene meccanismi per descrivere dati, gestire archivi persistenti e fornisce meccanismi di backup
+- Permette accesso concorrente
+- Contiene informazioni sui meta-data
+###### Issue
+- Spazio di archivio maggiore rispetto allo spazio per i dati effettivi
+- Tempo di risposta influenzato dal tempo di CPU, locking contention e ritardi dovuti alla frequenza di aggiornamento dello schermo
+- Locking modes:
+    - **Pessimist locking**: Lock prima di accedere ad un oggetto e rilasciato quando accesso è completo
+    - **Optimistic locking**: Lettura e scrittura possono avvenire liberamente, se quando l'activity è completata il database ha trovato una contesa annulla l'operazione fatta
+- Administration: Grandi database richiedono un team di supporto allenato per impostare policies di sicurezza, gestire lo spazio del disco, fare backup, monitorare le performance e regolare il tuning
+
+###### Object-Oriented Databases
+- Supporta i fondamentali concetti di modellazione degli oggetti
+    - Classi, attributi, metodi. associazioni, ereditarietà
+- Per mappare i modelli ad oggeti bisogna
+    - Determinare quali oggetti sono persistenti
+    - Eseguire analisi dei requisiti e object design
+    - Creare indici singoli di attributi per evitare un riduzione di performance dovuto al problema del collo di bottiglia
+    - Fare mapping
+
+###### Relational Databases
+- Basato sull'algebra relazionale
+- Le tabelle hanno un numero specificato di colonne e un numero arbitrario di righe
+    - **Primary key**: Combinazione di attributi che identificano univocamente un riga di una tabella
+    - **Foreign key**: Riferimento ad una chiave primaria di un altra tabella
+- SQL linguaggio per definire e manipolare tabelle
+- Supporto di vincoli
+    - **Integrità referenziale**: Riferimento alle voci in altre tabelle esistono realmente
+
+#### Global Rsources Handling and Security
+##### Defining Access Control
+- In un sistema multi-utente diversi attori hanno accesso a differenti funzionalità e dati
+- Durante l'analisi modelliamo questi differenti accessi associando differenti casi d'uso a differenti attori
+- Durante la fase di system design modelliamo i differenti accessi esaminando il modello a oggetti determinando quale oggetti sono condivisi fra i vari attori
+    - Possiamo definire anche quali attori devono essere autenticati e quali dati devono essere cryptati
+
+##### Access Matrix
+- Modelliamo l'accesso alle classi con una matrice di classi
+    - Riga rappresenta l'attore del sistema
+    - Colonna rappresenta la classe di cui vogliamo controllare l'accesso
+- **Access Right**: Una voce della matrice degli accessi
+    - Lista di operazioni che possono essere svolte sull'istanza della classe da un attore
+
+###### Access Matrix Implementations
+- **Access globale alla tabella**: Rappresenta esplicitamente ogni cella della matrice come una tupla
+    - Per determinare se un attore ha accesso ad un oggetto bisogna trovare la tupla, se non presente l'acceso è negato
+- L'elenco di controllo degli accessi associa un elenco di coppie alla classe con la quale bisogna accedere
+    - Ogni volta che un oggetto è acceduto, la sua lista di accesso è spuntata per il corrispondente attore e operazione
+- Un capacità associa un coppia a un attore
+    - Permette all'attore di ottenere il controllo di accesso ad un oggetto della classe descritta nella capacità
+
+#### Decide on Software Control
+- Controllo implicito
+    - Rule-base system
+    - Logic programming
+- Controllo esplicito
+    - Centralizzato
+        - **Procedure-Driven Control**: Controllo risiede nel codice del programma
+            - Semplice, facile da costruire, difficile da mantenere
+            ![Procedure](img/proceduredc.png)
+
+        - **Event-Driven control**: Controllo risiede nel dispatcher che chiama le funzioni via callback
+            - Flessibile, buono per il design delle interfacce grafiche, facile da estendere
+            ![Event](img/eventdc.png)
+
+    - Decentralizzato: Controllo risiede in una serie di oggetti indipendeti
+        - Possibile speedup attraverso la paralellizazione, incrementando overhead della comunicazione
+##### Centralized vs. Decentralized Designs
+- Controlla i sequence diagram e i control object
+    - Se il diagramma sembra una fork -> Centralized
+    - Se il diagramma sembra una stair -> Decentralized
+- **Centralized Design**: Un control object o sottosistema controlla tutto
+    - Cambio struttura controllo facile
+    - Problema tappo di bottiglia
+- **Decentralized Design**: Controllo distribuito
+     - Responsabilità divisa
+     - Rientra perfettamente in uno sviluppo object-oriented
+
+#### Boundary Conditions
+- Affronta la configurazione del sistema
+    - **Configuration**: Per ogni oggetto persistente identificare in quale caso d'uso è creato o distrutto
+        - Per gli oggetti non creati o distrutti in nessun caso d'uso, aggiungi casi d'uso invocato dall'amministratore del sistema
+    - **Inizializzazione**: Descrive come il sistema o le componenti passano da uno stato di non inizializzato a uno stato di ready-state
+    - **Termination**: Descrive quali risorse devono essere rimosse e quali sistemi vengono avvisati alla terminazione del sistema o del componente
+    - **Failure**: Bugs, errori, problemi esterni
+        - Deve prevedere errori fatali
+        - Casi d'uso eccezionali estendono i comuni casi d'uso
+
+### Distributed System Architectures
+#### Centralised System
+- Applicazione viene eseguita su un singolo processo o su un singolo computer che costituisce l'unica componente autonoma del sistema
+    - Condiviso fra diversi utenti
+    - Tutte le risorse del componente sono sempre accessibili
+    - Singolo punto di controllo, singolo punto di fallimento
+    - Sistema dei mainframe
+
+#### Distributed System
+- L'elaborazione delle informazioni è distribuita su una serie di computer
+![Pro e Contro](img/dsprocontro.png)
+
+##### Distribbuted System Architectures
+- **Client-server architectures**: Servizi distribuiti chiamati dai client
+    - Server che forniscono servizi trattati in maniera diversa dai client che usano i servizi
+    - Client conoscono una serie di server, ma i server non hanno bisogno di conoscere i client
+    - Client e server sono processi logici
+
+- **Distributed object architectures**: Nessuna distinzione fra client e server
+    - Tutti gli oggetti possono fornire e richiedere servizi
+    - La comunicazionne fra gli oggetti avviene tramite un sistema middleware chiamato broker di richieste di oggetti
+    ![Distributed object Architecture](img/dsobjectarchitecture.png)
+
+    - **Vantaggi**
+        - Ritardare la decisione di dove e come i servizi devono essere forniti
+        - Sistema aperto che permette di aggiungere nuove richieste quando necessarie
+        - Flessibile e scalabile
+        - Possibilità di riconfigurare il sistema dinamicamente con la migrazione degli oggetti attraverso il network
+    - **Usi**
+        - Come modello logico permette di strutturare e organizzare il sistema
+            - Si pensa solo a come fornire funzionalità all'applicazione in termini di servizi e combinazioni di servizi
+        - Come approccio flessibile per l'implementazione di un client-server system
+            - Sia il client che il server sono realizzati come oggetti distribuiti che comunicano attraverso un software bus
+
+##### Middleware
+- Software che gestisce e supporta i differenti componenti del sistema distribuito
+- Solitamente software standard
+
+##### Layered application architecture
+- **Presentation layer**: Presentazione dei risultati della computazione al sistema dell'utente e collezione degli input dell'utente
+- **Application processing layer**: Fornisce funzionalità specifiche all'applicazione
+- **Data management layer**: Gestire il database del sistema
+
+##### Application layers and client server systems
+- **Thin-client model**: Tutti processi dell'applicazione e la gestione dei dati è gestita dal server
+    - Client si occupa di eseguire il software di presentazione
+    - Usato quandp il sistema legacy migra su un architettura client server
+        - Il sistema legacy agisce come server con una interfaccia grafica implementata su client
+        - Grande carico di elaborazione sul server e sulla network
+- **Fat-client model**: Il server è solo responsabile della gestione dei dati
+    - Software del client implementa la logica dell'applicazione e le interazione con il sistema dell'utente
+    - Grand parte dei processi sono delegati al client che li esegue in locale
+    - Complesso soprattutto per la gestione
+    - Nuove versioni devono essere installate su tutti i client
+
+![Thin and Fat Client](img/thinandfatclient.png)
+![Client-Server Styles](img/clientserverstyle.png)
+
+##### Three-tier architectures
+- Ogni layer dell'architettura dell'applicazione deve essere eseguito su un processore separato
+- Migliore performance di un thin client e semplice gestione rispetto a un fat client
+- Scalabile 
+![3-Tier](img/3-tier.png)
+
+### Documentation, Review, and Management
+
+#### Reviewing System Design
+- Non c'è un agente esterno, come il client
+- Alcune activity nel system design triggerano la revisione del modello di analisi
+- Il client e l'utente sono riportati nel processo come la revisione
+
+#### Correctness and Completeness
+- Corretto se l'analisi del modello può essere mappato al modello di system design
+- Completo se ogni requisito e ogni problematica del system design sono stati affrontati
+
+#### Consistence, Realism, and Readability
+- Consistente se non contiene contraddizione
+- Realistico se il corrispondente sistema può essere implementato
+- Leggibile se lo sviluppatore non coinvolto nel system design può capire il modello
+
+#### Documenting System Design
+- SDD è usato per definire interfacce fra team di sviluppatori e serve come riferimento quando una decisione di livello architettura deve essere rivisitata
+- Deve includere:
+    - Gestione del progetto
+    - Architetti del sistema
+    - Sviluppatori che fanno design e implementano ogni sottosistema
+
+#### Assigning Responsibilities
+- Il design del sistema nei sistemi complessi è centrato attorno architecture team
+    - Questo team cross-funzionale fatto di architetti che definiscono la decomposizione del sottosistema e selezionati sviluppatori che implementeranno il sottosistema
+    - Inizia a lavorare dal momento in cui l'analisi del modello e stabile fino alla fine della fase di integrazione
+        - Incentivo per anticipare problemi incotrati durante la fase di integrazione
+    - Numero di sottosistemi determina il numero di architecture team
+        - Per sistemi complessi, un architecture team è introdotto per ogni livello di astrazione
+        - In tutti i casi, dovrebbe esserci un ruolo di integrazione nel team per assicurare consistenza e comprensione dell'architettura da parte di un singolo individuo
+
+#### Main Roles
+- **Architetto**: Assicura consistenza nelle decisioni di design e stile di interfaccia
+    - Assicura la consistenza del design nella gestione della configurazione e testing team, in particolare nella formazione della policy configuration management e la strategia di integrazione del sistema
+    - Leader del cross-functional architecture team
+    - **Architecture Liaisons**: Membri del team di architettura
+        - Rappresentanti del team dei sottosistemi
+        - Trasmettono informazione da a il loro team e negoziano il cambiamento di interfaccia
+        - Si concentrano nei servizi del sottosistema, durante la fase di implementazione, si concentrano sulla consistenza delle API
+
+#### Communicating about system design
+- **Size**: Il numero di problemi aumenta man mano che gli sviluppatori inziano a progettare
+    - Il numero di item che lo sviluppatore manipola incrementa, ogni pezzo funzionale richiede molte operazioni o molti oggetti
+    - Gli sviluppatori approfondiscono multipli design e multiple implementazioni tecnologiche
+- **Change**: La decomposizione del sottosistema e l'interfaccia del sottosistema sono in costante flusso
+    - I termini usati dagli sviluppatori per nominare differenti parti del sistema evolvono constantemente
+    - Se il cambiamento è rapido, gli sviluppatori non devono discutere la stessa versione del sottosistema, per evitare troppa confusione
+- **Level of abstraction**: Discussione sui requisiti possono diventare concreti usando interfacce mock-ups e analogie sul sistema esistente
+    - Discussione sull'implementazione possono essere resi concreti quando integrazione e i risultati del test sono disponibili
+    - Discussioni di system design sono raramente concrete, si sentono dopo durante l'implementazione e il testing
+- **Reluctance to confront problems**: Il livello di astrazione può rendere facile la risoluzione di problematiche
+    - Qualsiasi decisione che ha un impatto sul sottosistema o sulle interfacce del sottosistema non può essere ritardato
+- **Conflicting goals and criteria**: Sviluppatori individuali spesso ottimizzano differenti criteri
+    - Sviluppatori esperti nel design si occuperanno dell'ottimizzazione del tempo di risposta
+    - Sviluppatori esperti nei database si occuperanno di ottimizzare la produttività
+
+#### Effective communication techniques
+- **Identificare e dare priorità agli obiettivi di progettazione del sistema e renderli espliciti**: Se gli sviluppatori coinvolti nella progettazione del sistema contribuiscono a questo processo, saranno più facili da raggiungere
+    - Gli obiettivi di progettazione forniscono anche un quadro oggettivo in base al quale le decisioni possono essere valutate.
+
+- **Rendere disponibile la versione corrente della scomposizione del sistema a tutti gli interessati**: Un documento live distribuito via Internet è un modo per ottenere una rapida distribuzione
+    - L'utilizzo di uno strumento di gestione della configurazione per gestire i documenti di progettazione del sistema aiuta gli sviluppatori a identificare le modifiche recenti.
+
+- **Mantenere un glossario aggiornato**: Come nell'analisi, definire i termini in modo esplicito riduce i malintesi
+    - Quando si identificano e si modellano i sottosistemi, fornire definizioni oltre ai nomi
+    - Un diagramma UML con solo i nomi dei sottosistemi non è sufficiente per supportare una comunicazione efficace
+    - Una definizione breve e sostanziale dovrebbe accompagnare ogni nome di sottosistema e classe
+
+- **Confronto sui problemi dei design**: Ritardare le decisioni di progettazione può essere utile quando sono necessarie più informazioni prima di impegnarsi nella decisione di progettazione
+    - Questo approccio, tuttavia, può prevenire il confronto con difficili problemi di progettazione
+    - Prima di presentare una questione, è necessario esplorare e  descrivere diverse possibili alternative e giustificare il ritardo   
+        - Questo garantisce che le questioni possano essere ritardate senza gravi ripercussioni sulla decomposizione del sistema
+
+- **Iterazione**: Interventi mirati nella fase di implementazione possono migliorare la progettazione del sistema
+    - Le decisioni importanti nelle fasi iniziali della progettazione del sistema influenzano la decomposizione del sottosistema quando vengono avviate ciascuna delle diverse attività di progettazione del sistema
+    - Le revisioni delle interfacce dei sottosistemi avvengono quando vengono creati prototipi di valutazione per valutare problemi specifici
+    - Errori e sviste scoperti in ritardo innescano modifiche alle interfacce del sottosistema e talvolta alla decomposizione del sistema stesso
+    - **Major decisions iterations**
+        - Gestite meglio nelle sessione di brainstorming
+        - Massimizzazione della comunicazione
+        - Spesso la decomposizione del sistema è progettata prima della fine dell'analisi
+    
+    - **Revisions to the interfaces of subsystems iterations**
+        - Mira a risovere problemi specifici
+        - Decomposizione è stabile e mira a identificare se uno specifico pacchetto è appropriato per il sistema
+            - Durante questo periodo gli sviluppatori possono creare prototipi verticali per casi d'uso critici per testare l'appropriatezza della decomposizione
+            - Ciò consente di individuare e risolvere tempestivamente i problemi di flusso di controllo
+            - Non necessario un cambio di processo formale
+    - **Errors and oversight iterations**
+        - Risolve i problemi di progettazione scoperti in una fase avanzata del processo
+        - Sebbene gli sviluppatori preferiscano di gran lunga evitare queste iterazioni, poiché tendono a essere costose e a introdurre molti nuovi bug nel sistema, dovrebbero prevedere modifiche in una fase avanzata dello sviluppo
+        - Anticipare le iterazioni tardive include la documentazione delle dipendenze tra i sottosistemi, la logica di progettazione delle interfacce dei sottosistemi e qualsiasi soluzione alternativa che potrebbe fallire in caso di modifica
+        - Il cambiamento dovrebbe essere gestito con attenzione e dovrebbe essere implementato un processo di cambiamento simile a quello che monitora le modifiche dei requisiti
+
+#### How much effort should I put into system design
+- Quando le nuove informazioni diventano disponibile, si tende a effettuare dei cambi nel SDD prima dell'integrazione del sistema
+
+#### Design Windows
+- Possiamo ottenere la stabilizzazione progressiva della decomposizione del sottosistema utilizzando il concetto di finestra di progettazione
+    - Per incoraggiare il cambiamento e controllarlo, le questioni critiche vengono lasciate aperte solo per un periodo di tempo specificato
+    - Le strutture dati e gli algoritmi interni, tuttavia, possono essere lasciati aperti fino a dopo l'integrazione, consentendo agli sviluppatori di rivederli in base ai test delle prestazioni
+    - Una volta chiusa la finestra di progettazione, il problema deve essere risolto e può essere riaperto solo in un'iterazione successiva
+- Con l'accelerazione dell'innovazione tecnologica, molti cambiamenti possono essere previsti quando una parte dedicata dell'organizzazione è responsabile della gestione della tecnologia
+    - I responsabili tecnologici analizzano le nuove tecnologie, le valutano e accumulano conoscenze che vengono utilizzate durante la selezione dei componenti
+    - Spesso il cambiamento avviene così rapidamente che le aziende non sono consapevoli di quali tecnologie forniscono
+
+### Rationale Management
+- **Rationale**: Ragionamento che ha portato il sistema
+    - Questioni da affrontare
+    - Alternative che consideriamo
+    - Decisioni usate per risolvere le problematiche affrontate
+    - Criterio usati per la guida delle decisioni
+    - Dibattito che gli sviluppatori hanno affrontato per raggiungere una decisione
+
+#### Rationale in Software Engineering
+- **Migliorare il supporto alla progettazione**: Evitare la valutazione duplicata di alternative scadenti
+    - Rendere consistenti e impliciti i trade-offs
+- **Migliorare il supporto alla documentazione**: Rendere più facile ai non sviluppatori rivedere il design
+- **Migliorare il supporto alla manutenzione**: Fornisce ai manutentori il contesto di design
+- **Migliorare l'apprendimento**: Nuovi membri dello staff posso imparare il design ripetendo le decisioni che lo hanno prodotto
+
+- **Rappresentazione**
+    - Argomentazione è l'approccio più promettente
+        - Più informazioni dei documenti, come trade-offs e alternative scartate
+        - Meno disordinato dei registri di comunicazione, che contengono tutto
+    
+    - **Issue model**: Rappresenta argomenti in una forma semi-strutturata
+        - Nodi rappresentano i passi dell'argomento
+        - Link rappresentano le relazioni
+
+#### Centralized Traffic Control
+- Abilita il dispatcher a monitorare e controllare trains da remoto
+- Permette di pianificare il percorso e ripianificarlo in caso di problemi
+
+- Ideali esempi di cattura della logica
+- Sistemi a lunga vita
+    - Tempo di vito legato alla manutenzione esteso
+- Costoso
+    - Bassa tolleranza ai guasti
+    - Transizione verso una tecnologia matura
+
+#### Issues
+- Problemi concreti che non hanno una unica e corretta soluzione
+- Sono formulati come domande
+
+![Issues](img/issues.png)
+
+#### Proposals
+- Possibili alterative alle issues
+- Una proposal può essere condivisa da multiple issues
+
+![Proposal](img/proposal.png)
+
+#### Consequent issue
+- Issues sollevate dal'introduzione di una proposal
+
+![Consequent Issue](img/consequentissues.png)
+
+#### Criteria
+- Misura di bontà
+- Sono spesso design goal o requisiti non funzionali
+
+![Criteria](img/criteria.png)
+
+#### Arguments
+- Rappresenta il dibattito che gli sviluppatori hanno dovuto affrontare per risolvere un problema
+- Possono supportare o opporsi a qualsiasi fase del rationale
+
+![Arguments](img/arguments.png)
+
+#### Resolutions
+- Rappresentano decisioni
+- Riassume la scelta delle alternative e l'argomentazione a sostegno
+- Un problema risolto viene chiamato chiuso
+- Un problema risolto può essere riaperto se necessario, risoluzione è declassata
+
+![Resolutions](img/resolutions.png)
+
 ## appunti
 non usare new dare un nome all'operazione
 non aggiungere nel class diagram i boundary control
