@@ -1186,6 +1186,1002 @@
 
 ![Resolutions](img/resolutions.png)
 
+
+## Object Design
+- Processo che permette di aggiungere dettagli all'analisi dei requisiti e fare delle decisioni di implementazione
+- **Object Desing**: Base dell'implementazione
+    - Iterazione su dove mettere le operazioni nel object model
+
+![Object Design](img/objectdesign.png)
+
+### Reusing Pattern Solution
+#### Activities
+- **Metodologie Object-Oriented**
+    - **System Design**: Decomposizione in sottosistemi
+    - **Object Design**: Implementazione nel linguaggio scelto
+        - Strutture dati e algoritmi scelti
+
+- **SA/SD**
+    - **Preliminary Design**: Decomposizione in sottosistemi
+        - Strutture date scelte
+    - **Detailed Design**: Algoritmi scelti
+        - Strutture dati ridefinite
+        - Implementazione nel linguaggio scelto
+        - Spesso in parallelo con il design preliminare
+
+#### Techniques for Finding Objects
+- **Analisi Requisiti**: Con i casi d'uso individuazione degli oggetti partecipanti
+    - Analisi testuale del flusso di eventi
+    - Estrazione degli oggetti del dominio dell'applicazione attraverso interazione con il cliente
+    - Trovare oggetti usando la conoscenza generale
+
+- **System Design**: Decomposizione in sottosistemi
+    - Idetificazione di layer e partizioni
+
+- **Object Design**: Trovare nuovi oggetti applicando la conoscenza sull'implementazione del dominio
+
+#### Application Domain vs Solution Domain Objects
+- Gli oggetti dell'applicazione sono spesso chiamati domain object e rappresentano il concetto di dominio rilevante per il sistema
+    - Rilevati dagli specialisti del dominio dell'applicazione e dagli utenti finali
+
+- Gli oggetti del dominio delle soluzioni rappresentano concetti che non hanno contro parti nel dominio dell'applicazione
+    - Identificati dagli sviluppatori
+
+![Application Domain vs Solution Domain Objects](img/ADVsSDO.png)
+
+#### Design Pattern
+- Necessità di riutilizzabili e flessibili design
+- Descrive il problema che occore spesso nel tuo ambiente, e descrive il cuore della soluzione al problema, al fine di riutilizzarlo senza rifarlo
+
+##### Composite Pattern
+- Oggetti composti in una struttura ad albero per rappresentare la gerarchia
+- Permette di trattare oggetti individuali e composizione di essi in modo uniforme
+
+![Composite Object](img/compositeObject.png)
+
+#### Modeling Software Development with Composite Patterns
+- **Ciclo di vita del software**: Consiste in una serie di sviluppi di attvità che sono altre attvità o collezioni di task
+    - **Composite**: Activity
+    - **Leaf node**: Task
+    ![Ciclo di vita del software](img/sfcComposite.png)
+
+- **Sistema software**: Consiste in una serie di sottosistemi che sono altri sottosistemi o collezioni di classi
+    - **Composite**: Sottosistemi
+    - **Leaf node**: Classi
+    ![Ciclo di vita del software](img/sscComposite.png)
+
+#### Ideal Structure of a Subsystem: Façade, Adapter, Bridge
+- Un sottosistema consiste in:
+    - Oggetto interfaccia
+    - Una serie di oggetti del dominio dell'applicazione che modellano entità reali o esistenti nel sistema
+        - Alcune sono interfacce per sistemi esterni
+    - Uno o più control object
+
+##### Facade Pattern
+- Un interfaccia unica per una serie di oggetti del sottosistema
+- Interfaccia di alto livello che rende il sottosistema facile da usare
+- Fornisce unn architettura chiusa
+
+- **Architettura Aperta**: Tutti i client possono il veicolo sottosistema e chiamare qualsiasi componente o operazioni della classe a piacimento
+    - Efficiente
+    - Non ci si può aspettare che il chiamante capisca come il sottosistema lavaro o le complesse relazioni del sottosistema
+    - Codice non portabile
+    ![Architettura Aperta](img/openarc.png)
+
+- **Architettura chiusa con Facade**
+    - Sottosistema decide come accedere
+    - Nessun uso improprio dai chiamanti
+    - Può essere usato nella fase iniziale di integrazione del test
+    ![Architettura Chiusa](img/closedarc.png)
+
+#### UML Notation for subsystems: Package
+- **Package**: Collezioni di classi che sono raggruppate insieme
+**Notazione**: Box con una tab, che indica il nome del pacchetto
+
+#### Additional Definitions
+##### Use of inheritance
+- Due obiettivi
+    - Descrivere Taxonomia
+    - Specifica dell'interfaccia
+
+- **Identificazione della taxonomia**: Identifica gli oggetti del dominio dell'applicazione che sono gerarchicamente collegati
+    - Goal: Rendere analisi dei modelli più comprensibile
+
+- **Service Specification**: Incrementa il riuso, migliora la modificabilità e il riuso
+
+![Ereditarietà](img/ereditarieta.png)
+
+##### Reuse
+- Riutilizzare le conoscenze di una precedente esperienza del problema corrente
+- Riutilizzare funzionalità già disponibili
+
+- **Composition**: Ottenuto dall'aggregazione
+    - Un nuovo oggetto con nuove funzionalità ottenuto con aggregazioni di oggetti esistenti
+
+- **Ereditarietà**: Nuove funzionalità ottenute con l'ereditarietà
+
+- Tre modi per ottenere nuove funzionalità
+    - **Implementazione di ereditarietà**: Anche chiamata ereditarietà
+        - Goal: Estende una funzionalità di un applicazione usando le funzionalità della classe padre
+        - Eredita da un classe esistente con alcune o tutte le operazioni implementate 
+        - Possono mostrare comportamenti indesiderati
+    - **Ereditarietà dell'interfaccia**: Anche chiamata subtyping
+        - Eredita da una classe astratta le operazioni specificate, ma non implementate
+    - **Delegazione**: Due oggeti sono coinvolti nella gestione di una richiesta
+        - Un oggetto ricevente delegate le operazioni al suo delegato
+        - Lo sviluppatore si assicura che l'oggetto ricevente non permetta al client di non utilizzare in modo improprio il client
+        - Cattura un operazione e la manda ad un altro oggetto, a differenza della ereditarietà che estende una classe di base con una nuova operazione o con un overwriting di una operazione
+
+
+![Delegazione](img/Delegate.png)
+
+##### Comparison: Delegation vs Implementation Inheritance
+- **Delegation**
+    - **Pro**: Flessibilità, ogno oggetto può essere rimpiazzatp a runtime da un altro oggetto
+    - **Contro**: Inefficienza, oggetti sono incapsulati
+
+- **Ereditarietà**
+    - **Pro**: Facile da usare
+        - Supportato da molti linguaggi di programmazione
+        - Facile da implementare nuove funzionalità
+    - **Contro**: Espone la sottoclasse ai dettagli della classe padre
+        - Ogni cambiamento nella implementazione della classe padre forza il cambiamento della sottoclasse
+
+##### Design Heuristic
+- Non usare mai implementazione di ereditarietà, ma sempre ereditarietà dell'interfaccia
+- Una sottoclasse non deve mai nascondere operazioni implementate nella superclasse
+- Molti design pattern usano una combinazione di ereditarietà e delegazione
+
+#### Adapter Pattern
+- Usato per fornire una nuova interfaccia a componenti che già esistono e che senza di esso non potrebbero comunicare a causa della loro incompatibilità
+- Chiamato con wrapper
+- **Class Adapter**: Usa ereditarietà multipla per adattare un interfaccia ad un altra
+- **Object Adapter**: Usa ereditarietà singola e delegazione
+
+![Adapter](img/adapter.png)
+
+#### Bridge Pattern
+- Usa un ponte per decomporre un'astrazione dalla sua implementazione in modo che le due possano variare in modo indipendente
+
+- Chimato Handle/Body pattern
+
+- Consente di decidere dinamicamente differenti implementazioni di un'interfaccia
+
+![Bridge](img/bridge.png)
+
+#### Adapter Vs Bridge
+- **Somiglianze**: Usate per nascondere dettagli dell'implementazione sottostante
+- **Differenze**
+    - Il pattern adapter fa funzionare insieme componenti non correlate fra loro
+        - Applicato a sistemi dopo che sono stati progettati
+
+    - Il bridge pattern è usato all'inizio della progettazione per permettere varie indipendenti implementazioni e astrazioni
+        - Green field engineering
+
+![Bridge and Adapter](img/bridgeAndAdapter.png)
+
+#### A Pattern Taxonomy
+
+![A Pattern Taxonomy](img/tassionomia.png)
+
+#### Proxy Pattern
+- Costoso
+    - Creazione di Object 
+    - Inizializzazione Object 
+- Obiettivo è ritadare la creazione e inizializzazione di un oggetto al momento in cui si ha bisogno di esso
+
+- **Proxy Pattern**: Riduce il costo di accesso all'oggetto
+    - Usa un altro oggetto detto proxy che funge da sostituto dell'oggetto reale
+    - Crea l'oggetto reale sono se l'utente ne necessita
+![Proxy Pattern](img/Proxypatternpng.png)
+
+##### Proxy Applicability
+- **Remote Proxy**: Rappresentazione di un oggetto locale in uno spazio di indirizzamento diverso
+    - **Cattura dell'informazione**: Utile se l'informazione non cambia spesso
+
+- **Virtual Proxy**: L'oggetto è troppo costoso da creare e scaricare
+    - Il proxy è un sostituto
+
+- **Protection Proxy**: Il proxy fornisce accesso controllato all'oggetto reale
+    - Utile quando diversi oggetti devono avere accesso e visualizzazione diverse per lo stesso documento
+
+![Virtual Proxy](img/protectionproxy.png)
+
+#### Command Pattern
+- **Motivation**
+    - Costruire unn interfaccia utente
+    - Fornire un menu
+    - Vuoi rendere l'interfaccia utente riutilizzabile fra diverse applicazioni
+        - Non è possibile codificare in modo rigido i significati dei menu delle varie applicazioni
+        - L'applicazione conosce solo cosa deve essere fatto quando un menu viene selezionato
+
+![Command Pattern](img/commandpattern.png)
+
+- **Applicability**: Incapsulare una richiesta come un oggetto
+    - Parametrizzare il client con diverse richiesta
+    - Code o log per le richieste
+    - Supoorto di operazione annnullabili
+
+    - **Usi**: Annullamento code
+        - Buffering di transazione del database
+
+![Structuring the Object](img/Structuringtheobject.png)
+
+![Typical Sequence](img/Commandpatternstructerobject.png)
+
+#### Observer Pattern
+- Definisce una dipendenza una-a-molti fra oggetti in modo che quando un oggetto cambia stato, tutte le sue dipendenze sono notificate e aggiornate in automatico
+- Publish and Subscribe
+
+- **Usi**
+    - Mantiene consistenza fra stati ridondanti
+    - Ottimizza il cambiamento delle batch per mantenere consistenza
+
+![Observer Pattern](img/observerpattern.png)
+![Sequence Diagram](img/observsequence.png)
+
+#### Strategy Pattern
+- Molti algoritmi esistono per stessa task
+
+- I differenti algoritmi saranno appropriati in tempo diversi
+
+- Non vogliamo supportare tutti gli algoritmiin tempi diversi
+    - Se necessitiamo di un nuovo algoritmo , lo vogliamo aggiungere facilmente senza disturbare l'applicazione
+
+![Strategy Pattern](img/Strategypattern.png)
+![strategy Pattern](img/applicazionestrategypattern.png)
+
+- **Applicabilità**: Molte classi collegate fra loro differiscono solo per un comportamento
+    - Strategy permette di configurare una singola classe con molti comportamenti
+- Sono necessarie diverse varianti di un algoritmo che bilanciano spazio e tempo
+    - Tutte queste varianti possono essere implementate come una gerarchia di classi di algoritmi
+
+#### Abstract Factory Motivation
+![Abstarct Factory](img/abstractFactory.png)
+
+- **Applicabilità**
+    - **Indipendenza fra inizializzazione o rappresentazione**:  Il sistema deve essere indipendente da come i suoi prodotti sono creati, composti o rappresentati
+
+    - **Indipendenze del produttore**: Un sistema deve essere configurato con una delle multiple famiglie di produttori
+        - Procurare una libreria di classe per un customer, ma non vuoi rivelare quale particolare produttore stai usando
+    
+    - **Vinvoli relativi ai prodotti**: Una famiglia di prodotti correlati è progettata per essere usata insieme e necessita di rinforzare i vincoli
+
+    - **Affrontare il cambiamento imminente**: Puoi usare un particolare prodotto di una famiglia, ma devi aspettarti che la tecnologia sottostante cambia velocemente, e nuovi prodotti appariranno sul mercato
+
+![Abstract Factory](img/AbstractFactorysystem.png)
+
+#### Builder Pattern Motivation
+- Le compagnie di software fanno soldi introducendo nuovi formati, forzando l'utente a fare aggiornamenti
+    - Utilizzo di un oggetto builder che si specializza nella conversione in qualsiasi formato noto e facilmente estendibile per gestire qualsiasi nuovo formato disponibile sul mercato
+
+![Builder Pattern](img/builderpattern.png)
+
+##### Quando usare un Builder Pattern
+- La creazione di un prodotto complesso deve essere indipendente dalla particolare parte che compone il prodotto
+    - In particolare il processo di creazione non deve essere conosciuto dal processo di assemblamento
+
+- Il processo di creazione deve permettere differenti rappresentazioni per l'oggetto che si sta costruendo
+
+#### Abstract Factory Vs Builder
+- **Abstract Factory**: Si focalizza nei prodotti della famiglia
+    - Il prodotto può essere semplice o complesso
+    - Non nasconde il processo di creazione
+        - Prodotto viene restituito immediatamente
+
+- **Builder**: Il prodotto sottostante necessitano di essere costruiti come parte del sistema ma aumenta la complessità
+    - La costruzione del prodotto complesso cambia di volta in volta
+    - Il builder pattern nasconde il complesso processo di creazione dall'utente
+        - Il prodotto è returned dopo la creazione come step finale
+
+- Lavorano insieme per una famiglia di multipli prodotti complessi
+
+### Specifying Interfaces
+#### Developers play different Role
+![Developer](img/developerroles.png)
+
+#### Class Implementor, Class Extender, and Class User
+- **Class Implementor**: Responsabili della realizzazione della classe
+    - Progetta la struttura dati interna
+    - Definisce l'interfaccia delle operazioni e implementa il codice
+
+- **Class User**: Invoca operazioni fornite dalla classe durante la realizzazione di un'altra classe
+    - L'interfaccia specifica il confine della classe in termini di servizi che offre che fornisce
+
+- **Class Extender**: Sviluppa specializzazione della classe
+    - La specifica dell'interfaccia specifica il comportamento corrente della classe e i vincoli sui servizi forniti dalla classe specializzata
+
+![Class User Vs Extender](img/ClassuserExtender.png)
+
+#### Specifying Interfaces
+- Analisi dei requisiti delle activities
+    - Identificare attributi e operazioni senza specificare il loro tipo o i loro parametri
+
+- **Object Design: Tre attività**
+    - **Aggiungi informazione di visibilità**
+        - **Private (Classe implementatore)**
+            - Inserisci - prima dei membri della classe
+            - Un attributo privato può essere accessibile solo dalla classe nel quale è definito
+            - Un operazione privata può essere invocato solo dalla classe ella quale è definita
+            - Attributi e operazioni private non possono essere accessibili dalle sottoclassi o altre classi
+        - **Protected (Classe extender)**
+            - Inserisci # prima dei membri della classe
+            - Un operazione o un attributo protetto possono essere accessibili dalla classe nel quale è definito o in uno dei discendenti della classe
+        - **Public (Classe Utente)**
+            - Inserisci + prima dei membri della classe
+            - Un attributo o un operazione può essere accessibile da qualsiasi classe
+        
+        - **Information Hiding Heuristic**
+            - Costruisci firewall attorno alle classi
+            - Solo se qualcosa necessita di accedere alle informazioni, rendilo pubblico, spesso vuoi conoscere l'accesso
+            - Meno operazioni conosce, meno sarà affetta da qualsiasi cambiamento
+            - Meno operazioni conosce, più facilmente la classe può essere cambiata
+            - Accedere ad un attributo privato è più lento
+        
+        - **Information Hiding Design Principles**
+            - Solo le operazione della classe sono autorizzate a manipolare i suoi attributi
+            - Nascondi oggetti esterni al confine del sottosistema
+                - Definisce interfacce di classe astratte che mediano fra il sistema e il mondo esterno e anche fra i sottosistema
+            - Non applicare un operazione al risultato di un'altra operazione
+    - **Aggiungi informazioni sulla firma del tipo**
+        ![Informazioni sulla firma](img/informazionefirma.png)
+
+    - **Aggiungi contratti**
+        - Contratti sulla classe abilita il caller e il callee a condividere le stesse ipotesi sulla classe
+            - **Invariante**: Un predicato che è sempre vero per tutte le istanze della classe
+                - Vincoli associato con classi o interfacce
+                - Usati per specificare in maniera cosistente vincoli fra gli attributi della classe
+            
+            - **Precondizione**: Un predicato che deve essere vero prima dell'invocazione dell'operazione
+                - Associate con specifiche operazioni
+                - Usate per specificare vincoli che un chiamante deve soddisfare prima di chiamare un operazione
+            
+            - **PostCondizione**: Un predicato deve essere vero dopo che un operazione è invocata
+                - Associata con specifiche operazione
+                - Usate per specificare vincoli che l'oggetto deve assicurare dopo l'invocazione dell'operazione
+
+##### Expressing Constraints In UML
+- **OCL (Object Constrait Language)**
+    - Permettono vincoli di essere formalmente specificati su un singolo elemento del modello o su un gruppo di elementi del model
+    - Un vincolo espresso con un espressione OCL ritorna il valore vero o falso
+        - OCL non è un linguaggio procedurale
+    - Può essere mostrato come nota in UML attacata all'elemento UML attraverso una relazione di indipendenza
+
+##### Ereditarietà di contratti
+- Un utente della classe si aspetta che un contratto che vale per la superclasse sia valido anche per la sottoclasse
+
+- I contratti possono essere ereditati
+    - **Precondizioni**: Un metodo della sottoclasse è autorizzato a indebolire la precondizione del metodo se si effettua l'ovveride
+    - **Postcondizione**: Metodo nella sottoclasse devono assicurare la stessa postcondizione come nella superclasse
+    - **Invariante**: Una sottoclasse deve rispettare tutte le invarianti della sua superclasse
+        - Una sottoclasse può rafforzare l'eredirarietà delle ivarianti
+
+##### JavaDoc
+- Aggiunge la documentazione al codice sorgente
+- Un commento doc consiste in una serie di caratteri fra /** e /*
+
+![Doc Tag1](img/doctag1.png)
+
+![Doc Tag2](img/docTag2.png)
+
+#### Package it all up
+- Impacchetta il design in una unità fisica che può essere modificata, compilata, linkata e riutilizzata
+- **Costruire Moduli Fisici**: Idealmente usa un pacchetto per ogni sottosistema
+    - La decomposizione del sottosistema potrebbe non essere adatta all'implementazione
+
+- **Minimize Coupling**: Le classi nelle relazioni cliente-fornitore sono tipicamente debolmente accoppiate
+    - Un grande numero di parametri in un metodo indica forte accoppiamento
+    - Evita dati globali
+- **Maximize Cohesiveness**: Classi strattamente connesse da un associazione stanno nello stesso pacchetto
+
+#### Package Heuristic
+- Ogni servizio del sottosistema è reso disponibile da uno o più oggetti interfaccia all'interno del pacchetto
+- Inizia con un oggetto interfaccia per ogni servizio del sottosistema
+    - Limita il numero di operazioni dell'interfaccia a 7+/-2
+- **Interface Object**: Usato durante l'analisi dei requisiti, system design e object design
+    - Denota un servizio come una API
+
+- **Java Interface**: Usato durante l'implementazione in Java
+
+### Object Constraint Language (OCL)
+- **OCL (Object Constraint Language)**: Permette ai vincoli di essere formalmente specificati su un singolo elemento del model o su un gruppo di elementi del modello
+    - Non è un linguaggio procedurale
+
+- **OCL and UML**: Linguaggio che permette di esprimere vincoli su un modello UML
+    - Ritorna un valore vero o false
+    - Può essere rappresentato come una nota allegata ai modelli UML vincolato da una relazione di dipendenza
+
+- **Contratti**: I vincoli sulla classe che consentono agli utenti della classe, implementatori e extender di condividere le stesse assunzioni sulla classe
+    - Invariante
+    - Precondizione
+    - Postcondizione
+
+![Vincoli](img/constraitsocl.png)
+
+#### UML Istance Diagram
+![Diagramma delle istanza](img/istancediagram.png)
+
+#### Model Constraints
+![Local Attribute Navigation](img/localAttributeNavigation.png)
+![Model Constraits](img/secondConstraits.png)
+![Model Constraits](img/secondconstraint(2).png)
+![Model Constraits](img/thirdconstraint.png)
+![Model Constraits](img/forthandfifthconstraints.png)
+
+#### OCL Collections: Definition
+- **OCL Set**: Usato durante la navigazione di una singola associazione
+- **OCL Sequences**: Usato durante la navigazione di una singola ordinata associazione
+- **OCL Bags**: Può contenere lo stesso oggetto multiple volte
+    - Multiset
+    - Usato per accumulare oggetti quando accedi ad associazioni indirette
+
+- **OCL Operations**
+    ![OCL Operazioni](img/ocloperations.png)
+    ![OCL Operazioni](img/ocloperation2.png)
+
+- **OCL Qualifier**
+- Operazioni che permettono di iterare sulle collection e testare le espressioni di ogni elemento
+    ![Quantifiers](img/quantifiers.png)
+
+### Mapping Models to Code
+
+#### Attività dell'Object Design
+- **Selezione delle componenti e riutilizzo**: Identificare componenti standard, oggetti di soluzione aggiuntivi, e design pattern
+- **Service Specificazione**: Descrive precisamente ogni interfaccia della classe
+- **Mapping Models to Code**: Trasforma il modello di progettazione degli oggetti in base ai criteri di prestazione, migliora la comprensibilità e lo mappa al codice sorgente e agli schemi di archiviazione
+
+#### Transformation and Mapping Activities
+##### Ottimizzazione
+- Questa attività affronta i requisiti della prestazioni del modello di sistema
+
+- **Ottimizzazione del design**
+    - **Ottimizzazione dei percorsi di accesso**
+        - Aggiunta di associazioni ridondanti al fine di ridurre il costo di accesso delle associazioni trasversali ripetute
+        - Ridurre le associazioni "many" ad associazioni "one" usando associazioni qualified
+        - Eliminare percorsi morti il prima possibile
+        - Controllare se l'ordine di esecuzione del ciclo deve essere invertito
+        - Muovi gli attributi invocati solo con metodi getter e setter nella classe chiamante
+    - **Collassare oggetti: Trasformare oggetti in attributo**
+        - Implementare Entity come attributi embedded
+        - Oppure implementare Entity come classi separate con associazioni con altre classi
+        - Collassare oggetti nel modello potrebbe essere intervallato da operazioni di refactoring sul codice
+    - **Memorizza gli attributi derivati per salvare tempo di compilazione**
+        - Gli attributi derivati devono essere modificati quando il valore di base cambia
+            - **Explicit Code**: Implementatori determinano gli attributi derivati interessati
+            - **Periodic Computation**: Ricompilazione degli attributi derivati occasionalmente
+            - **Active Value**: Un attributo può designare un insieme di valori dipendenti che vengono aggiornati automaticamente quando il valore attivo viene modificato
+    - **Ritardare le computazioni costose**
+    - Bilanciare fra efficienze e chiarezza
+##### Realizing Associations
+- Associazioni mappate ai costrutti del codice sorgente, come riferimenti o collezioni di riferimenti
+- Associazioni uniformi e decisioni individuali per ogni associazione
+    - 1-to-1
+        - Nome dei ruoli trattati come attributi e tradotti in riferimenti
+        ![Unidirectional 1-to-1](img/Unidirectional1to1.png)
+        ![Bidirectional 1-to-1](img/Bidirectional1to1.png)
+    - 1-to-many
+        - Tradotti in set
+        ![1-to-Many](img/1-to-Many.png)
+        ![Many-to-Many](img/Many-to-Many.png)
+    - Qualified
+        - Tradotti in Hash Map
+        ![Qualified](img/Qualified.png)
+
+![Association](img/Association.png)
+##### Mapping Contracts to Exceptions
+- Descriviamo il comportamento delle operazioni quando i contratti non sono funzionanti
+- Lancio di eccezione se il linguaggio ne è fornito
+- **Implementazione di un contratto**
+    - Controllare la precondizione con un test prima di iniziare il metodo e lancio eccezione se precondizione è violata
+    - Controllare la postcondizione alla fine del metodo e lancio di eccezzione se il contratto è violato
+    - Controllare l'invariante durante il controllo della postcondizione
+    - Gestire l'ereditarietà incapsulando il controllo del codice per precondizione e postcondizione in metodo separati che possono essere chiamati dalle sottoclassi
+    - Questo approccio non è del tutto realistico per un numero di ragioni
+
+- **Heuristic**
+    - Omettere il controllo del codice per postcondizione e invarianti
+        - Possibile controllo atraverso il testing, e non identifica molti bug a meno che non sia stato scritto da un altro sviluppatore
+    
+    - Focalizzarsi sulle interfacce del sottosistema e omissioni del controllo di metodi privati e protette
+
+    - Focalizzarsi sui contratti delle componenti con il più lungo ciclo di vita degli oggetti entità
+    - Riutilizzo di vincoli per il controllo del codice
+        - Incampsulamento in metodi che possono essere invocati facilmente e condividono le stesse classi delle eccezioni
+
+##### Mapping Class Models to a Storage Schema
+- Durante il sistem design selezioniamo le strategie di archiviazione
+    - Ora mappiamo gli object model allo schema di archiviazione
+- I linguaggi Object-Oriented non fornisco di solito un metodo efficiente di archiviazione degli oggetti persistenti
+    - Mappare questi oggetti in una struttura dati
+- **Relational Databases**: Basati sull'algebra relazionale
+    - Dati rappresentati in una tabella bidimensionale con un numero specificato di colonne e non specificato numero di righe
+        - **Chiave Primaria**: Combinazione di attributi che identificano univocamente una riga di una tabella
+        - **Chiave Esterna**: Riferimento ad una chiave primaria in un'altra tabella
+        - **Integrità Referenziale**: Riferimenti alle entry delle altre tabelle esiste realmente
+
+- Gli Object Model può essere mappato in database relazione
+    - Ogni classe è mappata in una tabella
+    - Ogni attributo è mappata in una colonna della tabella
+    - Associazione uno-a-molti implementata come una chiave esterna nascosta
+    - Associazione molti-a-molti è mappato nella sua tabella
+    - Metodi non sono mappati
+
+    ![Turning Object Models](img/TurningObjectModels.png)
+    ![Turning Object Models](img/TurningObjectModels2.png)
+    ![Turning Object Models](img/TurningObjectModels3.png)
+    ![Turning Object Models](img/TurningObjectModels4.png)
+
+- **Gestire Implementazione**: Necessità di documentare le trasformazioni per mantenere la coerenza tra i modelli di oggetti e il codice sorgente e per mantenere aggiornati
+- **Responsabilità**: L'architetto principale prende decisioni di design e selezione delle trasformazioni da applicare
+    - L'architettura del liason è responsabile per la documentazione dei contratti di associati alle interfacce del sottosistema e notificare i cambiamenti alla classe utente
+    - Lo sviluppatore è responsabile di seguire le decisione dell'architetto principale, applicare le trasformazioni, mappare object model a un codice sorgente e mantenendo aggiornati i commenti del codice sorgente tutti i documenti interessati
+#### Object Model Transformations
+- Trasformazioni sono applicate ad un model object per ottenere un altro model object
+    - **Goal**: Semplificare, ottimizzare, rendere il modello più conforme alle specifiche
+    - Ristrutturare la gerarchia delle classe per aumentare l'ereditarietà
+![Transformations](img/TranformationsObjectModel.png)
+
+#### Incrementa l'Ereditarietà
+- Comportamenti astratti comuni da gruppi di classi
+    - Se una serie di operazioni o attributi sono ripetuti in 2 classi, le classi possono essere istanze di una classe generale
+
+#### Building a Super Class from Several Classes
+- Tutte le operazioni devono avere la stessa firma, ma spesso la firma non corrisponde
+    - Alcune operazioni hanno meno argomenti dell'altre
+    - Attributi simili nelle classi hanno diversi nomi
+        - Rinomina attributi e cambiamenti di tutte le operazioni
+    - Operazioni definite in una classe ma non in altre
+        - Usa funzioni virtuali ed overriding delle funzioni della classe
+
+- Astrai il comportamento comune e crea una superclasse da esso
+- Le superclassi sono desiderabili
+    - Incrementa la modularità, estensibilità e riutilizzabilità
+    - Incrementa la gestione della configurazione
+
+![Tipi di trasformazioni](img/TypeTransformations.png)
+
+#### Refactoring Vs Model Transformations
+- Una trasformazione di un object model può essere mappato in una serie di step di refactoring
+    - **Pull-up Campo**: Muove gli attributi da una sottoclasse alla classe padre
+    - **Pull-up Corpo del Costruttore**: Muove il codice di inizializzazione dalla sottoclasse alla superclasse
+    - **Pull-up Metodo**: Muove i metodi che manipolano gli attributi dalla sottoclasse alla superclasse
+![Refactoring](img/refactoring.png)
+
+#### Transformation Principles
+- Ogni trasformazione deve affrontare un singolo criterio o un obiettivo di design
+- Ogni trasformazione deve essere locale
+    - Cambiamento di pochi metodi o classi alla volta
+- Ogni trasformazione deve essere applicata in modo isolato dagli altri cambiamenti
+    - Facilita i test e riduce la possibilità di introduzione di errori
+- Ogni trasformazione deve essere seguita da un passo di validazione
+    - Convalidare la trasformazione in base agli altri documenti di specifica di design, con annessa modifica dei documenti nei quali il cambiamento impatta
+
+### Modellare Applicazione Web Tramite UML
+- Pagina server contiene metodi e variabili relativi allo scripting server-side
+- Pagina client contiene elementi relativi alla formattazione, allo scripting client side
+
+![Stereotipo Pagina](img/stereotipoPagina.png)
+![Stereotipo Form](img/stereotipoform.png)
+
+#### Stereotipo di Associazione
+![Stereotipo Associazione](img/stereotipoassociazione.png)
+![Stereotipo Associazione](img/stereotipoassociazione2.png)
+
+#### Streotipo lato client attraverso script
+![Stereotipo Script](img/stereotiposcript.png)
+
+#### Diagramma delle Pagine
+- Diagramma delle classi che descrive la relazione fra codice sul server e schermi prodotti sul client
+
+#### Altri stereotipi
+![Stereotipo Frameset](img/stereotipoframe.png)
+![Stereotipo Target](img/stereotipoTarget.png)
+
+## Testing
+### Testing Introduction
+#### Terminologia
+- **Affidabilità**: Misura il successo con il quale il comportamento osservato del sistema conferma alcune specifiche del suo comportamento
+- **Fallimento**: Qualsiasi deviazione del comportamento osservato rispetto al comportamento specificato
+- **Stato Errato**: Il sistema è in uno stato che con i processi futuri porterà ad un fallimento
+- **Fault (Bugs)**: La causa meccanica o algortimica che causa uno stato errato
+
+#### How to Deal with Error
+- **Prevenzione dell'Errore**: Prima del rilascio del sistema
+    - Uso di metodologie di programmazione per ridurre la complessità
+    - Uso di una versione di controllo per prevenire inconsistenze nel sistema
+    - Applica verifica per prevenire bug legati all'algoritmo
+- **Rilevamento degli Errori**: Mentre il sistema è in esecuzione
+    - **Testing**: Crea fallimenti in maniera pianificata
+    - **Debugging**: Inizia con un fallimento non pianificato
+    - **Monitoring**: Invia informazioni riguardo lo stato
+        - Trova bug legati alla performance
+- **Recupero dagli Errori**: Recupero da un fallimento una volta che il sistema è rilasciato
+    - Sistemi database
+    - Ridondanza modulare
+    - Recupero da blocchi
+
+#### Basic Testing Definitions
+- **Errori**: Le persone commettono errori
+- **Fault**: Risultato diun errore nella documentazione software, codice, ecc...
+- **Fallimento**: Un fallimento avviene quando si esegue un fault
+- **Incidente**: Conseguenza di un fallimento
+    - Possono apparire e non all'utente
+- **Testing**: Esercitare il software attraverso dei test case per trovare fallimenti o ottenere confidenza nel sistema
+- **Test Case**: Insieme di dati di input e risultati attesi (Oracolo) che permettono di esercitare una componente conlo scopo di causare fallimenti
+- **Test Suit**: Un insieme di test case
+
+##### Test Stubs and Drivers
+- **Component**: Una parte del sistema che può essere isolata e testata
+- **Test Sub**: Implementazione parziale di un componente sul quale i componenti testati dipendono
+- **Test Driver**: Implementazione parziale di un componente che dipende da una componente testata
+- Test Stub e Driver possono essere interattivi o automatici
+    - Permettono di ridurre il tempo di esecuzione del test
+    - Richiedono grandi risorse
+
+![Driver, Stubs, and Scaffolding](img/DriverStubsandScaffolding.png)
+
+##### Correzione e Test di Regressione
+- Una correzione è un cambiamento il cui scopo è risolvere il fault
+    - Può introdurre nuovi fault
+- Test di regressione necessita dirieseguire tutti test dopo il cambiamento
+    - Necessita di mantenere i test case
+
+- Impossibilità di testare ogni modulo o sistema sia dal punto di vista teorico (Problema di Arresto) che pratico (Proibitivo in termini di tempo e costo)
+- Un test ha successo se porta ad un fallimento
+
+- **Test Efficace**
+    - Dettagli sul sistema sottostante
+    - Conoscenza delle tecniche di testing
+    - Test indipendenti sono meglio
+
+![Testing Activities](img/TestingActivities.png)
+![Testing Activities](img/TestingActivitiesctd.png)
+![Fault Handling Technique](img/FaultHandlingTechnique.png)
+![Quality Assurance encompasses Testing](img/QualityAssuranceencompassesTesting.png)
+
+#### Component Testing
+- **Test Unitari**
+    - Sottosistemi individuali
+    - Eseguito dagli sviluppatori
+    - **Goal**: Confermare che il sottosistema è correttamente codificato e svolge la funzionalità prevista
+- **Test d'Integrazione**
+    - Gruppi di sottosistemi ed eventualmente l'intero sistema
+    - Eseguito dagli sviluppatori
+    - **Goal**: Testare l'interfaccia fra i sottosistemi
+
+#### System Testing
+- **Goal**: Determinare se i sistema soddisfa i requisiti
+- **Test di Accettazione**: Valuta il sistema prodotto dagli sviluppatori
+    - Eseguito dal cliente
+    - **Goal**: Dimostrare che il sistema soddisfa i requisiti del cliente ed è pronto all'uso
+
+#### Documenting testing: Planning
+- **Test Plan**: Si focalizza sull'aspetto managerialedeltesting
+    - Documenta lo scope, l'approccio, le risorse, e schedula le attività di testing
+- **Test Case Specification**: Documenta ogni test
+    - Questo documento contiene input, drivers, stubs, e output aspettato dai teste tutte le task performate
+#### Documenting testing: Execution Documents
+- **Test Execution Report**: Documenta ogni esecuzione
+    - **Test Item Transmittal Report**: Documento di accompagnamento che contiene informazioni per identificare gli item del software
+    - **Test Log**: I risultati del test
+    - **Test Incident Report**: Descrive tutti gli incidenti scoperti durante il test che devono essere approfonditi
+    - **Test Summary Report**: Un sommario di tutte le attività di testing, con una lista di attività risolte e da risolvere
+
+### Test Selection Techniques
+#### Tecniche di Verifica
+- **Informali**: Codice incrementale
+- **Analisi Statica**
+    - **Hand execution**: Lettura del codice sorgente
+    - **Walk-Through**: Presentazione informale
+    - **Code Inspection**: Presentazione formale
+    - Tool automatici per controllo di errori sintattici o semantici o deviazioneìi dagli standard di codifica
+- **Dynamic Analysis**
+    - **Black-box (Funzionale)**: Selezione del test basato sulla specifica
+    - **White-box (Strutturale)**: Selezione del test basato sulla struttura logica interna del programma
+
+#### Black-box Testing
+- Partizionamento dello spazio di input in classe
+- **Goal**: Riduce il numero dei test case attraverso partizionamento equivalente
+    - Scleta dei test case per ogni classe diequivalenza
+- Testa ogni classe e i confini fra le classi
+    - Spesso i fallimenti si trovano ai confini
+- **Selezione di classi di equivalenza**
+    - Input valido per un intervallo di valori
+    - Selezione i test case da 3 classi di equivalenza
+        - Sotto il range
+        - Interno al range
+        - Sopra il range
+    - Input valido se è un insieme discreto
+    - Seleziona i test case in base a se il valore discreto è valido oppure no
+
+#### Equivalence Class Testing
+- **Motivation**: Testing completo e evitare ridondanza
+- **Classi di equivalenza**: Partizionamento dell'input
+- Intero input coperto
+- **Disjoint classes**: Evitare la ridondanza
+- **Test case**: Un elemento di ogni classe di equivalenza
+
+#### Weak/Strong Equ. Class Testing
+![Three input](img/Threeinput.png)
+
+- **Weak Equivalence Class Testing**: Scegli un valore di una variabile per ogni classe di equivalenza
+- **Strong Equivalence Class Testing**: Basato sul prodotto cartesiano AxBxC
+    - Sottoinsieme di input disgiunto
+
+![WECT](img/WECT.png)
+![SECT](img/SECT.png)
+
+#### Discussione
+- Se la condizione di errore è ad alta priorità, bisogna estendere il testing forte delle classi di equivalenza per includere le classi non valide
+- ECT appropriato per dati di input definiti in termini di range e insiemi di valori discreti
+- SECT fa l'assunzione che le variabili siano indipendenti, generando errore altrimenti
+
+#### Boundary value testing
+- Partizionamento dell'input in sottoclassi adeguate, assumendo che il comportamento del programma sia simile
+- Maggior parte dei problemi si verificano ai confini
+
+![Boundary ValueBoundary ValueBoundary Valuev](img/BoundaryValue.png)
+
+- L'errore tende a verificarsi agli estremi, quindi bisogna focaizzarsi sui confini dello spazio di input per identificare i casi di test
+    - Il valore delle varibili deve essere al minimo, poco sopra il minimo, un valore nominale, poco sotto il massimo e al massimo
+        - min, min+, nom, max-, max
+        - Mantenere i valori di tutte le variabili tranne una ai loro valori nominali, lasciando che una variabile assuma il suo valore estremo
+
+![Boundary Analysis Test Cases](img/BoundaryAnalysisTestCases.png)
+
+- **Casi generali e limitazioni**
+    - Una funzione con n variabili richiede 4n + 1casi di test
+    ![Robustness Testing](img/RobustnessTesting.png)
+
+- **Worst Case Testing (WCT)**: I valori di confine fanno l'assunzione comune che i fallimenti derivino dai fault
+    - Maggiore è l'analisi dei valori di confine, maggiori sono i costi
+        - 5n
+
+    ![WCT for 2 variables](img/WCTfor2variables.png)
+    ![Robust WCT for 2 variables](img/RobustWCTfor2variables.png)
+
+#### Category Partition: Steps
+- Il sistema è diviso in funzioni individuali che possono essere testate in maniera indipendente
+- Il metodo identifica il parametro per ogni funzione, e per ogni parametro identifica distinte categorie
+- **Categorie**: Sono suddivise in scelte 
+- Identificazione dei vincolifra le scelte
+- Vengono generati frame di test costituiti dalle combinazioni consentite di scelte nelle categorie
+- I test frame sono convertiti in test data
+
+#### Constraints
+![Constraints](img/Constraints.png)
+
+#### Test specification: categories and choices for the parameters
+![Test specification](img/Testspecification.png)
+![Test specification](img/Testspecification2.png)
+
+#### Property and selector expression
+![Property and selector expression](img/Propertyandselectorexpression.png)
+
+![Property and selector expression](img/Propertyandselectorexpression2.png)
+
+#### How many test frames after constraints?
+- Il testo |Error| si occupano di testare una particolare feature la quale causa un'eccezione o uno stato di errore
+- Una scelta marcata con |Error| non è combinato con le scelte nelle altre categorie per creare test frame
+
+![Using Error property](img/UsingErrorproperty.png)
+![Using Error property](img/UsingErrorproperty2.png)
+
+- Annotazione |single| descrive speciali, inusuali, o ridondanti condizioni che nondevono essere combinati con tutte le possibili scelte 
+- Una scelta marcata con |single| non è combinato con le scelte nelle altre categorie per creare test frame
+
+![Using Single property](img/UsingSingle.png)
+
+#### Category Partition
+- Rende esplicite ledecisioni di test aperte alle recensioni
+
+#### Parameters and environment objects
+- **Parametri**: Pattern e filename
+- **Oggetti di ambienti**: Il contestodel file filename
+#### Systematic vs Random Testing
+- **Random**: Distribuzione uniforme dello spazio di input
+    - Tutti gli input hanno uguale importanza
+- **Systematic**: Selezione degli input più importanti
+    - Spazio di input partizionato in classi
+    ![Systematic Partition Testing](img/SystematicPartitionTesting.png)
+
+#### The Partition Principle
+- Il test partizionato separa lo spazio di input in classi, ma causa overlap
+- Nel caso desiderato ogni fault porta ad un fallimento che sono facili da trovare nella classi di input
+    - Il campionamento di ogni classe nella quasi-partizione seleziona almeno un input che porta a un errore, rivelando l'errore
+    - Raramente garantito dato che dipendiamo da esperienze basate sull'euristica
+![Partitioning and Test Coverage](img/PartitioningandTestCoverage.png)
+
+#### White-box Testing**:  
+- **Focus**: Accuratezza e copertura
+- 4 Tipi di White-box Testing
+    - **Statement Testing**: Testa singoli statements
+    - **Loop Testing**: Permette che il ciclo venga skippato completamente, eseguito esattamente una volta ed eseguito più di una
+    - **Path Testing**: Si assicura che ogni percorso del programma sia eseguito
+    - **Branch Testing**: Si assicura che ogni possibile risulato di una condizione sia testato almeno una volta
+- Non scalabile
+
+#### Comparison of White & Black-box Testing
+##### White-box Testing
+- Potenzialmente un numero infinito di percorsi da testare
+- Testa cosa è fatto e non cosa dovrebbe fare
+- Non può trovare casi d'uso mancanti
+
+##### Black-box Testing
+- Potenziale combinatorio esplosivo dei test case
+- Spesso non chiaro quando un test case selezionato copre un particolare errore
+- Non scopre strani casi d'uso
+
+##### White & Black-box Testing
+- Entrambi necessari
+- La scelta del caso di test si colloca nel mezzo
+    - Numeri di possibili percorsi logici
+    - Natura dei dati di input
+    - Ammontare di computazioni
+    - Complessità dell'algoritmo e della struttura dati
+
+![Black vs. White Box Testing](img/BlackvsWhiteBoxTesting.png)
+
+#### The 4 Testing Steps
+
+![The 4 Testing Steps](img/The4TestingSteps.png)
+![The 4 Testing Steps](img/GuidanceforTestCaseSelection.png)
+
+### Integration, System, and Acceptance Testing
+#### Component-Based Testing Strategy
+- Intero sistema è visto come una collezione di sottosistemi
+- L'ordine con il quale il sottosistema sono selezionati dipende dalla strategia di testing
+    - **Big bang integration (Non incrementale)**
+    - **Bottom up integration**
+    - **Top down integration**
+    - **Sandwich testing**
+    - **Variations of the above**
+
+##### Using the Bridge Pattern to enable early Integration Testing
+- Attraverso il brdge pattern forniscono implementazione multiple sotto la stessa interfaccia
+
+![Using the Bridge Pattern](img/UsingtheBridgePattern.png)
+
+##### Integration Testing: Big-Bang Approach
+![Big-Bang Approach](img/Big-BangApproach.png)
+
+##### Bottom-up Testing Strategy
+- Il sottosistemi nel layer inferiore della gerarchia sono testati in maniera individuale
+- I sottosistemi successivi chiamano i sottosistemi inferiori già testati
+- **Test Driver**: Speciale programma che necessita di essere testato
+    - Una routine che chiama un particolare sottosistema e gli passa i test case
+![Bottom-up Integration](img/Bottom-upIntegration.png)
+
+- **Pro**: Utile per i sistemi object-oriented
+    - Sistemi real-time
+    - Sistemi con strette necessità di performance
+- **Contro**: Testa il più importante sottosistema per ultimo
+
+##### Top-down Testing Strategy
+- Test del layer superiore o controlla il sottosistema prima
+- Quindi combina tutti i sottosistemi chiamati dai sottosistemi testati e testa la raccolta risultante di sottosistemi
+- **Test Sub**: Speciale programma che necessita di essere testato
+    - Un programma o metodo che simula l'attività di un mancante sottosistema rispondendo alla sequenza di chiamate del sottosistema chiamato e ritorna dati falsi
+
+![Top-down Integration Testing](img/Top-downIntegrationTesting.png)
+
+- **Pro**: I test case possono essere definiti in termini delle funzionalità del sottosistema
+- **Contro**: Stubs possono essere difficili,dato che richiedono che tutte le possibili condizioni devono essere testate
+    - Richiede ungrande numero di stub
+
+##### Sandwich Testing Strategy
+- Combina top-down e bottom-up
+- Sistema è visto come un albero a 3 layer
+    - Un layer target nel mezzo
+    - Un layer sopra il target
+    - Un layer sotto il target
+
+- **Euristica**: Prova a minimizzare il numero di stub e driver
+![Sandwich Testing Strategy](img/SandwichTestingStrategy.png)
+
+- **Pro**: Top e bottom layer test possono essere fatti in parallelo
+- **Contro**: Non testa a fondo i singoli sottosistemi del livello di destinazione prima dell'integrazione
+
+- **Modified Sandwich Testing Strategy**
+    - Test in prallelo
+        - Layer nel mezzo con stub e driver
+        - Layer superiore con stub
+        - Layer inferiore con driver
+        - Il layer superiore accede il layer nel mezzo
+        - Il layer inferiore accede il layer nel mezzo
+
+    ![modified sandwich testing](img/modifiedsandwichtesting.png)
+    ![Scheduling the sandwich tests](img/Schedulingthesandwichtests.png)
+    ![Modified Sandwich Testing Strategy](img/ModifiedSandwichTestingStrategy.png)
+
+#### Steps in Component-Based Testing
+    1. Basato sulla strategia di integrazione, seleziona un componente da testare
+    2. Unisci le componenti selezionate, esegui i fix-up necessari per rendere operativo l'integrazione del test
+    3. Esegui il test funzionale, definisci i test case che esercitano tutti i casi d'uso
+    4. Esegui il testing strutturale, definisci i test case che esercitano il componente selezionato
+    5. Esegui il test di performance
+    6. Registra i test case e le attività di testing
+    7. Ripeti gli step 1 e 7 fino a quando il sistema non è testato del tutto
+    
+#### Which Integration Strategy should you use?
+
+- **Fattori da considerare**
+    - Quantità del cablaggio di prova (stub e driver)
+    - Luogo dei percorsi critici nel sistema
+    - Disponibilità del hardware
+    - Disponibilità dei componenti
+    - Problemi di pianificazione
+
+- **Approccio Bottom up**
+    - Buono per oggetti orientati alle metodologie di design
+    - Il testdriver deve corrispondere l'interfaccia delle componenti
+    - Le componenti top-level non possono essere rimandate alla fine del testing
+    - Rilevamento degli errori di progettazione posticipato alla fine del testing
+
+- **Approccio Top-down**
+    - I test case possono essere definiti in termini di funzioni esaminate
+    - Necessità di mantenere la correttezza degli stub dei test
+    - Scrivere stub può essere difficile
+
+#### System Testing
+- **Impatto dei requisiti sul testing del sistema**: Più espliciti sono i requisiti e più facilemente sono testabili
+    - Qualità dei casi d'uso determina la failità del testing funzionale
+    - Qualità della decomposizione del sottosistema determina la facilità della struttura del testing
+    - Qualità dei requisiti non funzionali e dei vincoli determinano la facilità del test delle performance
+
+##### Structure Testing
+- **Goal**: Copre tutti i percorsi del sistem design
+    - Esercita tutti gli input e tutti gli output dei parametri di ogni componenti
+    - Esercita tutte le componenti e tutti le chiamate
+    - Usa condizionale e iterazionale testing come un unità di testing
+
+##### Functional Testing
+- **Goal**: Testa le funzionalità del sistema
+    - I test case sono progettati a partire dal documento di analisi dei requisiti e centrata attorno ai requisiti e le funzionalità chiave
+        - Instanzia casi d'uso per derivare i test case
+        - Differenti scenarii possono essere ottenuti applicando tecniche black-box ai dati di input
+- Sistema trattato come una black-box
+- Unit test case possono essere riutilizzati, ma anche per l'utente finale devono essere sviluppati nuovi casi di test
+
+##### Performance Testing
+- **Stress Testing**: Limite di stress del sistema
+- **Volume Testing**: Testa cosa accade se si gestisce un grande numero di dati
+- **Configuration Testing**: Testa vari software e la configurazione hardware
+- **Compability Testing**: Testa la retrocompatibilità con il sistema esistente
+- **Security Testing**: Prova a violare i requisiti di sicurezza
+- **Timing Testing**: Valutare i tempi di risposta e il tempo necessario per eseguire una funzione
+- **Environment Testing**: Testa la tolleranza per calore, umidità, movimento e portabilità
+- **Quality Testing**: Testa la affidabilità, manutenibilità e disponibilità del sistema
+- **Recovery Testing**: Verifica la risposta del sistema alla presenza di errori o alla perdita di dati
+- **Human factors testing**: Testa l'interfaccia grafica dell'utente
+
+##### Test Cases for Performance Testing
+- Porta il sistema al suo limite
+- **Goal**: Prova a rompere il sistema
+- Testa il comportamento del sistema quando è sovraccarico, quando cambi l'ordine di esecuzione e a grandi volumi di dati
+
+#### Acceptance Testing
+- **Goal**: Dimostrare che il sistema è per l'uso
+    - Scelta di test fatta da client/sponsor
+    - Molti test possono essere presi dai test di integrazione
+    - Test di accettamento fatti dal client
+    - La maggior parte dei bug nel software viene tipicamente individuata dal cliente dopo che il sistema è in uso
+
+- **Alpha Test**: Sponsor utilizza il software sul sito dello sviluppatore
+    - Usato in un ambiente controllato, con lo sviluppatore pronto a risolvere bug
+- **Beta Testing**: Condotto sul sito dello sponsor
+    - Testato in modo realisitico nel ambiente di destinazione
+    - Il potenziale cliente potrebbe scoraggiarsi
+
+#### Testing has its own Life Cycle
+![Testing has its own Life Cycle](img/TestinghasitsownLifeCycle.png)
+
+#### Test Team
+![Test Team](img/TestTeam.png)
+
+### Tecniche di Testing per Software Object Oriented
+
+
 ## appunti
 non usare new dare un nome all'operazione
 non aggiungere nel class diagram i boundary control
@@ -1249,3 +2245,11 @@ i servizi non sono le operazioni, ma un gruppo di operazioni coese
     per il progetto implemenatare sotto sistemi essenziali tipo login e gestione ordine
 
     non si controlla post condizione , dato che si fa  al fine di controllare post condizione e invariate
+
+
+    documenti solo per il test di sistema
+    per il test di uità juit o altro quindi senza documenti
+
+    fare test funzionale
+
+    per ogni caso d'uso da testare fare progettazione del test e lista dei casi di test in un documento a apparte
