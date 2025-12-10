@@ -1992,7 +1992,7 @@
     - Raramente garantito dato che dipendiamo da esperienze basate sull'euristica
 ![Partitioning and Test Coverage](img/PartitioningandTestCoverage.png)
 
-#### White-box Testing**:  
+#### White-box Testing:  
 - **Focus**: Accuratezza e copertura
 - 4 Tipi di White-box Testing
     - **Statement Testing**: Testa singoli statements
