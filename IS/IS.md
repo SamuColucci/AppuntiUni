@@ -2180,7 +2180,77 @@
 ![Test Team](img/TestTeam.png)
 
 ### Tecniche di Testing per Software Object Oriented
+#### Caratteristiche Linguaggi OO
+- Astrazione dei dati
+- Ereditarietà
+- Polimorfismo
+- Binding dinamico
+- Genericità
+- Getione delle eccezioni
+- Concorrenza
 
+#### Stato e Information Hiding
+- Correttezza legato anche allo stato definiti nella struttura dati
+
+#### Scaffolding
+- Infrastruttura deve settare lo stato per por eseguire i test (Driver)
+- Esaminare lo stato per poter stabilire l'esito dei test (Oracolo)
+**Approcci intrusivi**
+    - Modifica del codice sorgente al finedi aggiungere testdriver
+    - Usare i costrutti dl inguaggio
+
+#### Stato e generazione dei casi di test
+- Costruire una macchina a stati finiti
+    - **Stati**: Insieme di stati della classe
+    - **Transizioni**: Invocazioni dei metodi
+- Percorrere la macchina a stati finiti per derivare i casi di test
+- I cammini di una macchina a stadi finiti corrisponde ad una sequenza di operazioni
+- **Casi di test**: Cammini della macchina a stadi finiti
+
+#### Testing di integrazione per software OO
+- **Big bang**: poco adatto
+- **Top-down e Bottom-up**: Cambia il tipo di dipendenze fra i moduli
+    - Uso di classi ed ereditarietà
+- **Threads**: Un thread è identificato con una sequenza di messaggi
+
+#### Grafo delle Dipendenze
+- Se il grafo è aciclico esiste un ordinamento parziale sui suoi elementi
+    - Possibilità di definire un ordinamento topologico totale
+    - Ordine d'integrazione definito in base a questo ordinamento
+- Se esistono dipendenze cicliche tra le classi è impossibile definire un ordinamento parziale
+    - Ogni grafo orientato ciclico è riducibile a un grafo aciclico collassando i sottografi massimi fortemente connessi 
+
+#### Problemi di Integrazione per software OO 
+- Una volta definito l’ordine di integrazione si aggiungono le classi incrementalmente esercitandone le interazioni
+
+#### Testing di integrazione basato su thread
+- La generazione dei casi di test può essere effettuata a partire dai diagrammi di interazione (specifiche)
+- Opportuno costruire threads anche dal codice e verificare la corrispondenza con le specifiche 
+
+#### Problemi di Integrazione: Ereditarietà
+- Linguaggi procedurali classici: Il codice è strutturato in procedure e una volta eseguito il test di un modulo di una procedura non è necessario rieseguirlo
+- Linguaggio orientati agli oggetti: Il codice èstrutturato in classi, nelle relazioni di ereditarietà alcune operazioni restano invariate altre vengono ridefinite e altre aggiunte
+    - Necessità di identificare le proprietà che devo ritestare
+    - Può essere necessario verificare la compatibilità di comportamento tra metodi omonimi in una relazione classe-sottoclasse 
+
+#### Polimorfismo e binding dinamico
+- Liguaggi procedurali classici: Le chiamate a procedura sono associate staticamente al codice corrispondente 
+- Liguaggi orientati agli oggetti: Un riferimento (variabile) può denotare oggetti appartenenti a diverse classi in relazione tipo-sottotipo (polimorfismo)
+    - Più implementazioni di una stessa operazione
+    - Il codice effettivamente eseguito è identificato a run-time, in base alla classe di appartenenza dell’oggetto (binding dinamico)
+
+#### Altri problemi: Genericità
+- Le classi parametriche devono essere istanziate per poter essere testate
+
+#### Altri problemi: Gestione delle eccezioni
+- Le eccezioni modificano il flusso di controllo senza la presenza di un esplicito costrutto di tipo test and branch 
+- **Copertura ottimale**: Sollevare tutte le possibili eccezioni in tutti i punti del codice in cui è possibile farlo (può non essere praticabile)
+- **Copertura minima**: Sollevare almeno una volta ogni eccezione 
+
+#### Altri problemi: Concorrenza
+- Risulati ed eccezioni non-detrministici
+- Casi di test composti da valori di input e output sono poco significativi 
+- Casi di test composti da valori di input/output e da una sequenza di eventi di sincronizzazione
 
 ## appunti
 non usare new dare un nome all'operazione
