@@ -1,8 +1,8 @@
-# 1.1 Capitolo 1: Natura e Fisica del Suono
+# 1.1 Capitolo 1: Nozioni di base
+## 1.1 Natura e Fisica del Suono
 
 Il suono è la percezione uditiva prodotta dalla **vibrazione** di un corpo, che genera onde di pressione trasmesse attraverso un mezzo elastico (come l'aria).
 
-### Propagazione e Velocità
 Le onde sonore non si propagano istantaneamente. La loro velocità dipende dal mezzo e dalle condizioni ambientali:
 * **Velocità standard:** Circa **343,1 m/s** (1235 km/h) a 20°C in aria.
 * **Effetto Temperatura:** La velocità aumenta all'aumentare della temperatura.
@@ -11,7 +11,6 @@ Le onde sonore non si propagano istantaneamente. La loro velocità dipende dal m
 
 ---
 
-### Caratteristiche dell'Onda Sonora
 La percezione del suono dipende da tre proprietà fondamentali dell'onda:
 
 1.  **Frequenza (Altezza):**
@@ -28,15 +27,13 @@ La percezione del suono dipende da tre proprietà fondamentali dell'onda:
 3.  **Forma dell'onda (Timbro):**
     * Determina il "colore" del suono e permette di distinguere la fonte (es. violino vs sassofono).
 
-# 1.2 Le Note Musicali
+## 1.2 Le Note Musicali
 
 Le note sono gli elementi costruttivi fondamentali della musica. Si distinguono dai suoni generici per la loro "gradevolezza" e precisione fisica.
 
-### Suono vs Rumore
 * **Rumore:** Un suono percepito come sgradevole.
 * **Nota:** Un suono gradevole, tipicamente prodotto da strumenti musicali, utilizzato come unità di base per la composizione.
 
-### Caratteristiche di una Nota
 Oltre alle proprietà fisiche dell'onda (altezza, volume, timbro), una nota è definita dalla sua **dimensione temporale**:
 1.  **Inizio:** L'istante esatto in cui il suono comincia.
 2.  **Durata:** L'intervallo di tempo per cui il suono si protrae, determinandone la fine.
@@ -45,23 +42,20 @@ Oltre alle proprietà fisiche dell'onda (altezza, volume, timbro), una nota è d
 > In ambito informatico/algoritmico, una nota viene quindi trattata come un **oggetto** che possiede parametri di frequenza, ampiezza, timbro e coordinate temporali (start-time e duration).
 ---
 
-## 1.2.1 Altezza e Frequenza
+### 1.2.1 Altezza e Frequenza
 
 L'altezza è la caratteristica che distingue i suoni **gravi** (bassa frequenza) da quelli **acuti** (alta frequenza). È il parametro cardine per la melodia e l'armonia.
 
-### Il Sistema Musicale Moderno
 * **Sottoinsieme di frequenze:** Anche se le frequenze sono infinite, la musica ne usa solo alcune.
 * **Standard:** La nota **La4** (centrale sul pianoforte) è fissata a **440 Hz**.
 * **Il Pianoforte:** Ha 88 tasti, ognuno associato a una frequenza specifica, suddivisi in **ottave** (gruppi di 12 note).
 
-### Percezione Uditiva
 * **Risoluzione:** L'orecchio umano fatica a distinguere frequenze troppo vicine (es. 440 Hz vs 441 Hz).
 * **Tipi di Orecchio:**
     * **Assoluto:** Capacità di identificare la frequenza esatta di una nota senza riferimenti.
     * **Armonico:** Capacità di isolare le singole note in un accordo (suoni simultanei).
     * **Relativo:** Capacità di identificare l'intervallo (distanza) tra due note.
 
-### Il Concetto di Intervallo e Consonanza
 L'intervallo è la "distanza" tra due suoni, espressa matematicamente come **rapporto tra le frequenze** ($f_2 / f_1$).
 
 1. **Unisono (Rapporto 1:1):** Due suoni con la stessa frequenza ($f/f = 1$). Massima consonanza.
@@ -71,7 +65,6 @@ L'intervallo è la "distanza" tra due suoni, espressa matematicamente come **rap
 
 
 
-### Formula delle Ottave
 Partendo da una frequenza di riferimento $f_r$, si possono calcolare tutte le sue ottave (superiori o inferiori) con la formula:
 $$f_n = f_r \cdot 2^n$$
 * Dove $n$ è un numero intero ($Z$).
@@ -82,15 +75,15 @@ $$f_n = f_r \cdot 2^n$$
 > [!TIP]
 > **Curiosità sull'etimologia:** Il termine "ottava" deriva dal fatto che nelle scale più comuni (composte da 7 suoni), il suono che raddoppia la frequenza è l'8° della sequenza.
 
-## 1.2.2 Timbro
+### 1.2.2 Timbro
 
 Il timbro è la caratteristica che permette di distinguere due suoni che hanno la stessa altezza (frequenza) e la stessa intensità, ma provengono da sorgenti diverse.
 
-### Definizione e Origine
+
 * **Identità sonora:** È ciò che ci permette di capire se una nota è suonata da un **violino**, un **pianoforte** o un **flauto**.
 * **Variazioni nello stesso strumento:** Il timbro può cambiare anche in base alla tecnica esecutiva (es. corde "pizzicate" vs "suonate con l'arco" in un violino).
 
-### Rappresentazione Visiva
+
 * **L'Oscilloscopio:** È lo strumento che permette di visualizzare graficamente il suono. 
 * **Processo:** Le variazioni di pressione dell'aria vengono convertite in segnali elettrici (tramite un microfono) e poi visualizzate come **forme d'onda**.
 * **Forma dell'onda:** Ogni strumento ha una forma d'onda peculiare (sinusoidale, quadra, a dente di sega o forme più complesse). La complessità della forma d'onda determina la ricchezza del timbro.
@@ -98,17 +91,15 @@ Il timbro è la caratteristica che permette di distinguere due suoni che hanno l
 > [!TIP]
 > **Concetto chiave per l'informatica musicale:** > In sintesi digitale, il timbro viene manipolato agendo sulla "forma" del segnale o aggiungendo armoniche alla frequenza fondamentale.
 
-## 1.2.3 Durata
+### 1.2.3 Durata
 
 La dimensione temporale trasforma un insieme di suoni in una composizione strutturata. Ogni nota non è solo una frequenza, ma un evento con un'estensione nel tempo.
 
-### Coordinate Temporali
 Una nota è definita da due momenti precisi:
 1. **Inizio (Start-time):** L'istante in cui la nota comincia a suonare.
 2. **Fine:** L'istante in cui il suono cessa.
 * **Durata:** L'intervallo di tempo tra l'inizio e la fine.
 
-### Rappresentazione Matematica e Cartesiana
 Le note possono essere pensate come funzioni che associano un'altezza a un intervallo di tempo. Questo permette di visualizzare la musica su un piano cartesiano:
 * **Asse X (Ascisse):** Rappresenta il **Tempo**.
 * **Asse Y (Ordinate):** Rappresenta la **Frequenza** (Altezza).
@@ -121,11 +112,10 @@ In questo sistema, ogni nota diventa un **segmento orizzontale**:
 > [!TIP]
 > **Piano Roll:** Questa rappresentazione cartesiana è esattamente ciò che nei software musicali (DAW) viene chiamato "Piano Roll", lo strumento principale per programmare musica al computer.
 
-## 1.2.4 Nomi delle Note e Alterazioni
+### 1.2.4 Nomi delle Note e Alterazioni
 
 Per identificare le frequenze all'interno di un'ottava, il sistema musicale assegna dei nomi specifici alle note.
 
-### Sistemi di Notazione
 Esistono due standard principali per nominare le note:
 * **Notazione Latina:** Do, Re, Mi, Fa, Sol, La, Si.
 * **Notazione Anglosassone:** Utilizza le lettere dalla A alla G.
@@ -134,7 +124,6 @@ Esistono due standard principali per nominare le note:
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | **La** | **Si** | **Do** | **Re** | **Mi** | **Fa** | **Sol** |
 
-### Le 12 Note dell'Ottava
 Oltre alle 7 note naturali, esistono altre **5 note** ottenute tramite le **alterazioni**, per un totale di 12 note per ottava:
 1.  **Diesis (# o ]):** Innalza la nota di un semitono.
 2.  **Bemolle (b o [):** Abbassa la nota di un semitono.
@@ -149,28 +138,24 @@ Le note alterate si trovano tra:
 > [!IMPORTANT]
 > **Enarmonia:** Note con nomi diversi ma stessa frequenza (es. Do# e Reb) sono dette note enarmoniche.
 
-### Alterazioni Multiple
 Nella pratica musicale si possono usare anche:
 * **Doppio Diesis (x o ]]):** Alza la nota di due semitoni (es. Do]] = Re).
 * **Doppio Bemolle (bb o [[):** Abbassa la nota di due semitoni (es. Sol[[ = Fa).
 
-### Standard MIDI
 Ogni tasto del pianoforte (88 in totale) è associato a:
 1.  Una **frequenza** specifica (es. La4 = 440 Hz).
 2.  Un **codice MIDI** unico (un numero intero che vedremo nel Capitolo 3).
 
-## 1.2.5 Tono e Semitono
+### 1.2.5 Tono e Semitono
 
 Il tono e il semitono sono le unità di misura fondamentali per calcolare la distanza tra due note nel sistema musicale occidentale.
 
-### Il Semitono (s)
 * **Definizione:** È la distanza minima tra due note adiacenti nel sistema temperato.
 * **Sul Pianoforte:** Corrisponde alla distanza tra un tasto e quello immediatamente successivo (bianco o nero che sia).
 * **Esempi:** - Tra **Mi** e **Fa** (due tasti bianchi adiacenti senza tasto nero in mezzo).
   - Tra **La** e **La#** (un tasto bianco e il tasto nero subito dopo).
 * **Codice MIDI:** Corrisponde a una differenza di **1** nell'identificativo MIDI ($i$ e $i+1$).
 
-### Il Tono (T)
 * **Definizione:** È composto dall'unione di due semitoni ($T = s + s$).
 * **Esempi:**
   - Tra **La** e **Si** (perché in mezzo c'è il La#).
@@ -178,16 +163,14 @@ Il tono e il semitono sono le unità di misura fondamentali per calcolare la dis
 * **Codice MIDI:** Corrisponde a una differenza di **2** nell'identificativo MIDI ($i$ e $i+2$).
 
 
-
-### Importanza Strutturale
 Queste unità servono a definire la "geometria" delle scale. Ad esempio, la scala maggiore è costruita sulla sequenza specifica:
 **T - T - s - T - T - T - s**
 
-# 1.5 Rappresentazione della Musica
+## 1.5 Rappresentazione della Musica
 
 Per visualizzare altezza e durata delle note, il sistema musicale utilizza un sistema grafico standardizzato che funziona come un piano cartesiano "semplificato".
 
-## 1.5.1 Il Pentagramma
+### 1.5.1 Il Pentagramma
 È composto da **5 linee parallele**. Funziona così:
 * **Asse Verticale:** Rappresenta l'altezza (più in alto è la nota, più è acuta).
 * **Asse Orizzontale:** Rappresenta lo scorrere del tempo (da sinistra a destra).
@@ -195,12 +178,10 @@ Per visualizzare altezza e durata delle note, il sistema musicale utilizza un si
 
 
 
-[Image of a musical staff with treble clef and ledger lines]
-
 
 ---
 
-## 1.5.2 Chiavi Musicali
+### 1.5.2 Chiavi Musicali
 La chiave determina l'altezza di riferimento (l'ottava) delle note sul pentagramma:
 * **Chiave di Violino (Sol):** Usata per suoni medio-acuti. La seconda linea dal basso è il **Sol4** (MIDI 67).
 * **Chiave di Basso (Fa):** Usata per suoni gravi.
@@ -208,7 +189,7 @@ La chiave determina l'altezza di riferimento (l'ottava) delle note sul pentagram
 
 ---
 
-## 1.5.3 Rappresentazione della Durata
+### 1.5.3 Rappresentazione della Durata
 Le durate sono espresse come frazioni di un intero (la **Semibreve**).
 
 | Nome | Valore (Frazione) | Simbolo Grafico |
@@ -228,15 +209,13 @@ Un punto dopo la nota aumenta la sua durata del **50%**.
 
 ---
 
-## 1.5.4 Metrica e Tempo
+### 1.5.4 Metrica e Tempo
 La musica è divisa in **battute** (separate da barre verticali).
 
-### L'Indicazione Metrica
 Rappresentata come una frazione (es. **3/4**):
 * **Numeratore (Sopra):** Quanti elementi ci sono in ogni battuta (es. 3 elementi).
 * **Denominatore (Sotto):** La durata di ogni elemento (es. da 1/4).
 
-### Velocità (BPM)
 La durata reale (in secondi) dipende dai **BPM** (Battiti Per Minuto).
 * **Calcolo:** Se la velocità è 132 crome al minuto, una croma dura $60 / 132 \approx 0,45$ secondi.
 
@@ -244,11 +223,10 @@ La durata reale (in secondi) dipende dai **BPM** (Battiti Per Minuto).
 > **Analogia Informatica:**
 > Il pentagramma è l'interfaccia grafica (GUI), mentre i BPM sono il "clock" del sistema che determina la velocità di esecuzione dei dati.
 
-# 1.6 Scale Musicali
+## 1.6 Scale Musicali
 
 Una scala è una sequenza di suoni ad altezza crescente che collegano una nota alla sua ottava superiore. Può essere vista come una scala fisica dove i "gradini" (**gradi**) hanno "alzate" (**intervalli**) differenti.
 
-### Definizione Formale e Informatica
 Da un punto di vista matematico, una scala è identificata da una sequenza di $n$ interi positivi $\langle s_1, s_2, \dots, s_n \rangle$ (espressi in semitoni) la cui somma è esattamente **12**.
 
 La posizione di ogni nota rispetto alla tonica (distanza cumulativa $D_i$) è data dalla formula:
@@ -293,7 +271,7 @@ Nelle scale a 7 suoni, ogni posizione ha un nome e una funzione specifica. I gra
 > [!IMPORTANT]
 > **Tonica e Dominante** sono i pilastri della musica occidentale; gran parte della musica popolare è costruita esclusivamente sull'alternanza degli accordi basati su questi due gradi.
 
-# 1.7 Scale e trasposizione
+## 1.7 Scale e trasposizione
 
 Il sistema a **12 semitoni** è stato progettato per permettere la **trasposizione**: la possibilità di costruire una scala (es. la scala maggiore) partendo da una qualsiasi delle 12 note disponibili, mantenendo invariata la struttura degli intervalli.
 
@@ -319,7 +297,7 @@ Per evitare di scrivere le alterazioni accanto a ogni singola nota durante il br
 > [!TIP]
 > **Definizione di Tonalità:** Stabilire la tonica significa stabilire l'intera scala. La tonalità è l'ambiente musicale definito da quella specifica scelta di note e alterazioni.
 
-# 1.8 Intervalli musicali
+## 1.8 Intervalli musicali
 
 L'intervallo è la distanza tra due note e viene misurato contando i gradi della scala coinvolti, includendo sia la nota di partenza che quella di arrivo.
 
@@ -360,7 +338,7 @@ Questa tabella è fondamentale per la logica algoritmica, poiché associa il nom
 | **7ª Maggiore** | 11 | Do - Si |
 | **Ottava Giusta** | 12 | Do - Do |
 
-# 1.9 Melodia e armonia
+## 1.9 Melodia e armonia
 
 Melodia e armonia rappresentano i due "assi cartesiani" attraverso i quali si sviluppa un brano musicale.
 
@@ -384,7 +362,7 @@ Un brano musicale è spesso costituito da più linee melodiche che procedono par
 > [!NOTE]
 > **Semplificazione:** Sebbene in teoria ogni "fetta verticale" sia un accordo, nella realtà alcune note (note di passaggio, ritardi) possono non far parte dell'accordo principale, rendendo l'analisi più complessa.
 
-# 1.10 Accordi
+## 1.10 Accordi
 
 Un accordo è l'esecuzione simultanea di almeno **3 note**. Rappresenta l'aspetto verticale della musica (Armonia).
 
@@ -421,11 +399,10 @@ Aggiungendo una quarta nota a distanza di una settima dalla fondamentale, si ott
 > Per un computer, un accordo è un **set di intervalli**. 
 > Se definisci `Maggiore = [0, 4, 7]`, l'algoritmo può costruire un accordo maggiore partendo da qualsiasi nota MIDI $n$ semplicemente calcolando $[n, n+4, n+7]$.
 
-# 1.11 Forme musicali
+## 1.11 Forme musicali
 
 La **forma musicale** indica la struttura della composizione e determina il modo in cui gli elementi musicali (come il tema) vengono organizzati nel tempo.
 
-### Esempi di Forme Classiche
 * **Forma Sonata:** Una struttura complessa divisa in 3 sezioni:
     1.  **Esposizione:** Presenta il tema principale, un ponte modulante (cambio di tonalità), un secondo tema e una coda.
     2.  **Sviluppo:** Elaborazione creativa del materiale tematico.
@@ -473,7 +450,7 @@ Si devono evitare effetti sgradevoli legati alle **consonanze perfette** (unison
 
 In musica non esistono regole ferree, ma la pratica consolidata (come riportato da Piston) permette di individuare dei movimenti degli accordi più probabili e "naturali" per l'orecchio.
 
-## 1.12.1 Successioni nel Modo Maggiore
+### 1.12.1 Successioni nel Modo Maggiore
 Ecco i gradi che solitamente seguono un determinato accordo:
 - **I (Tonica):** seguito da **IV** o **V**, talvolta **VI**; raramente da II o III.
 - **II (Sottodominante):** seguito da **V**, talvolta IV o VI; raramente da I o III.
@@ -483,7 +460,7 @@ Ecco i gradi che solitamente seguono un determinato accordo:
 - **VI (Sottodominante):** seguito da **II** o **V**, talvolta III o VI; raramente da I.
 - **VII (Sensibile):** seguito da **I** o **III**, talvolta VI; raramente da II, IV o V.
 
-## 1.12.2 Successioni nel Modo Minore
+### 1.12.2 Successioni nel Modo Minore
 I criteri sono simili al maggiore, con alcune specificità:
 - Il **I grado** può essere seguito dalla triade maggiore del **VII**.
 - Il **III grado** maggiore può essere seguito dal **VII** maggiore.
@@ -492,7 +469,7 @@ I criteri sono simili al maggiore, con alcune specificità:
 
 ---
 
-## 1.12.3 Le Cadenze principali
+### 1.12.3 Le Cadenze principali
 Le cadenze sono la "punteggiatura" della musica e definiscono la conclusione di una frase.
 
 - **Cadenza Autentica (V - I):** La risoluzione più forte. Spesso estesa in **II-V-I** o **IV-V-I**.
@@ -501,7 +478,7 @@ Le cadenze sono la "punteggiatura" della musica e definiscono la conclusione di 
 - **Cadenza Plagale (IV - I):** Usata spesso come conferma finale dopo una cadenza autentica.
 - **Cadenza d'Inganno (V - VI):** La dominante (V) sembra voler andare sul I, ma risolve a sorpresa sul VI grado.
 
-# 1.13 Metriche di valutazione
+## 1.13 Metriche di valutazione
 
 In questa sezione viene analizzato il rapporto tra la natura formale degli algoritmi e la natura creativa della composizione musicale.
 
