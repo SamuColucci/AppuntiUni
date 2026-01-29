@@ -1,4 +1,4 @@
-# 1.1 Natura e Fisica del Suono
+# 1.1 Capitolo 1: Natura e Fisica del Suono
 
 Il suono è la percezione uditiva prodotta dalla **vibrazione** di un corpo, che genera onde di pressione trasmesse attraverso un mezzo elastico (come l'aria).
 
@@ -531,71 +531,643 @@ Nonostante l'assenza di una metrica estetica universale, la musica possiede dell
 > [!TIP]
 > **Punto chiave:** La composizione musicale algoritmica non cerca "la" soluzione perfetta, ma esplora lo spazio delle soluzioni che rispettano determinati vincoli tecnici e stilistici.
 
+# Capitolo 2: Temperamento Equabile
+
+In questo capitolo si analizza il percorso storico e matematico che ha portato alla definizione delle frequenze attuali, partendo dai concetti di consonanza e dalla serie degli armonici.
+
+---
+
+## 2.1 Consonanza e Dissonanza
+La percezione dei suoni simultanei si divide in due categorie:
+* **Consonanza:** Suoni che producono un effetto gradevole (stabilità).
+* **Dissonanza:** Suoni che producono un effetto sgradevole (tensione/separazione).
+
+Sebbene il gusto sia soggettivo e culturale, la consonanza ha una base oggettiva nella **teoria dei suoni armonici** e nei **rapporti matematici semplici**.
+
+---
+
+## 2.2 Suoni Armonici e Ottave
+Quando un corpo vibra alla frequenza fondamentale $f$, produce simultaneamente frequenze multiple chiamate **armonici**: $f, 2f, 3f, 4f, 5f, \dots$
+
+### Caratteristiche degli Armonici:
+1. **Intensità:** Decresce rapidamente; l'orecchio percepisce principalmente la fondamentale.
+2. **Consonanza Fisica:** Il secondo armonico ($2f$) è il suono più consonante in assoluto rispetto alla fondamentale.
+3. **Punto di vista Pitagorico:** La consonanza deriva da rapporti tra numeri interi piccoli:
+    * **2/1:** Ottava (Metà corda)
+    * **3/2:** Quinta Giusta (2/3 della corda)
+    * **4/3:** Quarta Giusta (3/4 della corda)
+
+
+
+### L'Assioma dell'Ottava
+L'intervallo di ottava ($2:1$) è talmente consonante che le note vengono considerate **equivalenti** (hanno lo stesso nome). Questo permette di studiare la teoria musicale concentrandosi su una **singola ottava**, poiché i fenomeni si ripetono proporzionalmente in tutte le altre.
+
+---
+
+## 2.3 Quali suoni utilizziamo all'interno di un'ottava?
+All'interno di un'ottava esistono infinite frequenze, ma per fare musica dobbiamo selezionarne un sottoinsieme finito: la **scala**.
+
+* **Problema:** Come scegliere le frequenze "migliori"?
+* **Approccio:** In questo capitolo i nomi delle note (Do, Re, Mi...) sono usati in modo indicativo. L'obiettivo è dimostrare come criteri diversi (matematici o fisici) portino a sistemi diversi, fino ad arrivare al **Temperamento Equabile**.
+
+
+## 2.4 L’aritmetica degli intervalli
+Musicalmente, sommare o sottrarre intervalli corrisponde a operazioni moltiplicative sulle loro ampiezze:
+* **Somma:** L'ampiezza dell'intervallo totale è il **prodotto** delle ampiezze dei singoli intervalli ($i_3 = i_1 \cdot i_2$).
+* **Sottrazione:** Si ottiene **dividendo** l'ampiezza del primo per quella del secondo.
+* **Spostamento:** Per "salire" di un intervallo $i$ da una frequenza $f$, si calcola $f \cdot i$; per "scendere", si calcola $f / i$.
+
+---
+
+## 2.5 Scala Pitagorica
+Basata sulla purezza degli intervalli di Quinta ($3/2$) e Quarta ($4/3$):
+* **Tono Pitagorico:** Rapporto $9/8$.
+* **Semitono Pitagorico:** Rapporto $256/243$ (detto *Leimma*).
+* **Problema:** Il semitono pitagorico **non è la metà** del tono. Sommando due semitoni non si ottiene un tono ($1.0534^2 \neq 1.125$).
+
+## 2.6 Scala Naturale (Zarliniana)
+Cerca di massimizzare la consonanza usando rapporti più semplici presenti negli armonici (es. la Terza maggiore $5/4$).
+* **Risultato:** Introduce due tipi di tono: il **Tono grande** ($9/8$) e il **Tono piccolo** ($10/9$).
+* **Comma Sintonico:** La differenza tra questi due toni ($81/80$). La presenza di toni diversi rende la gestione degli strumenti a tastiera molto complessa.
+
+## 2.7 Scala delle quinte e Comma Pitagorico
+Se proviamo a costruire una scala cromatica di 12 note salendo per intervalli di quinta ($3/2$) e riportandoli nell'ottava, scopriamo che il ciclo non si chiude:
+* Dopo 12 quinte, la nota raggiunta è leggermente più alta dell'ottava di partenza.
+* **Comma Pitagorico:** Il rapporto $\frac{531441}{524288} \approx 1.0136$. Questa piccola differenza è l'errore intrinseco dei sistemi basati su rapporti naturali.
+
+---
+
+## 2.8 Il Problema della Trasposizione
+La trasposizione è il processo di spostare una melodia mantenendo costanti gli intervalli.
+* **Conflitto:** Usando scale pitagoriche o naturali, trasponendo una melodia (es. da Do a Re) si generano frequenze leggermente diverse per le stesse note.
+* **Conseguenza:** Per suonare in tutte le tonalità servirebbero infiniti tasti per ogni ottava, poiché ogni scala "esige" la sua frequenza specifica.
+
+---
+
+## 2.9 Il Temperamento Equabile
+La soluzione definitiva consiste nell'abbandonare i rapporti razionali (frazioni) in favore di una divisione matematica esatta dell'ottava in 12 parti uguali.
+
+* **La Formula:** Poiché la somma di 12 intervalli deve dare un raddoppio di frequenza ($x^{12} = 2$), l'ampiezza di un semitono equabile è:
+  $$x = \sqrt[12]{2} \approx 1.059463$$
+* **Caratteristiche:**
+    1.  **Uniformità:** Il semitono è costante. Il tono è esattamente il doppio del semitono ($x^2$).
+    2.  **Trasposizione perfetta:** È possibile suonare in qualsiasi tonalità con soli 12 tasti.
+    3.  **Compromesso:** Tutti gli intervalli (tranne l'ottava) sono leggermente "stonati" rispetto ai rapporti naturali, ma l'orecchio umano si è abituato a questo compromesso.
+
+
+
+### Evoluzione Storica
+* **Vincenzo Galilei:** Propose un'approssimazione razionale del semitono ($18/17$).
+* **Werckmeister (Temperamento Buono):** Un sistema misto che permetteva di suonare in tutte le tonalità pur mantenendo alcune quinte naturali. È il sistema per cui J.S. Bach scrisse *"Il Clavicembalo ben temperato"*.
+
+# Capitolo 3: MIDI - Standard, File e Protocollo
+
+Il **MIDI** (*Musical Instrument Digital Interface*) nasce agli inizi degli anni '80 dall'esigenza di far comunicare strumenti digitali di produttori diversi. Lo standard, curato dalla *MIDI Manufacturers Association* (1984), si compone di tre parti:
+1.  **Interfaccia Hardware**
+2.  **Protocollo di comunicazione**
+3.  **Formato dei File**
+
+---
+
+## 3.1 Interfaccia Hardware
+Lo standard definisce le specifiche fisiche per il trasferimento dei dati:
+* **Velocità:** 31.250 bps (baud rate).
+* **Tipo:** Seriale asincrono (i bit sono spediti uno dopo l'altro).
+* **Connettori:** Storicamente di tipo **DIN a 5 pin**.
+    * Lunghezza massima cavo: 6,6 metri (per evitare attenuazione/interferenze).
+    * **Pinout:**
+        * Pin 1 e 3: Non utilizzati.
+        * Pin 4: Corrente (5V).
+        * Pin 2: Massa (Ground).
+        * Pin 5: Dati MIDI.
+* **Porte:**
+    * **IN:** Riceve dati dall'esterno.
+    * **OUT:** Spedisce dati generati dallo strumento.
+    * **THRU:** Replica in uscita i dati ricevuti dalla porta IN (per collegamenti in cascata).
+
+*Nota: Oggi il collegamento DIN è spesso sostituito dall'USB.*
+
+
+
+---
+
+## 3.2 Protocollo MIDI
+È il linguaggio universale che descrive come suonare le note e gestire i suoni.
+
+### 3.2.1 Le Note
+* Rappresentate da numeri interi **da 0 a 127** (128 note totali).
+* **Do Centrale (C4):** Codice MIDI **60**.
+* Estensione tipica pianoforte (88 tasti): da 21 (A0) a 108 (C8).
+
+### 3.2.2 Velocity (Attacco e Rilascio)
+* **Attacco:** Velocità con cui si preme il tasto (determina il volume/intensità). Range: 0-127.
+* **Rilascio:** Velocità con cui si lascia il tasto (influenza la chiusura del suono).
+
+### 3.2.3 Strumenti (Program Change)
+* Il protocollo gestisce fino a **128 timbri** (Patch).
+* Esempi: 1=Piano acustico, 41=Violino, 74=Flauto.
+
+### 3.2.4 Canali
+* Esistono **16 canali logici**.
+* Permettono di controllare fino a 16 strumenti diversi indipendenti sullo stesso cavo.
+
+### 3.2.5 Suonare una nota
+Per suonare una nota servono due messaggi distinti:
+1.  **Note On:** Inizia a suonare la nota (richiede Codice Nota e Velocity).
+2.  **Note Off:** Smetti di suonare la nota.
+
+### 3.2.6 Tempo e Sincronizzazione (Clock)
+Il MIDI è un protocollo *Real-Time* (esegue appena riceve). Per sincronizzare i dispositivi (es. Sequencer) si usa il **MIDI Clock**:
+* Vengono inviati **24 messaggi di Clock** per ogni semiminima (beat).
+* **BPM (Beat Per Minute):** Determina la durata reale.
+    * *Esempio 120 BPM:* 120 semiminime al minuto $\rightarrow$ 1 semiminima = 0.5 secondi.
+
+---
+
+## 3.3 Standard MIDI File (SMF)
+I file MIDI servono per memorizzare l'esecuzione. I dati multi-byte sono salvati in formato **Big-Endian**.
+
+### 3.3.2 Lunghezza Variabile (Variable Length Quantity - VLQ)
+Per risparmiare spazio, alcuni valori numerici usano un numero variabile di byte (da 1 a 4).
+* Si usano **7 bit** per byte per i dati effettivi.
+* L'**8° bit (MSB)** funge da segnalatore:
+    * `1`: Segue un altro byte.
+    * `0`: È l'ultimo byte del valore.
+
+### 3.3.3 Struttura del File
+Il file è una sequenza di blocchi (*Chunks*):
+`SMF = Header_Chunk + Track_Chunk_1 + ... + Track_Chunk_N`
+
+#### A. Header Chunk (Intestazione)
+Inizia sempre con la stringa **"MThd"**. Lunghezza fissa 6 byte. Contiene:
+1.  **Formato (2 byte):**
+    * *Tipo 0:* Una sola traccia (tutto insieme).
+    * *Tipo 1:* Più tracce simultanee (es. multitraccia).
+    * *Tipo 2:* Più tracce indipendenti (pattern sequenziali).
+2.  **Numero di Tracce (2 byte).**
+3.  **Divisione Temporale (PPQN - 2 byte):** Pulses Per Quarter Note (tick per semiminima).
+
+#### B. Track Chunk (Traccia)
+Inizia con la stringa **"MTrk"**. Contiene la sequenza di eventi.
+Ogni evento è strutturato come:
+`Delta Time + Evento`
+* **Delta Time:** Tempo di attesa rispetto all'evento precedente (in tick). Se è 0, l'evento è simultaneo al precedente.
+
+### Tipologie di Eventi
+
+#### 1. Eventi MIDI (Voice Messages)
+Hanno uno **Status Byte** (MSB=1, indica tipo e canale) seguito da 1 o 2 **Data Bytes**.
+
+| Evento | Status (Hex) | Parametro 1 | Parametro 2 |
+| :--- | :---: | :--- | :--- |
+| **Note Off** | `0x8n` | Nota (0-127) | Velocity rilascio |
+| **Note On** | `0x9n` | Nota (0-127) | Velocity attacco |
+| **Aftertouch** | `0xAn` | Nota | Pressione |
+| **Control Change** | `0xBn` | Num. Controller | Valore (es. Pedale Sustain = 64) |
+| **Program Change** | `0xCn` | Num. Programma | *(non usato)* |
+| **Channel Aftertouch**| `0xDn` | Pressione | *(non usato)* |
+| **Pitch Bend** | `0xEn` | Valore LSB | Valore MSB (14 bit totali) |
+*(dove `n` è il numero del canale 0-15)*
+
+#### 2. Running Status (Ottimizzazione)
+Se un evento ha lo stesso Status Byte del precedente (es. una serie di Note On sullo stesso canale), lo Status Byte può essere omesso.
+* *Esempio:* Invece di `NoteOn C4, NoteOn E4`, si invia `NoteOn C4, E4`.
+
+#### 3. Il "Trucco" del Note Off
+Per sfruttare al massimo il Running Status, invece di usare il comando `Note Off` (`0x8n`), si usa un `Note On` con **Velocity = 0**. Questo permette di avere lunghe sequenze di soli comandi `Note On`.
+
+#### 4. Meta Eventi
+Dati non musicali (testo, tempo, copyright). Iniziano sempre con `0xFF`.
+Formato: `0xFF + Tipo + Lunghezza + Dati`.
+
+* **End of Track (`0x2F`):** Obbligatorio alla fine di ogni traccia.
+* **Set Tempo (`0x51`):** Specifica i microsecondi per semiminima (3 byte). Default 500.000 (120 BPM).
+* **Time Signature (`0x58`):** Specifica la metrica (numeratore, denominatore come potenza di 2, click metronomo).
+* **Key Signature (`0x59`):** Tonalità (alterazioni e modo).
+* **Testi:** Copyright (`0x02`), Nome Traccia (`0x03`), Lyrics (`0x05`).
+
+
+
+# Capitolo 4: Rappresentazione e analisi della musica
+
+Questo capitolo esplora come la musica può essere descritta e memorizzata digitalmente per essere manipolata da un computer, andando oltre il formato MIDI e la partitura tradizionale.
+
+## 4.1 Partitura
+La partitura è la rappresentazione simbolica classica, evolutasi dai **neumi** (segni medievali per il canto) fino al pentagramma moderno.
+* **Funzione:** Ottimale per l'esecuzione umana.
+* **Limite:** Difficile da manipolare per un computer rispetto a formati digitali strutturati specifici.
+
+## 4.2 MusicXML
+**MusicXML** è lo standard basato su XML per lo scambio di partiture digitali. Permette di descrivere la gerarchia musicale in modo leggibile sia da umani che da software.
+
+### 4.2.1 Struttura XML
+Usa i **tag** (es. `<note>...</note>`) per creare una struttura ad albero.
+* **Validazione:** Definita tramite **XSD** (XML Schema Definition), che ha sostituito i vecchi DTD.
+
+### 4.2.2 Struttura di un file ("Ciao Mondo")
+Un file minimo contiene:
+1.  `<score-partwise>`: Elemento radice.
+2.  `<part-list>`: Elenco degli strumenti.
+3.  `<part>`: Contiene la musica (identificata da un ID).
+4.  `<measure>`: La singola battuta.
+    * `<attributes>`: Chiave, tempo (es. 4/4), armatura.
+    * `<note>`: Contiene `<pitch>` (altezza) e `<duration>` (durata).
+
+### 4.2.3 Part-wise vs Score-wise
+L'ordine gerarchico può variare:
+* **Part-wise (Orizzontale):** `<part>` contiene `<measure>`. È il formato più comune.
+* **Score-wise (Verticale):** `<measure>` contiene `<part>` (come la lettura di un direttore d'orchestra).
+
+---
+
+## 4.3 Libreria Python: music21
+Una potente libreria (MIT) per l'analisi e la manipolazione musicale simbolica. Usa un approccio a oggetti.
+
+### 4.3.1 Oggetti principali
+* **`note.Note`:** Rappresenta una nota.
+    * Attributi: `name` (es. 'A'), `octave` (es. 4), `pitch.frequency` (es. 440), `pitch.midi`.
+* **`duration.Duration`:** Rappresenta la durata.
+    * Unità base: Semiminima (Quarter Note) = 1.0.
+
+### 4.3.2 Liste e Flussi (Stream)
+* **Stream:** Un contenitore gerarchico (simile a una lista) per oggetti musicali. Gli oggetti hanno un **offset** (posizione temporale).
+    * Gerarchia tipica: `Score` -> `Part` -> `Measure` -> `Note`.
+
+### 4.3.3 Visualizzazione
+Il metodo `.show()` permette di visualizzare il risultato:
+* `s.show()`: Apre il software di notazione (es. MuseScore).
+* `s.show('midi')`: Riproduce l'audio.
+
+---
+
+## 4.4 Rappresentazioni Specifiche
+Per l'analisi algoritmica (es. ricerca di plagi o pattern), la partitura viene spesso convertita in stringhe.
+
+### 1. TinyNotation
+Formato stringa semplificato di music21.
+* Esempio: `'tinyNotation: 4/4 C4 D4 E4'` (Scala di Do).
+
+### 2. Rappresentazione "Note" (Assoluta)
+Una stringa che elenca le note in sequenza (nome + ottava).
+* Esempio: `D5 C5 B4 A4...`
+* **Problema:** Non è invariante alla trasposizione. Se la tonalità cambia, la stringa cambia completamente.
+
+### 3. Rappresentazione "Interval" (Relativa)
+Descrive la distanza in **semitoni** tra una nota e la successiva (`+` sale, `-` scende).
+* **Vantaggio:** È **invariante alla trasposizione**. La stessa melodia in tonalità diverse produce la stessa sequenza di intervalli.
+* *Nota:* La prima nota e le pause (`p`) non generano intervalli numerici.
+
+# Capitolo 5: Similarità e plagio musicale
+
+In questo capitolo si affronta il problema della similarità tra brani musicali, base fondamentale per l'analisi del **plagio** (questione controversa con forti implicazioni economiche e legali).
+* **Il Problema:** Non esiste una metrica formale assoluta per definire oggettivamente quanto due composizioni siano simili; il giudizio è spesso soggettivo.
+* **L'Approccio:** Ci si focalizza sull'**aspetto melodico**, utilizzando rappresentazioni basate su stringhe di caratteri e algoritmi di confronto testuale.
+
+---
+
+## 5.1 Stringhe e distanze
+Una melodia può essere rappresentata come una stringa, ovvero una sequenza di caratteri presi da un alfabeto $\Sigma$.
+
+### 5.1.1 Edit Distance (Distanza di Levenshtein)
+Definisce il numero minimo di operazioni necessarie per trasformare una stringa in un'altra. Le operazioni consentite sono:
+1.  **Cancellazione:** Eliminare un simbolo ($torta \to trta$).
+2.  **Inserimento:** Aggiungere un simbolo ($torta \to tortar$).
+3.  **Sostituzione:** Cambiare un simbolo ($torta \to porta$).
+
+La distanza si calcola formalmente tramite un algoritmo di **Programmazione Dinamica** che utilizza due matrici $(n+1) \times (m+1)$:
+* Una matrice per i costi (valore della distanza minima).
+* Una matrice per le operazioni (quale operazione ha generato il minimo).
+
+La formula ricorsiva è:
+$$ed(\alpha(i), \beta(j)) = \min(Cancellazione, Inserimento, Sostituzione)$$
+
+#### Algoritmo: Calcolo Edit Distance
+Ecco l'implementazione per calcolare la distanza e tracciare le operazioni:
+
+```java
+public static int computeED(String m1, String m2) {
+    int len1 = m1.length();
+    int len2 = m2.length();
+    // d = matrice distanze, s = matrice operazioni
+    int[][] d = new int[len1+1][len2+1];
+    int[][] s = new int[len1+1][len2+1];
+
+    // Inizializzazione bordi (caso stringhe vuote)
+    s[0][0] = '-';
+    for (int i=1; i<=len1; i++) {
+        d[i][0] = i; 
+        s[i][0] = 'D'; // Delete
+    }
+    for (int j=1; j<=len2; j++) {
+        d[0][j] = j; 
+        s[0][j] = 'I'; // Insert
+    }
+
+    // Riempimento matrice (Programmazione Dinamica)
+    for (int i=1; i<=len1; i++) {
+        for (int j=1; j<=len2; j++) {
+            // Se i caratteri sono uguali
+            if (m1.charAt(i-1) == m2.charAt(j-1)) {
+                d[i][j] = d[i-1][j-1];
+                s[i][j] = 'E'; // Equal
+            } else {
+                // Calcolo costi operazioni
+                int canc = d[i-1][j];
+                int ins = d[i][j-1];
+                int subst = d[i-1][j-1];
+                
+                // Trova il minimo
+                if (subst <= canc && subst <= ins) {
+                    d[i][j] = 1 + subst;
+                    s[i][j] = 'S'; // Substitution
+                } else if (canc <= ins) {
+                    d[i][j] = 1 + canc;
+                    s[i][j] = '^'; // Delete (Up)
+                } else {
+                    d[i][j] = 1 + ins;
+                    s[i][j] = '<'; // Insert (Left)
+                }
+            }
+        }
+    }
+    return d[len1][len2]; // Risultato finale
+}
+```
+
+### 5.1.2 Ricerca di sottostringhe (String Matching)
+Serve a determinare se un frammento melodico (pattern) è presente in un brano (testo).
+
+* **Algoritmo Naive (Forza Bruta):** Controlla il pattern a partire da ogni posizione possibile del testo. Complessità $O(nm)$ (lenta se ci sono molte ripetizioni).
+
+```Java
+// Logica Naive
+stringSearchNaive(String pattern, String str) {
+    int p=pattern.length();
+    int n=str.length();
+    for (int i = 0; i <= n - p; i++) {
+        int j;
+        for (j = 0; j < p; j++)
+            if (text[i+j] != pattern[j]) break;
+            if (j == p) return i; // pattern found at offset i.
+    }
+    return n; // pattern not found.
+}
+```
+
+* **Algoritmo KMP (Knuth-Morris-Pratt):** Più efficiente ($O(n+m)$). Sfrutta una **pre-computazione** sul pattern per costruire una tabella `next`. Questa tabella indica, in caso di mismatch, di quanto scorrere il pattern senza dover ricontrollare i caratteri già noti (sfruttando la conoscenza di prefissi che sono anche suffissi).
+
+```Java
+KMP-precomputation(String pattern) {
+    m=pattern.length;
+    int next[m];
+    next[1]=0;
+    k=0;
+    for (q=2; q<m; i++) {
+        while ((k>0) and (pattern[k+1] <> pattern[q])) {
+            k=next[k];
+    }
+    if (pattern[k+1] == pattern[i]) then k=k+1;
+    next[q]=k;
+    }
+    return next[];
+}
+```
+
+```Java
+stringSearchKMP(String pattern, String str) {
+    n = str.length;
+    m = pattern.length;
+    next = KMP-precomputation(pattern);
+    q = 0; //#chars match
+    for (i=1; i<n; i++) {
+        while (q>0) and (pattern[q+i] <> str[i])
+            q = next[q]; //next char does not match
+        if (pattern[q+1] == str[i])
+            q = q+1; //next char match
+        if (q == m)
+            print "Occorrenza alla posizione i-m";
+        q = next[q]; //Look for next match
+    }
+}
+```
+
+### 5.1.3 Ricerca Approssimata
+Combina i concetti precedenti: cerca la sottostringa del testo che ha la **minima edit distance** rispetto al pattern (non una corrispondenza esatta, ma la più simile).
+
+---
+
+## 5.2 Similarità basata sulla distanza testuale
+L'idea centrale è usare l'Edit Distance come misura inversa di similarità:
+* **Distanza bassa:** Melodie simili (poche modifiche).
+* **Distanza alta:** Melodie diverse.
+
+### Esempio: "Fra Martino"
+* Melodia A vs Melodia B (lieve variazione): Distanza 5 $\to$ **Simili**.
+* Melodia A vs Melodia B trasposta (in altra tonalità): Distanza 24 $\to$ **Sembrano diverse** (falso negativo).
+
+### 5.2.1 Il Problema della Trasposizione
+Se si usano nomi assoluti delle note (es. "C4"), l'algoritmo fallisce se i brani sono in tonalità diverse.
+
+**Caso Studio: Al Bano ("I cigni di Balaka") vs Michael Jackson ("Will you be there")**
+* Confronto tonalità originali (La Magg vs Re Magg): Distanza **27** (Massima).
+* Confronto dopo trasposizione (Entrambi in Re Magg): Distanza **11** (Molto bassa, indica forte similarità).
+
+Lo stesso principio vale per le stringhe di accordi.
+
+### 5.2.2 Altre Rappresentazioni (Metacaratteri)
+Per risolvere i problemi di trasposizione e tempo, si usano codifiche diverse dove ogni nota è un "metacarattere" (stringa trattata come singolo simbolo).
+
+#### 1. Rappresentazione Note (Assoluta)
+* **Codifica:** Nome nota + Alterazione + Ottava (es. `C5`, `Bb4`, `G#4`). Include `p` per pausa.
+* **Difetto:** Sensibile alla trasposizione (cambia se cambia la tonalità).
+
+#### 2. Rappresentazione Pitch (Intervalli)
+* **Codifica:** Distanza in semitoni tra note successive (es. `+4` sale di una terza maggiore, `-2` scende di una seconda maggiore).
+* **Vantaggio:** **Invariante alla trasposizione**. La melodia `Do-Mi-Sol` è sempre `+4 +3`, indipendentemente dalla tonalità di partenza.
+
+#### 3. Rappresentazione Pitch-da (Intervalli + Durata Assoluta)
+* **Codifica:** Intervallo + Simbolo Durata.
+* **Alfabeto Durate:** `w` (whole/intero), `h` (half/metà), `q` (quarter/quarto), `e` (eight/ottavo), `s` (sixteenth/sedicesimo).
+* **Esempio:** `+3h` (sale di 3 semitoni, durata minima).
+* **Difetto:** Sensibile al tempo assoluto (se suono il brano più velocemente, la stringa cambia).
+
+#### 4. Rappresentazione Pitch-nd (Intervalli + Durata Relativa)
+* **Codifica:** Intervallo + Ripetizione simbolo base `b`.
+* **Metodo:** Si calcola il MCD (Massimo Comun Divisore) delle durate e si usa `b` come unità.
+* **Esempio:** Se `b`=croma, una semiminima è `bb`. Stringa: `+3bb -2b`.
+* **Vantaggio:** Risolve il problema del tempo assoluto (funziona anche se il brano è suonato al doppio della velocità).
+
+#### 5. Rappresentazione Pitch-ndt (Durata Relativa Tollerante)
+* **Problema della Pitch-nd:** Se c'è una nota brevissima (es. acciaccatura), il MCD diventa piccolissimo e la stringa diventa eccessivamente lunga.
+* **Soluzione:** Si sceglie un divisore più grande, ignorando o approssimando le durate "anomale" o troppo brevi per mantenere la rappresentazione compatta.
+
+# Capitolo 6: Composizione automatica semplice
+
+In questo capitolo vengono presentate tecniche di composizione automatica basate su procedimenti non musicali (matematici o logici) sui quali vengono innestate regole per la produzione sonora.
+
+---
+
+## 6.1 Metodo di Guido d'Arezzo
+Un metodo "algoritmico" (con componenti casuali) ideato intorno all'anno 1000 per trasformare un **testo** in una **melodia**.
+
+* **Mapping:** Associa le vocali ($a, e, i, o, u$) a una serie di note su un'estensione di 2 ottave. Poiché ci sono più note che vocali, l'associazione è ciclica (una vocale corrisponde a più note possibili).
+* **Procedimento:**
+    1.  Si estrae la sequenza di vocali dal testo (es. "dalle parole" $\to$ `a e a o e`).
+    2.  Per ogni vocale, si sceglie una delle note corrispondenti.
+    3.  La scelta tra le opzioni (es. quale "a" usare) è lasciata al caso o al gusto (aspetto non deterministico).
+
+---
+
+## 6.2 Il Gioco dei Dadi (Musikalisches Würfelspiel)
+Sistema popolare nel XVIII secolo (famosa la versione attribuita a **Mozart**). Si basa sulla ricombinazione casuale di frammenti musicali pre-composti.
+
+* **Meccanismo:** Si lanciano 2 dadi (somma da 2 a 12) per scegliere il contenuto di ogni battuta del brano.
+* **Struttura (Esempio di Mozart):**
+    * Il brano dura 16 battute.
+    * Per ogni posizione temporale (es. battuta n. 1), esistono 11 varianti possibili (una per ogni risultato dei dadi).
+    * Totale frammenti: $16 \times 11 = 176$ battute precostruite.
+* **Il "Trucco":** Per garantire che il risultato abbia senso musicale, tutte le 11 opzioni per una specifica battuta condividono la stessa **funzione armonica** (es. tutte le opzioni per la battuta 1 sono in Do Maggiore, tutte quelle per la battuta 3 sono in Sol, etc.).
+    * L'armonia è fissa a priori, mentre melodia e ritmo variano casualmente.
+
+---
+
+## 6.3 Compositori basati su Catene di Markov
+Modello matematico che descrive l'evoluzione di un sistema basandosi su probabilità di transizione tra stati.
+
+* **Funzionamento:** Lo stato futuro dipende solo dallo stato attuale e da una distribuzione di probabilità.
+* **Applicazione Musicale:**
+    * **Stati:** Note musicali (o accordi).
+    * **Matrice di Transizione:** Definisce la probabilità che una nota $X$ sia seguita dalla nota $Y$.
+    * *Esempio:* Se suono un Do, ho il 70% di probabilità di andare al Re e il 30% di andare al Mi.
+
+---
+
+## 6.4 Compositori basati su Automi Cellulari (CA)
+Gli automi cellulari (introdotti da Von Neumann) sono modelli discreti studiati per l'auto-riproduzione e la complessità emergente.
+
+### 6.4.1 Componenti di un CA
+1.  **Universo:** Griglia di celle (spesso toroidale per evitare bordi).
+2.  **Stati:** Condizione della cella (es. Viva/Morta, o colori multipli).
+3.  **Vicinato:** Quali celle influenzano quella centrale (es. le 8 celle adiacenti).
+4.  **Regole di Evoluzione:** Determinano lo stato al tempo $t+1$ in base al vicinato al tempo $t$.
+
+### 6.4.3 Game of Life (Conway)
+Il CA più famoso.
+* **Stati:** Viva (1) / Morta (0).
+* **Regole:**
+    * *Nascita:* Cella morta con 3 vicini vivi $\to$ Viva.
+    * *Sopravvivenza:* Cella viva con 2 o 3 vicini vivi $\to$ Resta Viva.
+    * *Morte:* Altrimenti (sovraffollamento o solitudine).
+
+### 6.4.4 Cyclic Cellular Automaton (CCA)
+Un CA con $p$ stati (colori). Una cella passa allo stato successivo ($k+1$) se ha abbastanza vicini in quello stato. Genera pattern a spirale.
+
+### 6.4.5 Esempio di Compositore Automatico con CA
+Viene proposto un sistema ibrido che usa due automi in parallelo:
+1.  **Game of Life:** Determina *quando* suonare (trigger). Se la cella $(i,j)$ è viva, si genera un evento.
+2.  **Automa Ciclico:** Determina la *nota di riferimento* (in base al colore della cella corrispondente).
+
+**Algoritmo di Generazione:**
+* **Pitch (Altezza):** Le coordinate $(i, j)$ della cella viva determinano gli intervalli per generare una tripla di note a partire dalla nota di riferimento.
+* **Ritmo:** Lo stato delle 8 celle del vicinato viene usato come un byte (256 combinazioni) per selezionare un pattern ritmico predefinito.
+* **Scansione:** L'automa viene letto per colonne, dall'alto in basso, da sinistra a destra.
+
+
+## 6.5 Musica Evolutiva
+Gli **algoritmi evolutivi** si ispirano al processo di selezione naturale di Darwin: una popolazione di soluzioni si evolve per adattarsi a criteri stabiliti, sopravvivendo o estinguendosi.
+
+### 6.5.1 Algoritmi Genetici (GA)
+Sono la tipologia più diffusa. Le soluzioni musicali sono trattate come individui biologici.
+* **Cromosoma:** La rappresentazione simbolica della soluzione (stringa di bit o caratteri).
+* **Gene:** L'unità funzionale minima del cromosoma (un "pezzetto" della soluzione).
+* **Operazioni Evolutive:**
+    1.  **Crossover (Ricombinazione):** Genera un nuovo individuo combinando parti di due genitori (es. metà del cromosoma A + metà del cromosoma B).
+    2.  **Mutazione:** Modifica casualmente alcuni geni di un individuo per introdurre variabilità.
+* **Fitness Function (Funzione di Adattamento):** Una formula matematica che valuta la "bontà" di una soluzione. Determina chi sopravvive alla generazione successiva.
+
+**Struttura dell'algoritmo:**
+1.  Generazione popolazione iniziale casuale.
+2.  Ciclo (fino a MAX iterazioni):
+    * Crossover tra coppie.
+    * Mutazione.
+    * Selezione dei migliori in base alla Fitness.
+
+```Java
+P = setInitialPopulation()
+for (i=1 to MAX)
+    C = Applica il Crossover a tutte le coppie di P
+    M = P Applica la Mutazione a tutti gli elementi di P
+    P = i migliori SIZE elementi di P+C+M in funzione di f
+    endfor
+Fornisci in output il miglior elemento di P
+```
+
+### 6.5.2 Esempio: Music GA
+Applicazione per creare una frase pop di 4 battute (Melodia + Accordi).
+* **Gene:** Rappresenta una frazione di battuta (es. 2/4) contenente un accordo e un frammento melodico.
+* **Cromosoma:** Sequenza di geni che formano l'intera frase.
+* **Regole della Fitness Function (Esempio):**
+    * *Premio (+):* Note della melodia appartenenti all'accordo sottostante; gradi congiunti; cadenze finali (es. V-I); inizio/fine sulla tonica.
+    * *Penalità (-):* Note estranee all'accordo (salvo note di passaggio); salti melodici vietati; successioni armoniche inusuali.
+
+---
+
+## 6.6 Fractal Music
+Si basa sulla geometria dei **frattali** (oggetti geometrici definiti ricorsivamente, autosimili a qualsiasi scala, come la *Curva di Von Koch*).
+
+### Applicazione Musicale
+Si introduce una struttura ricorsiva nella composizione:
+1.  **Sostituzione degli intervalli:** Si parte da un elemento base (es. due note). Ogni nota viene poi sostituita da una copia dell'elemento base, scalata secondo l'intervallo della nota originale. Il processo può essere ripetuto all'infinito.
+2.  **Sostituzione delle durate:** Si divide ricorsivamente la durata delle note (es. dimezzando ad ogni iterazione).
+3.  **Sovrapposizione:** Gli elementi generati ricorsivamente possono essere suonati in sequenza o sovrapposti temporalmente.
+
+---
+
+## 6.7 e 6.8 Fibonacci Music
+Utilizza la **successione di Fibonacci** ($F_n = F_{n-1} + F_{n-2} \rightarrow 0, 1, 1, 2, 3, 5, 8, 13...$).
+
+### Metodo di composizione
+* Si prendono le singole cifre della sequenza (0, 1, 1, 2, 3, 5, 8, 1, 3...).
+* Si mappa ogni cifra (0-9) su una nota di una scala (es. Scala Maggiore estesa a 10 note).
+* La sequenza generata viene poi elaborata ritmicamente e armonicamente per renderla musicale.
+
+### Digressione Matematica e Naturale
+* Originata dal problema della crescita di una popolazione di conigli (Fibonacci, 1202).
+* Il rapporto tra due numeri successivi di Fibonacci tende al **Rapporto Aureo** ($\phi \approx 1.618$).
+* Presente in natura (petali dei fiori, spirale delle conchiglie) e usata spesso in arte e architettura per le sue proporzioni estetiche.
+
+---
+
+## 6.9 Musica e Simmetria
+La simmetria è una trasformazione che lascia un oggetto inalterato rispetto a un sistema di riferimento (es. rotazione, riflessione).
+
+### Simmetria in Musica (Classica)
+* **Traslazione:** Ripetizione di una struttura ritmica o melodica spostata nel tempo o nell'altezza (es. *Preludio in Do* di Bach, *5a Sinfonia* di Beethoven).
+* **Riflessione:**
+    * **Retrogrado:** Esecuzione dall'ultima nota alla prima (simmetria verticale).
+    * **Inverso:** Inversione della direzione degli intervalli (simmetria orizzontale).
+    * **Retrogrado-Inverso:** Combinazione delle due.
+* **Simmetria Formale:** Struttura A-B-A (Forma tripartita).
+* **Canone:** Sovrapposizione della stessa melodia traslata nel tempo.
+
+### Simmetria negli Accordi
+Divisione simmetrica dell'ottava (12 semitoni):
+* Accordo diminuito (3+3+3+3 semitoni).
+* Accordo aumentato (4+4+4 semitoni).
+* Scala esatonale (2+2+2+2+2+2 semitoni).
+
+### 6.9.7 Dodecafonia (Arnold Schönberg)
+Sistema che abbandona la tonalità basandosi sull'equivalenza delle 12 note.
+* **La Serie:** Una sequenza fondamentale che contiene tutte le 12 note della scala cromatica (senza ripetizioni).
+* **Trasformazioni della Serie:** La composizione si sviluppa applicando simmetrie alla serie fondamentale:
+    1.  **Fondamentale:** La serie originale.
+    2.  **Retrogrado:** La serie letta al contrario.
+    3.  **Contrario (Inverso):** Gli intervalli ascendenti diventano discendenti e viceversa.
+    4.  **Retrogrado-Contrario:** L'inverso letto al contrario.
+
+*Esempio citato:* Anton Webern, Variazioni op. 27.
 
 # Appunti in classe
-
-## Suoni
-- Un corpo in vibrazione produce delle onde sonore che si propagano nell'aria raggiungendo l'orecchio.
-La velocità del suono nell'aria è di circa <em>343,1 m/s</em> ad una temperatura di 20°
-Formula: $$331,3 + 0,6*t$$
-<em>t</em>: temperatura misurata in Celsius
-
-- **Frequenza**: **Altezza** del suono e l'intensità che determina il **volume** del suono percepito e viene misurata in Hertz
-- **Timbro**: Forma delle onde
-- **Intensità**: Misurata in decibel (dB)
-
-## Note
-- L'altezza di una nota permette di distringuere un suono frave da un suono acuto
-- La nota posizionata al centro del pianoforte ha la frequenza particolare di 440Hz
-- La capacità di individuare la differenza di frequenza è soggettiva
-- Due suoni con la stessa frequenza sono consonanti e quindi risultano più gradevoli
-- **Intervallo**: Distanza fra due suoni
-    $$f_1/f_2=intervallo$$
-
-    - **Intervallo** = 1 viene detto **unisono**
-    - **Intervallo** = 2 viene detto **ottava**
-        - Data una frequenza f<sub>r</sub> si possono ottenere le ottave corrispondenti raddoppiando o dimezzando
-            $$f_n=f_r*2^n, n \in Z$$
-            - f<sub>n</sub> &gt; f<sub>r</sub>: ottave più acute
-            - f<sub>n</sub> &lt; f<sub>r</sub>: ottave più gravi
-            - ottava con <em>n</em>
-- **Timbro**: Rappresenta l'insieme delle caratteristiche di un suono che permette di distinguere diverse sensazioni uditive per suoni con timri diversi
-- **Durata**: Rappresenta l'intervallo di tempo che va dall'inizio della nota fino al momento in cui cessa il suono
-## **Note in un'ottava**
-- Se ad ogni frequenza facciamo corrispondere una nota alla avremmo infinite note, quindi per convenzione le ottave sono divise in 12 note
-L'ottava è divisa in 12 intervalli detti semitoni uguali
-
-    $$f_k=f_R*(2^{1/12})^k, k \in 0,1,2,...,12$$
-
-    Le note di un ottava sono identificate da nomi, 7 hanno un nome proprio mentre 5 si ottengono usando le alterazioni bemolle (♭) che abbassa la frequenza e diesis (#) che alza la frequenza
-
-    - f<sub>k</sub>=1.05946, k rappresenta la nota di riferimento, k=12 rappresenta doppio frequenza di k
-
-## **Tono e Semitono**
-- **Semitono**: Distanza fra una nota i e quella successiva i+1
-    - Simbolo s
-- **Tono**: Distanza fra una nota i e la nota i+2
-    - Simbolo T
-
-## Pentagramma
-- Formato da cinque linee parallele
-- **Chiave**: rappresenta l'altezza dell'ottava di riferimento
-- Rappresentazione durata:
-    - **Semibreve**: equivale a 4 quarti
-    - **Minima**: equivale a 2 quarti
-    - **Semiminima**: equivale a 1 quarto
-    - **Croma**: equivale a 1 ottavo
-    - **Semicroma**: equivale a 1 sedicesimo
-
-        <img src="https://www.accordiespartiti.it/wp-content/uploads/2013/01/valori-musicali.png" width="500">
-
-    - **Punto**: aumenta durata del 50%
-    - **Durata di ogi battuta** viene specificata subito dopo la chiave
-        - Il numeratore rapprresenta il numero di elementi di cui è fatta
-        - Il denominatore la durata di ogni singolo elemento
-
-## Scale
-- Una scala musicale è una sequenza di suoni con altezza crescente che partono da una determinata nota e arrivanno all'ottava successivo, identificata da una sequenza di <em>n</em> interi positivi
 
 $$\sum_{i=1}^{n} s^i=12$$
 
