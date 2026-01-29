@@ -165,6 +165,55 @@ Il tono e il semitono sono le unità di misura fondamentali per calcolare la dis
 
 Queste unità servono a definire la "geometria" delle scale. Ad esempio, la scala maggiore è costruita sulla sequenza specifica:
 **T - T - s - T - T - T - s**
+## 1.3 Note in un'ottava
+
+In questo paragrafo si analizza come l'infinita gamma di frequenze sonore venga discretizzata nel sistema musicale occidentale per creare un insieme finito e utilizzabile di note.
+
+**La suddivisione delle frequenze**:
+* **Infinite vs Discrete:** Sebbene fisicamente esistano infinite frequenze, il sistema musicale ne seleziona solo un sottoinsieme specifico.
+* **Motivazione:** È difficile per l'orecchio umano distinguere note con frequenze troppo vicine tra loro.
+* **Standard:**
+    * L'ottava è divisa in **12 note** (più la tredicesima che è l'ottava della prima).
+    * La frequenza di riferimento è il **La = 440 Hz**.
+
+**Calcolo delle Frequenze (Sistema Temperato)**:
+Dato che l'ottava corrisponde a un raddoppio di frequenza ($2f$) e che è divisa in 12 intervalli uguali (semitoni), la formula per calcolare le frequenze è esponenziale.
+
+Data una frequenza di riferimento $f_R$:
+$$f_k = f_R \cdot \sqrt[12]{2}^k \approx f_R \cdot 1,05946^k$$
+Dove:
+* $k$ è il numero di semitoni di distanza dalla nota di riferimento.
+* $\sqrt[12]{2} \approx 1.05946$ è il fattore moltiplicativo costante del semitono.
+
+*Esempio:*
+Il primo semitono dopo il La (440 Hz) è il La# (o Sib):
+$$f_1 = 440 \cdot 1,05946 \approx 466 \text{ Hz}$$
+
+**Tabella delle Frequenze e MIDI**:
+Il testo riporta una tabella dettagliata che associa a ogni nota:
+1.  **Nome:** (es. C, C#, D...)
+2.  **Ottava:** (da 0 a 8).
+3.  **Codice MIDI:** Un numero intero univoco (es. La4 = 69).
+4.  **Frequenza:** Il valore in Hz (es. La4 = 440.000 Hz).
+
+*Range del Pianoforte:* Va dalla nota **La0** (MIDI 21, 27.5 Hz) fino al **Do8** (MIDI 108, 4186 Hz).
+
+**Nomenclatura**:
+Vengono presentati i due sistemi principali di denominazione:
+* **Latino:** Do, Re, Mi, Fa, Sol, La, Si.
+* **Anglosassone:** C, D, E, F, G, A, B.
+
+**Le Alterazioni**:
+Oltre alle 7 note "naturali", le altre 5 si ottengono tramite alterazioni:
+* **Diesis ($\sharp$ o ]):** Alza la nota (frequenza successiva).
+* **Bemolle ($\flat$ o [):** Abbassa la nota (frequenza precedente).
+* **Doppie alterazioni:** Doppio diesis (]]) e doppio bemolle ([[) spostano di due semitoni (un tono intero).
+
+*Esempio di equivalenza (Enarmonia):* Do diesis (C#) suona uguale a Re bemolle (Db).
+
+## 1.4 Tono e Semitono (Definizione preliminare)
+* **Semitono (s):** Distanza tra una nota $i$ e la successiva $i+1$ (es. Mi-Fa, o La-La#). È l'intervallo minimo.
+* **Tono (T):** Distanza tra una nota $i$ e la nota $i+2$ (es. Do-Re, o Mi-Fa#). Corrisponde a due semitoni.
 
 ## 1.5 Rappresentazione della Musica
 
@@ -446,7 +495,7 @@ Si devono evitare effetti sgradevoli legati alle **consonanze perfette** (unison
 #### Salti melodici vietati (nella singola linea)
 * **Da evitare:** Salti eccedenti e diminuiti, salti di 7ª (maggiore o minore) e sequenze di due salti che sommano un intervallo di 7ª.
 * **Salto di 8ª:** Consentito, ma la melodia deve cambiare direzione subito dopo il salto.
-# 1.12 Successioni armoniche tipiche
+## 1.12 Successioni armoniche tipiche
 
 In musica non esistono regole ferree, ma la pratica consolidata (come riportato da Piston) permette di individuare dei movimenti degli accordi più probabili e "naturali" per l'orecchio.
 
@@ -593,7 +642,7 @@ La soluzione definitiva consiste nell'abbandonare i rapporti razionali (frazioni
 
 
 
-### Evoluzione Storica
+### 2.10 Evoluzione Storica
 * **Vincenzo Galilei:** Propose un'approssimazione razionale del semitono ($18/17$).
 * **Werckmeister (Temperamento Buono):** Un sistema misto che permetteva di suonare in tutte le tonalità pur mantenendo alcune quinte naturali. È il sistema per cui J.S. Bach scrisse *"Il Clavicembalo ben temperato"*.
 
@@ -690,7 +739,7 @@ Ogni evento è strutturato come:
 `Delta Time + Evento`
 * **Delta Time:** Tempo di attesa rispetto all'evento precedente (in tick). Se è 0, l'evento è simultaneo al precedente.
 
-### Tipologie di Eventi
+### 3.3.4 Tipologie di Eventi
 
 #### 1. Eventi MIDI (Voice Messages)
 Hanno uno **Status Byte** (MSB=1, indica tipo e canale) seguito da 1 o 2 **Data Bytes**.
