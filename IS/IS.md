@@ -2323,3 +2323,22 @@ i servizi non sono le operazioni, ma un gruppo di operazioni coese
     fare test funzionale
 
     per ogni caso d'uso da testare fare progettazione del test e lista dei casi di test in un documento a apparte
+
+
+un unico documento con piano di test e progettazione del test, oppure progettazione e specifica in un altro documento
+
+test di classe di equivalenza non valida, va testata quasi sempre con la classe di equivalenza valida
+
+slide 38 if nonempty and quotes, quoted è opzianale e serve per ridurre i casi di test invece notempty in quel caso è obbligatorio
+
+Parameters and Categories
+slide 47 sono tutte scelte non categorie
+
+choices slide 48 0 e >=21, 21 è un valore non una scelta
+
+nel documento scritto aggiungere altre scelte oltre formato giusto o no, tipo manca @, manca dominio ecc
+
+nei test frame aggiungere anche il resto
+
+sistemare system design modifica tabella e cambio delle tabelle in class diagram con tipo oggetti
+usare junit 5.1 e non 6 a causa dei vari cambi
