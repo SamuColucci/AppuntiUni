@@ -1,4 +1,4 @@
-# 1.1 Capitolo 1: Nozioni di base
+# Capitolo 1: Nozioni di base
 ## 1.1 Natura e Fisica del Suono
 
 Il suono è la percezione uditiva prodotta dalla **vibrazione** di un corpo, che genera onde di pressione trasmesse attraverso un mezzo elastico (come l'aria).
