@@ -150,12 +150,14 @@ Ogni tasto del pianoforte (88 in totale) è associato a:
 
 Il tono e il semitono sono le unità di misura fondamentali per calcolare la distanza tra due note nel sistema musicale occidentale.
 
+**Semitono**: 
 * **Definizione:** È la distanza minima tra due note adiacenti nel sistema temperato.
 * **Sul Pianoforte:** Corrisponde alla distanza tra un tasto e quello immediatamente successivo (bianco o nero che sia).
 * **Esempi:** - Tra **Mi** e **Fa** (due tasti bianchi adiacenti senza tasto nero in mezzo).
   - Tra **La** e **La#** (un tasto bianco e il tasto nero subito dopo).
 * **Codice MIDI:** Corrisponde a una differenza di **1** nell'identificativo MIDI ($i$ e $i+1$).
 
+**Tono**:
 * **Definizione:** È composto dall'unione di due semitoni ($T = s + s$).
 * **Esempi:**
   - Tra **La** e **Si** (perché in mezzo c'è il La#).
@@ -278,8 +280,9 @@ Una scala è una sequenza di suoni ad altezza crescente che collegano una nota a
 
 Da un punto di vista matematico, una scala è identificata da una sequenza di $n$ interi positivi $\langle s_1, s_2, \dots, s_n \rangle$ (espressi in semitoni) la cui somma è esattamente **12**.
 
-La posizione di ogni nota rispetto alla tonica (distanza cumulativa $D_i$) è data dalla formula:
-$$D_i = \sum_{j=1}^{i} s_j$$
+Una scala musicale è identificata da una sequenza di $n$ interi positivi, $\langle s_1, s_2, \dots, s_n \rangle$, tali che la somma degli intervalli corrisponda esattamente a un'ottava (12 semitoni):
+
+$$\sum_{i=1}^{n} s_i = 12$$
 
 ### 1.6.1 Scala maggiore e scale diatoniche
 La scala maggiore è la scala diatonica costruita sui tasti bianchi partendo dal Do.
