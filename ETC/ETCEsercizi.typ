@@ -1088,3 +1088,22 @@ $ L(M) eq {0,1}^*{0} $
 Ossia tutte le stringhe che finiscono con $0$
 
 #pagebreak()
+
+= Possibili Domande d'Esame Linguaggi Regolari
+== Domanda 1
+- Ogni linguaggio ha un sottoinsieme che è un linguaggio regolare
+Vera, infatti ogni linguaggio ha come sottoinsieme il vuoto, che è un linguaggio regolare
+== Domanda 2
+- Ogni linguaggio regolare è un sottoinsieme proprio di un linguaggio regolare
+Vera, infatti sia $L$ un linguaggio regolare sull'alfabeto $Sigma'$, sia \ $Sigma eq Sigma' union {a}$, dove $a$ è un carattere che non appartiene a $Sigma'$. Il linguaggio $L$ è un sottoinsieme proprio del linguaggio regolare $Sigma^*$
+== Domanda 3
+- Sia $M$ un linguaggio regolare. Consideriamo $L$ l’insieme delle parole di $M$ che hanno lunghezza multipla di $3$. $L$ è regolare?
+Si infatti si ha 
+$ L eq M inter {Sigma^3}^* $
+e quindi $L$ è regolare dato che
+- $M$ è regolare
+- ${Sigma^3}^*$ è regolare essendo la chiusura di Kleene di un linguaggio finito e quindi regolare
+- $L$ intersezione di due linguaggi regolari
+== In generale
+- Non è vero che per ogni linguaggio regolare tutti i suoi sottoinsiemi propri sono regolari
+- Non è vero che se l’unione di due linguaggi è regolare allora i due linguaggi sono regolari

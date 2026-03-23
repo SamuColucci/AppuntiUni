@@ -1693,7 +1693,76 @@ Quindi risalendo nella ricorsione
 
 Questo automa accetta $L eq {a^i b^j c^k | i,j,k gt.eq 0}$
 #pagebreak()
-== Teorema 1.45 Chiusura Classe REG Rispetto Unione NFA
+== Teorema 1.45 Chiusura Classe REG Unione NFA
+Dato due qualsiasi linguaggi regolari $A_1 "e" A_2 arrow.double.r A_1 union A_2$ è 
+#image("img/NFA/nfaUnione.png")
+*Dimostrazione*: \
+Sia $N_1 eq (Q_1,Sigma,delta_1,q_1,F_1)$ che riconosce $A_1$ ed \
+$N_2 eq (Q_2,Sigma,delta_2,q_2,F_2)$ che riconosce $A_2$
+\
+Costruiamo $N eq (Q,Sigma,delta,q,F)$ per riconoscere $A_1 union A_2$
+- $Q eq {q_0} union Q_1 union Q_2$
+Gli stati di $N$ sono tutti gli stati di $N_1$ e $N_2$ con l'aggiunta di un nuovo stato iniziale $q_0$
+- Stato $q_0$ è lo stato iniziale di $N$
+- Insieme degli stati accettati $F eq F_1 union F_2$
+Gli stati accettati di $N$ sono tutti gli stati accettati di $N_1 "e" N_2$, in questo modo $N$ accetta se $N_1$ accetta o $N_2$ accetta
+- Definiamo $delta$ in modo che per ogni $q in Q$ e ogni $a in Sigma_epsilon$
+$ delta(q,a) eq cases(
+  delta_1(q,a) space space q in Q_1,
+  delta_2(q,a) space space q in Q_2,
+  {q_1,q_2} space space q eq q_0 "e" a eq epsilon,
+  emptyset space space q eq q_0 "e" a eq.not epsilon
+) $
+
+== Teorema 1.47 Chiusura Classe REG Concatenazione NFA
+#image("img/NFA/nfaConcatenazione.png")
+*Dimostrazione*: \
+Sia $N_1 eq (Q_1,Sigma,delta_1,q_1,F_1)$ che riconosce $A_1$ ed \
+$N_2 eq (Q_2,Sigma,delta_2,q_2,F_2)$ che riconosce $A_2$
+\
+Costruiamo $N eq (Q,Sigma,delta,q_1,F_2)$ per riconoscere $A_1 dot A_2$
+- $Q eq Q_1 union Q_2$
+Gli stati di $N$ sono tutti gli stati di $N_1$ e $N_2$ 
+- Stato $q_1$ è uguale allo stato iniziale di $N_1$
+- Gli stati accettati $F_2$ sono uguali agli stati accettati di $N_2$
+- Definiamo $delta$ in modo che per ogni $q in Q$ e ogni $a in Sigma_epsilon$
+$ delta(q,a) eq cases(
+  delta_1(q,a) space space q in Q_1 "e" q in.not F_1,
+  delta_1(q,a) space space q in F_1 "e" a eq.not epsilon,
+  delta_1(q,a) union {q_2} space space q in F_1 "e" a eq epsilon,
+  delta_2(q,a) space space q in Q_2,
+) $
+#pagebreak()
+== Teorema 1.49 Chiusura Classe REG Chiusura di Kleene
+#image("img/NFA/nfaChiusuraKleene.png")
+*Dimostrazione*: \
+Sia $N_1 eq (Q_1,Sigma,delta_1,q_1,F_1)$ che riconosce $A_1$
+\
+Costruiamo $N eq (Q,Sigma,delta,q_0,F)$ per riconoscere $A_1^*$
+- $Q eq {q_0} union Q_1$
+Gli stati di $N$ sono gli stati di $N_1$ più un nuovo stato iniziale
+- Stato $q_0$ nuovo stato iniziale
+- $F eq {q_0} union F_1$ 
+Gli stati accettati sono i vecchi stati accettati più il nuovo stato iniziale
+- Definiamo $delta$ in modo che per ogni $q in Q$ e ogni $a in Sigma_epsilon$
+$ delta(q,a) eq cases(
+  delta_1(q,a) space space q in Q_1 "e" q in.not F_1,
+  delta_1(q,a) space space q in F_1 "e" a eq.not epsilon,
+  delta_1(q,a) union {q_1} space space q in F_1 "e" a eq epsilon,
+  {q_1} space space q eq q_0 "e" a eq epsilon,
+  emptyset space space q eq q_0 "e" a eq.not epsilon
+) $
+
+== Chiusura Classe REG Reverse
+#image("img/NFA/nfaReverse.png")
+#image("img/NFA/nfaReverseEstremo.png")
+
+== Chiusura Classe REG Prefissi e Suffissi
+- Prefissi di $L$: ${x in Sigma^* | exists y in Sigma^* : x y in L}$
+- Suffissi di $L$: ${y in Sigma^* | exists x in Sigma^* : x y in L}$
+Si può dimostrare che se $L$ è regolare allora:
+- Pref(L) è regolare
+- Suff(L) è regolare
 
 #pagebreak()
 = Ogni NFA è un DFA e Viceversa
