@@ -1196,3 +1196,142 @@ Dove $A$ è una matrice $m times n$ con $"rango"(A) eq m$ ed $m lt.eq n$, allora
 == Algoritmo Naive
 - Un possibile algoritmo per determinare la soluzione ottima potrebbe consistere nella generazione esplicita di tutte le soluzioni ammissibili di base
 - Tale strategia non è conveniente poiché il numero massimo delle possibili basi cresce in maniera esponenziale col crescere delle dimensioni del problema e in caso di ottimo infinito è inutilizzabile
+
+#pagebreak()
+
+= Algoritmo del Simplesso
+== Forma Canonica in Funzione di una Base
+$ min z = cases(
+  underline(c)^T underline(x),
+  A underline(x) = underline(b),
+  underline(x) >= 0,
+  delim: #none
+) $
+Data una base $B$ ammissibili, riscriviamo il problema in funzione di $B$ come segue
+$ min z eq z_0 - sum_(j in N)(z_j - c_j) x_j $
+$ underline(x)_B eq underline(overline(b)) - sum_(j in N) underline(y)_i x_j $
+$ underline(x) gt.eq 0 $
+Con
+$ z_0 eq underline(c)_B^T A_B^(-1) underline(b) $
+$ z_j eq underline(c)_B^T A_B^(-1) underline(a)_j $
+$ underline(overline(b)) eq A_B^(-1) underline(b) $
+$ underline(y)_j eq A_B^(-1) underline(a)_j $
+Se consideriamo $min z eq z_0 - sum_(j in N)(z_j - c_j) x_j$ \ 
+Supponiamo che esiste un coefficiente $k in N$ tale che
+$ z_k - c_k gt 0 $
+La funzione obiettivo migliora
+\
+Dal momento che le $x_j$ sono uguali a zero, per $j in N backslash {k}$
+$ underline(x)_B eq underline(overline(b)) - underline(y)_k x_k $
+*Ottimo Illimitato*: Se $y_(i k) lt.eq 0, forall i in B$ allora $x_(B_i)$ cresce al crescere di $x_k$ e così $x_(B_i)$ continua a essere non negativo \
+Se esiste una componente $i$ tale che  $y_(i k) gt.eq B$ allora $x_(B_i)$ decresce al crescere di $x_k$, quindi il valore di $x_k$ verrà incrementato finchè una delle variabili in base assumerà valore zero \
+La variabile $x_(B_i)$ che si azzererà per prima verrà rimossa dalle varibili di base e sarà rimpiazzata dalla variabili $x_k$
+$ x_(B_1) eq overline(b)_1 - y_(1 k) x_k  gt.eq 0 arrow.double.r.l "sempre" $
+$ x_(B_2) eq overline(b)_2 - y_(2 k) x_k  gt.eq 0 arrow.double.r.l x_k lt.eq overline(b)_2 / y_(2 k) $
+$ ... $
+$ x_(B_m) eq overline(b)_m - y_(m k) x_k  gt.eq 0 arrow.double.r.l x_k lt.eq overline(b)_m / y_(m k) $
+Consideriamo solo i rapporti in cui $y_(i k) gt 0$ \
+*Test dei Minimi Rapporti*:
+$ x_k eq overline(b)_r / y_(r k) eq min_(1 lt.eq i lt.eq m){overline(b)_i / y_(i k): y_(i k) gt 0} $
+
+== Pivot
+Il coefficiente $y_(r k)$ è detto *Pivot* e viene usato per aggiornare i valori delle variabili di base dopo l'ingresso in base di $x_k$ \
+Quindi la nuova soluzione di base è la seguente
+$ x_(B_i) eq overline(b)_i - y_(i k) overline(b)_r / y_(r k) $
+$ x_k eq overline(b)_r / y_(r k) $
+$ x_j eq 0, forall j in N' "con" N' eq {B_r} union N backslash {k} $
+Con il cambio delle variabili in base, la nuova matrice di base risulta composta dalle stesse colonne della vecchia base ad eccezione della colonna associata a $x_(B_r)$ che è stata sostituita dalla colonna associata a $x_k$ \
+La nuova soluzione di base (a meno di casi degeneri) ha migliorato il valore della funzione obiettivo
+$ z eq z_0 - (z_k - c_k) overline(b)_r / y_(r k) lt z_0 $
+
+== Teorema Condizione di Ottimalità
+Un soluzione di base non degenere di un problema di PL è ottima se e solo se:
+- $overline(b)_i gt.eq 0, space i eq 1,...,m$ (Ammissibile)
+- $z_j - c_j lt.eq 0, space forall j in N$ (Non migliorabile)
+Se un problema ammette una soluzione ottima finita allora ammette una soluzione di base ottima che soddisfa le condizioni del teorema
+
+== Scelta Variabile Entrante
+Quando le condizioni di ottimalità non sono verificate è sempre possibile scegliere una nuova variabile fuori base $x_k$ da portare in base per migliorare l'obiettivo
+=== Metodo del Gradiente
+Sceglie la variabile fuori base $x_k$ che localmente fa aumentare più rapidamente la funzione obiettivo
+$ z_k - c_k eq max_(j in N){z_j - c_j} $
+
+== Scelta Variabile uscente
+Se $y_(i k) lt.eq 0, forall i eq 1,...,m$, la soluzione del problema è *illimitata*
+\
+Se $y_(i k) gt. 0$ per almeno un $r$, allora la soluzione di base non è ottima e quindi bisogna passare alla base successiva
+\
+Se una variabile $x_(B_i)$ è nulla e $y_(i k) gt. 0$, allora $x_k$ entra in base con valore nullo, non cambiando la soluzione e rimanendo degenere creando un cycling
+
+== Algoritmo del Simplesso
+- *Input*: Problema di PL e una soluzione di base ammissibile
+- *Test Ottimalità*: Se $z_j - c_j lt.eq 0,forall j in N$ allora la soluzione corrente è ottima e l'algoritmo termina, altrimenti passare alla *Scelta della Variabile Entrante*
+- *Scelta della Variabile Entrante*: Scegliere una variabile fuori base $x_k$ tale che $z_k - c_k gt 0$ e passare al *Test di Illimitatezza*
+- *Test di Illimitatezza*: Se $y_(i k), forall i eq 1,...,m$, allora la soluzione del problema è illimitata e l'algoritmo termina, altrimenti passare alla *Scelta della Variabile Uscente dalla Base: Test dei Minimi Rapporti*
+- *Scelta della Variabile Uscente dalla Base: Test dei Minimi Rapporti*: Scegliere la variabile $x_r$ tale che $ overline(b)_r / y_(r k) eq min_(1 lt.eq i lt.eq m){overline(b)_i / y_(i k): y_(i k) gt 0 } $
+$x_r$ è la variabile uscente e la variabile entrante è $x_k$ con valore $overline(b)_r / y_(r k) $
+
+- *Aggiornamento della Base*: Aggiornare gli indici della variabili in base e fuori base e tornare al passo *Test di Ottimalità*
+
+#pagebreak()
+
+== Individuazione di una Base di Partenza per il Simplesso
+Data una soluzione ammissibile $(underline(x)',underline(y)')$ del poliedro  \ $X' eq {A underline(x) + I underline(y) eq underline(b), space underline(x) gt.eq 0, underline(y) gt.eq 0 }$, il vettore $underline(x)$ sarà soluzione ammissibile del poliedro $X eq {A underline(x) eq underline(b), space underline(x) gt.eq 0}$ se e solo se $underline(y)' eq underline(0)$
+\
+*Dim*
+\
+$arrow.double.r$
+\
+Poichè per ipotesi $underline(x)'$ e $(underline(x)',underline(y)')$ sono soluzioni ammissibili dei rispettivi poliedri si ha che
+$ A underline(x)' eq underline(b) $ $ A underline(x)' + I underline(y)' eq underline(b) $
+Da cui otteniamo
+$ underline(b) + I underline(y)' eq underline(b) arrow.double.r underline(y)' eq underline(0) $
+$arrow.double.l$
+\
+Poichè $(underline(x)',underline(y)')$ è una soluzione ammissibile di $X'$ e $underline(y)' eq underline(0)$ si ha che $ underline(x)' gt.eq 0 $ e $ A underline(x)' + I underline(0) eq underline(b) arrow.double.r A underline(x)' eq underline(b) $
+
+#pagebreak()
+
+== Metodo delle Due Fasi
+Per risolvere la soluzione $(underline(x)', underline(0))$ risolviamo il seguente problema a cui ci riferiremo come problema di PL della 1° fase
+$ min g eq sum_(i=1)^m y_i $
+$ A underline(x) + I underline(y) eq underline(b) $
+$ underline(x) gt.eq 0, underline(y) gt.eq 0 $
+Per risolvere il nuovo problema possiamo utilizzare il simplesso a
+partire dalla matrice identità generata dalle colonne associate alle
+variabili artificiali $underline(y)$
+\
+Quindi all’inizio della procedura tutte le variabili artificiali $underline(y)$ sono in
+base mentre tutte le variabili 𝑥 del problema originale sono fuori base
+\
+\
+Alla fine della prima fase possono verificarsi due casi:
+- $g^* gt 0 arrow.double.r A underline(x) eq underline(b)$ non ammette soluzione e quindi non si passa alla seconda fase
+- $g^* eq 0 arrow.double.r A underline(x) eq underline(b)$ ammette soluzione e si passa alla seconda fase utilizzando la base ottima della prima fase come base di partenza per il simplesso
+
+#pagebreak()
+
+== Metodo del Big-M
+Il problema di PL viene risolto modificando artificialmente il sistema
+dei vincoli esattamente come fatto per il Due Fasi aggiungendo le
+variabili artificiali al sistema
+\
+Ciò che cambia è la funzione obiettivo usata dal metodo del Big-M
+\
+\
+Alla funzione obiettivo di P vengono sommate (nel caso di un problema
+di minimo) le variabili artificiali moltiplicate per un coefficiente M
+”molto grande”
+\
+Sia $P$
+$ min z eq underline(c)^T underline(x) $
+$ A underline(x) eq underline(b) $
+$ underline(x) gt.eq 0 $
+Otteniamo $P(M)$
+$ min z eq underline(c)^T underline(x) + M underline(I)^T underline(y) $
+$ A underline(x) + I underline(y) eq underline(b) $
+$ underline(x) gt.eq 0, underline(y) gt.eq 0 $
+
+#image("Lezione12/Big-M-Sol.png")
+
+#pagebreak()

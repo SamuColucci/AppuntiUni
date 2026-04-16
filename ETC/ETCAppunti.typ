@@ -1757,6 +1757,23 @@ $ delta(q,a) eq cases(
 #image("img/NFA/nfaReverse.png")
 #image("img/NFA/nfaReverseEstremo.png")
 
+Sia $M=(Q, Sigma, delta, q_0, F)$ che riconosce $L$. \
+Supponiamo di voler progettare un automa finito $R=(Q’, Sigma, delta’, q’_0, F’)$ che riconosce il reverse di L
+(per non perdere di generalità, sia R un NFA). Poiché $"Rev"(L)$ deve riconosce le stesse stringhe di $L$
+ma lette al contrario, l’idea è quella di far partire la computazione dalla fine (stati finali) e di
+andare a ritroso verso l’inizio (stato iniziale). 
+\ Formalmente, per ogni $p in delta(q_a), "per ogni" q in Q, a in Sigma$ si ha che \ $q in delta'(p,a)$
+. \ In questo modo stiamo “invertendo le frecce” di $M$.
+
+Un problema può essere il fatto che la computazione per partire dalla fine, dovrebbe partire dagli
+stati finali, ma lo stato iniziale degli automi è unico. Quindi l’automa $R$ avrà gli stati di $M$, con
+l’aggiunta di un nuovo stato che sarà iniziale e dal quale, con epsilon transizioni, andrò negli stati
+finali. Lo stato iniziale di M sarà lo stato finale di R. 
+\ Formalmente, $F’={q_0}$ mentre $q’_0$ sarà un nuovo stato, cioè $Q' eq Q union {q'_0}$. 
+\ Inoltre $delta'(q'_0,epsilon) eq F, "mentre" delta'(q'_0,a) eq emptyset$, per $a$ diverso dalla stringa vuota. \
+Non è necessario provare rigorosamente che  \ $delta'(q'_0,epsilon) in F "se e solo se" delta'(q'_0,w^R) in F$, perché segue
+dalla costruzione. Nelle slides della lezione c’è un esempio di costruzione.
+#pagebreak()
 == Chiusura Classe REG Prefissi e Suffissi
 - Prefissi di $L$: ${x in Sigma^* | exists y in Sigma^* : x y in L}$
 - Suffissi di $L$: ${y in Sigma^* | exists x in Sigma^* : x y in L}$
@@ -1764,6 +1781,50 @@ Si può dimostrare che se $L$ è regolare allora:
 - Pref(L) è regolare
 - Suff(L) è regolare
 
+=== Chiusura Classe REG Prefissi
+Innanzitutto, ricordiamo che dato un linguaggio L, indichiamo con $"Pref"(L) eq { x in Sigma^* | w eq x y in L, x,y in Sigma^*}$.
+\ \
+Seguiamo il ragionamento fatto durante la lezione e supponiamo che l’automa $M=(Q, Sigma, delta, q_0, F)$
+che riconosce L sia un NFA in cui non ci sono archi uscenti dagli stati finali. Questa ipotesi è facile
+da soddisfare aggiungendo all’automa un nuovo stato finale in cui entro leggendo la stringa vuota
+a partire da ogni stato finale di M. 
+\ Formalmente, consideriamo un automa $M’=(Q’, Sigma, delta’, q_0, {q_F})$
+che riconosce L, con $Q’=Q union {q_F}$ dove $delta’(q,a)= delta(q,a)$, per ogni q in Q, a in $Sigma$, e in più, per ogni q in
+F si ha che $q_F in delta’(q,epsilon)$. 
+\ Senza perdere di generalità, essendo un NFA, possiamo eliminare tutti gli
+stati pozzo, cioè quelli che non consentiranno di raggiungere gli stati finali.
+\  \
+Costruiamo ora $P=(Q’, Sigma, delta'’, q_0, {q_F})$ dove $delta’’(q,a)= delta’(q,a)$ per ogni $q in  Q’, a in Sigma$ e inoltre per ogni
+$q in Q’, q_F in delta’’(q, epsilon)$, se q raggiunge uno stato finale. Non è necessario provare rigorosamente che
+L(P)=Pref(L), cioè l’insieme dei prefissi di L, perché se w=xy, e w è accettata, allora $hat(delta)(q_0,w) eq hat(delta)(q_0, x y) eq hat(delta)(hat(delta)(q_0,x),y)$
+. \
+Sia $t in hat(delta)(q_0,x)$. Allora $hat(delta)(t,y) eq {q_F}$ se e solo se ${q_F} in hat(delta)'(q_0,x)$ , perché c’è la epsilon
+transizione da ogni stato come t che viene raggiunto da $hat(delta)'(q_0,x) "verso" q_F$.  \ 
+Inoltre, l’ipotesi
+garantisce che se raggiungo $q_F$ non esco verso nessun altro stato. Se così non fosse, non garantirei
+di riconosce solo i prefissi di L, ma potrei continuare e leggere altre stringhe. 
+=== Chiusura Classe REG Suffissi
+Innanzitutto, ricordiamo che dato un linguaggio L, indichiamo con Suff(L)$eq { y in Sigma^* | w eq x y in L, x,y in Sigma^*}$. \ \
+Anche per questo esercizio, seguiamo il ragionamento fatto durante la lezione e supponiamo che
+l’automa $M=(Q, Sigma, delta, q_0, F)$ che riconosce L sia un NFA in cui non ci sono archi entranti nello stato
+iniziale. Se infatti questo non accadesse, potremmo trovarci in una situazione simmetrica a quella
+dei prefissi, riconoscendo stringhe non suffissi di L.  \
+Questa ipotesi è facile da soddisfare
+aggiungendo all’automa un nuovo stato iniziale da cui usciamo leggendo la stringa vuota verso lo
+stato iniziale di M. \
+ Formalmente, consideriamo un automa $M’=(Q’, Sigma, delta’, q’_0, F}$ che riconosce L,
+con $Q' eq Q union {q'_0}$ dove $delta'(q,a) eq delta(q,a)$, per ogni $q$ in $Q$, a in $Sigma$, mentre ${q_0} in delta'(q'_0,epsilon)$ e $delta'(q'_0,a) eq emptyset$. 
+\ \
+Costruiamo ora $S=(Q’, Sigma, delta’’, q’_0, F)$ dove $delta’’(q,a)= delta’(q,a)$ per ogni $q in Q’$, $a  in Sigma$ e inoltre
+per ogni $q in Q’, q in delta’’(q’_0, epsilon)$, se q è raggiungibile dallo stato iniziale.
+\ 
+Non è necessario provare rigorosamente che L(S)=Suff(L), cioè l’insieme dei suffissi di L, perché se
+w=xy, e w è accettata, allora $hat(delta)'(q_0,epsilon) subset.eq 𝐹$ , perché c’è la epsilon transizione da ogni stato
+raggiunto da $hat(delta)'(q_0,epsilon)$ ad uno stato finale. 
+\ Quindi con la epsilon transizione, da $q_0$ vado in $hat(delta)'(q_0,epsilon)$
+a partire dal quale so che posso leggere anche y e arrivare in uno stato finale, quindi accettando y.
+L’ipotesi che sullo stato iniziale non ci siamo archi entranti, garantisce che posso solo “saltare” la x
+nella lettura
 #pagebreak()
 = Ogni NFA è un DFA e Viceversa
 Per i DFA
@@ -1857,3 +1918,217 @@ $ eq E(union_(r in hat(delta)_N (q_N,x)) delta_N (r,a)) eq hat(delta)_N (q_n,x a
 === Corollario Teorema 1.39
 Un linguaggio è regolare se e solo se esiste un automa finito non deterministico che lo riconosce
 - Quindi se esiste un NFA, un DFA o usando le proprietà di chiusura
+
+#pagebreak()
+
+= Espressioni Regolari
+*Teorema di Kleene*: Un linguaggio è regolare se e solo se esiste un espressione regolare che lo rappresenta, quindi vale il viceversa
+
+== Definizione Formale Espressioni Regolari
+- Passo Base:
+Per ogni $a in Sigma$, $a$ è un espressione regolare \
+$epsilon$ è un espressione regolare \
+$emptyset$ è un espressione regolare
+- Passo Ricorsivo:
+Se $E_1,E_2$ sono espressioni regolari, allora \
+$(E_1)$ è un espressione regolare \
+$(E_1 union E_2)$ è un espressione regolare \
+$(E_1 E_2)$ è un espressione regolare \
+$(E_1^*)$ è un espressione regolare 
+
+== Precedenza Operatori
+#table(
+  columns: 2, // Definisce 3 colonne di larghezza automatica
+  [Operatore], [Precedenza],
+  [$*$], [1],
+  [$.$], [2],
+  [$union$], [3]
+) 
+
+== Definizione Ricorsiva Linguaggi Rappresentati REG
+Data un espressione regolare $E$, indicheremo con $L(E)$ il linguaggio che essa rappresenta, definito come segue:
+- Passo base:
+Per ogni $a in Sigma, L(A) eq {a}$ \
+$L(epsilon) eq {epsilon}$ \
+$L(emptyset) eq emptyset$
+- Passo Ricorsivo:
+Se $E_1,E_2$ sono espressioni regolari allora \
+$L((E_1)) eq L(E_1)$ è un espressione regolare \
+$L(E_1 union E_2) eq L(E_1) union L(E_2)$ è un espressione regolare \
+$L(E_1 E_2) eq L(E_1) L(E_2)$ è un espressione regolare \
+$L(E_1^*) eq L(E_1)^*$ è un espressione regolare 
+
+== Proprietà Algebriche RE
+- $E_1 union E_2 eq E_2 union E_1$
+- $(E_1 union E_2) union E_3 eq E_1 union (E_2 union E_3)$
+- $emptyset union E_1 eq E_1$
+- $(E_1 E_2) E_3 eq E_1 (E_2 E_3)$
+- $emptyset E_1 eq E_1 emptyset eq  emptyset$
+- $epsilon E_1 eq E_1 epsilon eq  E_1$
+- $ E_1 (E_2 E_3) eq E_1 E_2 union E_1 E_3$
+- $(E_1 union E_2) union E_3 eq E_1 E_3 union E_2 E_3$
+- $ E_1 union E_1 eq E_1$
+- $((E_1)^*)^* eq E_1^*$
+- $E^+ eq E E^*$
+- $(E_1 union E_2)^* eq (E_1^* E_2^*)^*$
+
+#pagebreak()
+
+= Pumping Lemma
+Se $A$ è un linguaggio regolare, allora $exists p gt 0$ tale che $forall$ stringa $s in A$ di lunghezza almeno $p$ (cioè $|s| gt.eq p$), esistono $x,y,z$ tali che $s eq x y z$ e valgono le seguenti condizioni:
+- $x y^i z in A, forall i gt.eq 0$
+- $|y| gt.eq 1$
+- $|x y| lt.eq p$
+
+== Tecnica Per Provare la Non Regolarità
+- Supponiamo $A$ regolare (quindi vale PL)
+- Deve esistere $p>O$ tale che tutte le stringhe di $A$ di lunghezza maggiore o uguale a p possono essere iterate (non sappiamo p chi sia, ma esiste)
+3. Troviamo una stringa $s$ di $A$ che ha lunghezza maggiore o uguale a $p$ che però non può essere iterata considerando TUTTI $i$ possibili modi di fattorizzarla in $x,y,z$ (con le condizioni)
+4. Per ogni fattorizzazione, troviamo $i$ tale che $x y^i z$ non appartiene a A. Assurdo!
+
+#pagebreak()
+
+= Macchine di Turing
+== Descrizione Informale
+- Utilizza un nastro semi-infinito
+- Presenta una testina di lettura e scrittura che può muoversi avanti e dietro
+- Ha due stati speciali $q_("accept") "e" q_("reject")$  che hanno effetto immediato
+== Definizione Formale MdT
+Un macchina di Turing deterministica è una settupla
+$ (Q,Sigma,Gamma, delta,q_0,q_("accept"),q_("reject")) $
+- $Q$: Insieme finito degli stati
+- $Sigma$: Alfabeto dei simboli in input, con $union.sq in.not Sigma$
+- $Gamma$: Alfabeto finito dei simboli di nastro, con $union.sq in Gamma, Sigma subset Gamma, space L,R in.not Gamma$
+- $delta$: Funzione di transizione
+$ (Q backslash {q_("accept"),q_("reject")}) times Gamma arrow.r Q times R times {L,R} $
+- $q_0 in Q$: Stato iniziale
+- $q_("accept") in Q$: Stato di accettazione
+- $q_("reject") in Q$: Stato di rifiuto, $q_("accept") eq.not q_("reject")$ 
+
+== Funzione di Transizione MdT
+Se $delta(q,gamma) eq (q',gamma',d)$ sappiamo che $q,q' in Q,gamma,gamma'in Gamma, d in {L,R} $
+
+== Diagramma di Stato
+Grafo i cui nodi sono gli stati della macchina e le etichette sugli archi hanno la seguente forma
+$ "simbolo" arrow.r "simbolo",d $
+Con il simbolo $in Gamma$ e $d in {L,R}$
+#pagebreak()
+== Computazione di una Mdt Informale
+- Inizia dallo stato iniziale $q_0$
+- Con l'input $w in Sigma^*$ posizionato sulla parte più a sinistra del nastro, e con la testina posizionata sulla cella più a sinistra del nastro
+- Se input $epsilon$, allora il nastro contiene solo $union.sq$
+-  La computazione di M procede fino a quando non viene raggiunto uno stato di accettazione o rifiuto. Se nessuno dei due stati viene raggiunto, la computazione di M continua per sempre
+- Dato che $Sigma$ non contiene $union.sq$ all'inizio della computazione il primo simbolo $union.sq$ segna la fine della computazione
+- La computazione termina se ha raggiunto $q_("accept")$ e $q_("reject")$, oppure può non terminare
+
+== Configurazione di una MdT
+Una configurazione $C$ di una MdT $M eq (Q,Sigma,Gamma, delta,q_0,q_("accept"),q_("reject"))$ è una stringa $C eq u q v in Gamma^* Q Gamma^S$, con $Gamma^S eq Gamma^* (Gamma backslash {union.sq}) union {union.sq, epsilon}$ con
+- $q in Q$: Stato corrente di $M$
+- $u v in Gamma^*$ è il contenuto del nastro
+  - Convenzione nel eliminare tutti i simboli $union.sq$ che seguono ultimo carattere di $v "se" v eq.not epsilon$
+  - Tutti i simboli $union.sq$ che seguono $u$ altrimenti
+- Testina posizionata sul primo simbolo di $v$ se $v eq.not epsilon$, su $union.sq$ altrimenti
+\
+\
+Una configurazione $C$ di una MdT M si dice:
+- *Iniziale*: (Con input $w$) se $C eq q_o w, w in Sigma^*$
+- *Di arresto*: Se $C eq u q v, u,v in Gamma^* "e" q in {q_("accept"),q_("reject")}$
+  - Non esiste nessuna configurazione $C'$ tale che $C arrow.r C'$
+- *Di accettazione*: Se $C eq u q v, u,v in Gamma^* "e" q eq q_("accept")$
+- *Di rifiuto*: Se $C eq u q v, u,v in Gamma^* "e" q eq q_("reject")$
+
+=== Configurazioni Particolari
+- Se $C eq q v$ allora la testina è posizionata sulla prima cella del nastro
+- Se $C eq u q$ allora la testina è posizionata sulla prima cella della porzione del nastro contente solo $union.sq$
+
+
+== Passo di Computazione
+Sia $M eq  (Q,Sigma,Gamma, delta,q_0,q_("accept"),q_("reject"))$ una MdT deterministica
+\ 
+Siano $q_i,q_j in Q, space a,b,c in Gamma, "e" u,v in Gamma^*$
+\ \
+Diremo che $ u a q_i b v "produce" u q_j a c v $
+Se $delta(q_i,b) eq (q_j,c,L)$
+Diremo che $ u a q_i b v "produce" u a c q_j v $
+Se $delta(q_i,b) eq (q_j,c,R)$
+\ 
+\
+Quindi $C_1 arrow.r C_2$ prende il nome di passo di computazione
+
+== Computazione
+Siano $C,C'$ configurazioni \
+$C arrow.r^* C'$ se esistono configurazioni $C_1,...,C_k, k gt.eq 1$ tali che:
+- $C_1 eq C$
+- $C_i arrow.r C_(i+1)$, per $i in {1,...,k-1}$
+- $C_k eq C'$
+Diremo che $C arrow.r^* C'$ è una *computazione*
+\
+\
+Sia $M$ una MdT e $C$ una configurazione ci sono tre possibili casi:
+- $C arrow.r^* C'$ con $C' eq u q_("accept") v$ configurazione di accettazione
+  - $M$ si ferma in $q_("accept")$
+- $C arrow.r^* C'$ con $C' eq u q_("reject") v$ configurazione di rifiuto
+  - $M$ si ferma in $q_("reject")$
+- Per ogni configurazione $C'$ tale che $C arrow.r^* C'$ esiste una configurazione $C''$ tale che $C arrow.r^* C'arrow.r C''$
+  - M non si arresta
+
+== Parola Accetta da una MdT
+Un MdT $M$ accetta una parola $w in Sigma^*$ se esiste una computazione $C arrow.r^* C'$, dove $C eq q_0,w$ è la configurazione inziale di $M$ con input $w$ e $C' eq u q_("accept") v$ è una configurazione di accettazione
+\ \
+Quindi $M$ accetta $w in Sigma^*$ se e solo se esistono configurazioni $C_1,...,C_k$ di $M$ tali che:
+- $C_1 eq q_0 w$ è la configurazione inziale di $M$ con input $w$
+- $C_i arrow.r C_(i+1)$ per ogni $i in {1,...,k-1}$
+- $C_k$ è una configurazione di accettazione
+
+== Parola Rifiutata da una MdT
+Un MdT $M$ rifiuta una parola $w in Sigma^*$ se esiste una computazione $C arrow.r^* C'$, dove $C eq q_0,w$ è la configurazione inziale di $M$ con input $w$ e $C' eq u q_("reject") v$ è una configurazione di rifiuto
+\ \
+Quindi $M$ si ferma su $w in Sigma^*$ se $M$ accetta $w$ oppure rifiuta $w$, cioè esistono configurazioni $C_1,...,C_k$ di $M$ tali che:
+- $C_1 eq q_0 w$ è la configurazione inziale di $M$ con input $w$
+- $C_i arrow.r C_(i+1)$ per ogni $i in {1,...,k-1}$
+- $C_k$ è una configurazione di arresto
+#pagebreak()
+== Linguaggio Riconosciuto da una MdT
+Sia $M eq  (Q,Sigma,Gamma, delta,q_0,q_("accept"),q_("reject"))$ un MdT, il linguaggio $L(M)$ riconosciuto da $M$ è l'insieme delle stringhe che $M$ accetta
+$ L(M) eq {w in Sigma^* | exists u,v in Gamma^* space q_0 w arrow.r^* u q_("accept") v} $
+Quindi
+$ L(M) eq {w in Sigma^* | M "accetta" w} $
+
+- Data una MdT $M$, esiste sempre il linguaggio riconosciuto da $M$ ma non è detto che esista il linguaggio deciso da $M$, ciò è possibile se e solo se $M$ è un decider
+
+- Se $M$ è un decider, esiste il linguaggio deciso da $M$ e coincide con il linguaggio riconosciuto da $M$
+
+- Se $M$ non è un decider, esiste il linguaggio riconosciuto da $M$ ma non il linguaggio deciso da $M$
+== MdT Decisore
+Sia $R(M) eq {w in Sigma^* | M "rifiuta" w}$
+\ In generale $L(M) union R(M)$ non coincide con $Sigma^*$, ma se coincide allora $M$ è un decider
+\
+*Definizione Formale*: \
+Un Mdt $M eq  (Q,Sigma,Gamma, delta,q_0,q_("accept"),q_("reject"))$ è un decisore se per ogni $w in Sigma^*$, esistono $u,v in Gamma^*$ e $q in {q_("accept"),q_("reject")}$ tali che:
+$ q_0 w arrow.r^* u q v $
+
+== Linguaggio Deciso
+Un linguaggio $L$ è deciso da un MdT $M eq  (Q,Sigma,Gamma, delta,q_0,q_("accept"),q_("reject"))$ se $M$ è un decisore ed $L eq L(M)$
+
+Una MdT $M eq  (Q,Sigma,Gamma, delta,q_0,q_("accept"),q_("reject"))$ decide un linguaggio $L$ se per ogni $w in Sigma^*, q_0 w arrow.r^* C$ con $C eq u q v$
+configurazione di arresto ed $L eq L(M)$ 
+
+== Linguaggio Riconoscibile
+Un linguaggio $L subset.eq Sigma^*$ è Turing riconoscibile se esiste una macchina di Turing $M eq  (Q,Sigma,Gamma, delta,q_0,q_("accept"),q_("reject"))$ tale che 
+- $M$ riconosce $L$
+$ L eq L(M) eq {w in Sigma^*| exists u,v in Gamma^* space q_0 w arrow.r^* u q_("accept") v} $
+== Linguaggio Decidibile
+Un linguaggio $L subset.eq Sigma^*$ è decidibile se esiste una macchina di Turing $M eq  (Q,Sigma,Gamma, delta,q_0,q_("accept"),q_("reject"))$ tale che 
+- $M$ riconosce $L$
+$ L eq L(M) eq {w in Sigma^*| exists u,v in Gamma^* space q_0 w arrow.r^* u q_("accept") v} $
+- $M$ si arresta su ogni input
+$ "Per ogni" w in Sigma^*, q_0 w arrow.r^* u q v "con" q in {q_("accept"),q_("reject")} $
+\
+Rappresenta un sottoinsieme proprio dei linguaggio Turing riconoscibili, quindi un linguaggio $L$ è Turing riconoscibile ma non decidibile se:
+- Esiste una MdT che riconosce $L$
+- Non esiste nessuna MdT tale che $M$ accetta tutte le stringhe di $L$ e rifiuta tutte quelle che appartengono al complemento $overline(L)$
+
+== Funzioni Calcolabili
+Una funzione $f: Sigma^* arrow.r Sigma^*$ è calcolabile se esiste una macchina di Turing $M eq  (Q,Sigma,Gamma, delta,q_0,q_("accept"),q_("reject"))$ tale che
+$ forall w in Sigma^* space q_0 w arrow.r q_("accept") f(w) $
+- La Mdt si deve arrestare su ogni input
