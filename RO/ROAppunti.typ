@@ -1335,3 +1335,192 @@ $ underline(x) gt.eq 0, underline(y) gt.eq 0 $
 #image("Lezione12/Big-M-Sol.png")
 
 #pagebreak()
+
+= Teoria della Dualità
+Ad ogni problema di PL (primale) è associato un problema Duale
+- Problema Primale (P)
+$ min c_1 x_1, + ...+ c_n x_n $
+$s.t$
+$ a_(11) x_1 + ...+ a_(1 n) x_n gt.eq b_1 $
+$ ... $
+$ a_(m 1) x_1 + ...+ a_(m n) x_n gt.eq b_m $
+$ underline(x) gt.eq underline(0) $
+
+- Problema Duale (D)
+$ max b_1 w_1, + ...+ b_m w_m $
+$s.t$
+$ a_(11) w_1 + ...+ a_(m 1) w_m lt.eq c_1 $
+$ ... $
+$ a_(1 n) w_1 + ...+ a_(m n) x_m lt.eq c_n $
+$ underline(w) lt.eq underline(0) $
+
+Il problema D ha tante variabili quanti sono i vincoli di P e tanti vincoli quante sono le variabili di P
+
+#image("Lezione13/dualita1.png")
+
+In forma matriciale
+- (P)
+$ min underline(c)^T underline(x) $
+$ A underline(x) gt.eq underline(b) $
+$ underline(x) gt.eq 0 $
+
+- (D)
+$ max underline(b)^T underline(w) $
+$ A underline(w) lt.eq underline(c) $
+$ underline(w) gt.eq 0 $
+#pagebreak()
+== Duale del Problema Attuale
+- (P)
+$ max underline(b)^T underline(w) $
+$ A underline(w)^T lt.eq underline(c) $
+$ underline(w) gt.eq 0 $
+Da cui otteniamo
+$ -min - underline(b)^T underline(w) $
+$ -A underline(w)^T gt.eq -underline(c) $
+$ underline(w) gt.eq 0 $
+Calcoliamo il Duale
+$ -max - underline(c)^T underline(x) $
+$ -A underline(x)^T lt.eq -underline(b) $
+$ underline(x) gt.eq 0 $
+(D)
+$ min underline(c)^T underline(x) $
+$ A underline(x)^T gt.eq underline(b) $
+$ underline(x) gt.eq 0 $
+
+Quindi il duale del duale è il problema primale
+#pagebreak()
+== Duale di un Primale con Vincoli di Uguaglianza
+(P)
+$ min underline(c)^T underline(x) $
+$ A underline(x) eq underline(b) $
+$ underline(x) gt.eq 0 $
+
+Trasformiamo in vincoli di uguaglianza \
+$ A underline(x) eq underline(b) "equivale a" cases(A underline(x) gt.eq underline(b), A underline(x) lt.eq underline(b) arrow.double.r - A underline(x) gt.eq - underline(b)) $ 
+Quindi otteniamo
+$ min underline(c)^T underline(x) $
+$ A underline(x) gt.eq underline(b) $
+$ - A underline(x) gt.eq - underline(b) $
+$ underline(x) eq 0 $
+Introduciamo $2m$ variabili duali $underline(u),underline(v)$ e unisco le due condizioni maggiori
+$ max (underline(b)^T underline(u) - underline(b)^T underline(v)) $
+$ A^T underline(u)- A^T underline(v) lt.eq underline(c) $
+$ underline(c) gt.eq 0, underline(v) gt.eq $
+Se sostituiamo $underline(w) eq underline(u)-underline(v)$ si ottiene $(D)$
+$ max underline(b)^T underline(w) $
+$ A underline(w)^T lt.eq underline(c) $
+$ underline(w) "n.v" $
+#pagebreak()
+== Regole di Trasformazioni Generali
+#image("Lezione13/dualita2.png")
+
+== Importanza della Dualità
+- Soluzione ottima del problema duale è un bound sulla soluzione ottima del primale
+- Può essere conveniente risolvere il duale e non il primale
+- Hanno un interpretazione economica utile per l'analisi di sensitività
+#pagebreak()
+== Teorema (Debole) della Dualità
+Siano
+- (P)
+$ min underline(c)^T underline(x) $
+$ A underline(x) gt.eq underline(b) $
+$ underline(x) gt.eq 0 $
+
+- (D)
+$ max underline(b)^T underline(w) $
+$ A underline(w)^T lt.eq underline(c) $
+$ underline(w) gt.eq 0 $
+
+*Teorema (Debole) della Dualità*: \
+Siano $underline(x) "e" underline(w)$ soluzioni ammissibili rispettivamente per (P) e (D), allora
+$ underline(c)^T underline(x) gt.eq underline(b)^T underline(w) $
+
+- *Dimostrazione*:
+$underline(hat(x))$ soluzione ammissibile di P $arrow.double.r$ $A underline(hat(x)) gt.eq underline(b)$ (1) \
+Poichè $underline(hat(w)) gt.eq underline(0)$, premoltiplicando la (1) per $underline(hat(w))$, quindi $underline(hat(w))^T A underline(hat(x)) gt.eq underline(hat(w))^T underline(b)$ (2) \
+Poichè $underline(hat(w))$ è una soluzione ammissibile di D $arrow.double.r$ $underline(c)^T gt.eq underline(hat(w))^T A$ (3) \
+Dalle disequazioni (2) e (3), dato $underline(hat(x)) gt.eq 0$ si ha $underline(c)^T underline(hat(x)) gt.eq underline(hat(w))^T A underline(hat(x)) gt.eq underline(hat(w))^T underline(b)$ 
+
+#pagebreak()
+
+=== Corollario 1
+Se $underline(x)$ è una soluzione per (P) e $underline(w)$ una soluzione ammissibile per (D) tali che $underline(c)^T underline(x) eq underline(b)^T underline(w)$ allora $underline(x)$ e $underline(w)$ sono soluzioni ottime dei rispettivi problemi
+\ \
+- *Dimostrazione*:
+Supponiamo per assurdo che $underline(x)$ non sia ottimo per (P). Quindi esiste un'altra soluzione ammissibile $underline(x)^*$ di (P) tale che $underline(c)^T underline(x)^* lt.eq underline(c)^T underline(x)$. Ma poichè per ipotesi $underline(c)^T underline(x) eq underline(b)^T underline(w)$ si ha che $underline(c)^T underline(x)^* lt underline(b)^T underline(w)$. Assurdo che va contro la tesi
+
+=== Corollario 2
+Se il problema primale (P) è illimitato inferiormente allora il duale (D) è inammisibile. Viceversa se il duale (D) è illimitata superiormente il primale (P) è inammisibile
+\ \
+- *Dimostrazione*:
+Supponiamo che il valore ottimo del primale (P) sia $- infinity$ e che il problema duale ammetta una soluzione $underline(w)$. Dal teorema della dualità debole si ha che 
+$underline(c)^T underline(x) gt.eq underline(b)^T underline(w)$ per una qualsiasi soluzione ammissibile x di (P). Questo implica che $underline(b)^T underline(w) lt.eq -infinity$. Assurdo
+\ \
+Il corollario 2 stabilisce che l'illimitatezza di un problema implica l'inammissibilità del suo duale. Tuttavia questa non è una proprietà simmetrica ossia se un problema è inammissibile non è detto che il suo duale sia illimitato
+
+#pagebreak()
+== Teorema (Forte) della Dualità
+Data una coppia di problemi primale duale, (P) e (D), se uno dei due problemi ammette una soluzione ottima finita, allora anche l'altro problema ammette una soluzione ottima finita ed i valori ottimi delle funzioni obiettivo coincidono, i.e.
+$ underline(c)^T underline(x)^* eq underline(b)^T underline(w)^* $
+- (P)
+$ min underline(c)^T underline(x) $
+$ A underline(x) eq underline(b) $
+$ underline(x) gt.eq 0 $
+
+- (D)
+$ max underline(b)^T underline(w) $
+$ A underline(w)^T lt.eq underline(c) $
+$ underline(w) "n.v" $
+
+- *Dimostrazione*:
+Sia $underline(x)^*$ la soluzione ottima del primale e sia B la base ad esso associata
+$ underline(x)^* eq mat(underline(x)_B^*;underline(x)_N^*;delim: "[") "quindi" underline(c)^T underline(x)^* eq underline(c)_B^T underline(x)_B^* eq underline(c)_B^T A_B^(-1) underline(b) $
+Sia $underline(w)^(* T) eq underline(c)_B^T A_B^(-1) underline(b)$ vogliamo dimostrare che questo vettore è una soluzione ammissibile ed ottima per (D)
+\
+$ A^T underline(w)^* lt.eq underline(c) arrow.double.r.l underline(w)^(* T) A lt.eq underline(c)^T arrow.double.r underline(c)_B^T A_B^(-1) A lt.eq underline(c)^T $
+$ arrow.double.r.l underline(c)_B^T A_B^(-1) A - underline(c)^T lt.eq underline(0)^T $
+$ underline(c)_B^T A_B^(-1) [A_B |A_N] - [underline(c)_B^T|underline(c)_B^N] eq [underline(c)_B^T|underline(c)_B^T A_B^(-1) A_N] -[underline(c)_B^T|underline(c)_B^N] eq $
+$ eq [underline(c)_B^T - underline(c)_B^T |underline(c)_B^T A_B^(-1) A_N - underline(c)_N^T] eq [underline(0)| underline(c)_B^T A_B^(-1) A_N - underline(c)_N^T] lt.eq underline(0)^T $
+Poichè $underline(c)_B^T A_B^(-1) A_N - underline(c)_N^T lt.eq underline(0)^T$ è la condizione di ottimalità per (P), è verficata l'ammissibilità
+- *Ottimalità*:
+Il valore della funzione obiettivo duale in $underline(w)^(* T)$ è
+$ underline(w)^(* T) underline(b) eq underline(c)_B^T A_B^(-1)underline(b) eq underline(c)_B^T underline(x)_B^* eq underline(c)^T underline(x)^* $
+Dal corollario 1 ricaviamo che $ underline(c)^T underline(x)^* eq underline(w)^(* T)underline(b)$ e che $underline(w)^(* T)$ è ottima
+\
+Dal teorema della dualità forte ricaviamo che, data la base ottima B del primale, è possibile calcolare velocemente la soluzione ottima del duale (D) tramite l'equazione:
+$ underline(w)^(* T) eq underline(c)^T_B A_B^(-1) $
+
+- Se (P) è illimitato $arrow.double.r$ (D) non è ammissibile
+- Se (P) ha soluzione ottima finita $arrow.double.r.l$ (D) ha soluzione ottima finita e i valori delle loro funzioni obiettivo coincidono
+- Se (P) inammisibile $arrow.double.r$ (D) illimitato o inammisibile
+
+#pagebreak()
+
+== Teorema dello Scarto Complementare
+Consideriamo la coppia di problemi (D) e (P) in forma canonica e trasformiamoli in forma standard
+- (P)
+$ min underline(c)^T underline(x) $
+$ A underline(x) gt.eq underline(b) $
+$ underline(x) gt.eq underline(0) $
+Diventa
+$ min underline(c)^T underline(x) $
+$ A underline(x) - I underline(s) eq underline(b) $
+$ underline(x) gt.eq underline(0) $
+$ underline(s) gt.eq underline(0) $
+
+- (D)
+$ max underline(b)^T underline(w) $
+$ A underline(w)^T lt.eq underline(c) $
+$ underline(w) gt.eq underline(0) $
+Diventa
+$ max underline(b)^T underline(w) $
+$ A underline(w)^T + I underline(v) eq underline(c) $
+$ underline(w) gt.eq underline(0) $
+$ underline(v) gt.eq underline(0) $
+Ad ogni variabile di (P) è associato un vincolo di (D) e quindi la
+corrispondente variabile di slack/surplus e viceversa \
+- *Teorema della Slackness Complementare*:
+Data la coppia di soluzioni $underline(x)$ e $underline(w)$ rispettivamente ammissibili per (P) e (D), $underline(x)$ e $underline(w)$ sono ottime per (P) e (D) se e solo se
+$ s_J w_J eq (underline(a)^j underline(x) - b_j)w_j eq 0, space j eq 1,...,m $
+$ v_i x_i eq (c_i - underline(a)_i^T underline(w))x_i eq 0, space i eq 1,...,n $
+Con $underline(a)^j$ è la j-esima riga di A e $underline(a)_i$ è la i-esima colonna di A
