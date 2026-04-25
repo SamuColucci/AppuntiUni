@@ -439,7 +439,7 @@ $ exists (r_0,r_1...r_n), r_i in Q, r_0 eq q_0, r_n in F $
 $ "e" $
 $ forall i eq 0,1,...,n-1, delta(r,a_i) eq r_(i+1) $
 
-- Quindi la macchina inzia da una condizione iniziale che appartiene alla sequenza di stati
+- Quindi la macchina inizia da una condizione iniziale che appartiene alla sequenza di stati
 - La macchina passa da uno stato ad un altro in base ad una funzione di transizione
 - La macchina accetta il suo input se termina la lettura in uno stato accettante
 $ L(M) eq {w | M "accetta" w} $
@@ -2039,7 +2039,7 @@ Una configurazione $C$ di una MdT M si dice:
 
 === Configurazioni Particolari
 - Se $C eq q v$ allora la testina è posizionata sulla prima cella del nastro
-- Se $C eq u q$ allora la testina è posizionata sulla prima cella della porzione del nastro contente solo $union.sq$
+- Se $C eq u q$ allora la testina è posizionata sulla prima cella della porzione del nastro contenete solo $union.sq$
 
 
 == Passo di Computazione
@@ -2073,18 +2073,18 @@ Sia $M$ una MdT e $C$ una configurazione ci sono tre possibili casi:
   - M non si arresta
 
 == Parola Accetta da una MdT
-Un MdT $M$ accetta una parola $w in Sigma^*$ se esiste una computazione $C arrow.r^* C'$, dove $C eq q_0,w$ è la configurazione inziale di $M$ con input $w$ e $C' eq u q_("accept") v$ è una configurazione di accettazione
+Un MdT $M$ accetta una parola $w in Sigma^*$ se esiste una computazione $C arrow.r^* C'$, dove $C eq q_0,w$ è la configurazione iniziale di $M$ con input $w$ e $C' eq u q_("accept") v$ è una configurazione di accettazione
 \ \
 Quindi $M$ accetta $w in Sigma^*$ se e solo se esistono configurazioni $C_1,...,C_k$ di $M$ tali che:
-- $C_1 eq q_0 w$ è la configurazione inziale di $M$ con input $w$
+- $C_1 eq q_0 w$ è la configurazione iniziale di $M$ con input $w$
 - $C_i arrow.r C_(i+1)$ per ogni $i in {1,...,k-1}$
 - $C_k$ è una configurazione di accettazione
 
 == Parola Rifiutata da una MdT
-Un MdT $M$ rifiuta una parola $w in Sigma^*$ se esiste una computazione $C arrow.r^* C'$, dove $C eq q_0,w$ è la configurazione inziale di $M$ con input $w$ e $C' eq u q_("reject") v$ è una configurazione di rifiuto
+Un MdT $M$ rifiuta una parola $w in Sigma^*$ se esiste una computazione $C arrow.r^* C'$, dove $C eq q_0,w$ è la configurazione iniziale di $M$ con input $w$ e $C' eq u q_("reject") v$ è una configurazione di rifiuto
 \ \
 Quindi $M$ si ferma su $w in Sigma^*$ se $M$ accetta $w$ oppure rifiuta $w$, cioè esistono configurazioni $C_1,...,C_k$ di $M$ tali che:
-- $C_1 eq q_0 w$ è la configurazione inziale di $M$ con input $w$
+- $C_1 eq q_0 w$ è la configurazione iniziale di $M$ con input $w$
 - $C_i arrow.r C_(i+1)$ per ogni $i in {1,...,k-1}$
 - $C_k$ è una configurazione di arresto
 #pagebreak()
@@ -2132,3 +2132,292 @@ Rappresenta un sottoinsieme proprio dei linguaggio Turing riconoscibili, quindi 
 Una funzione $f: Sigma^* arrow.r Sigma^*$ è calcolabile se esiste una macchina di Turing $M eq  (Q,Sigma,Gamma, delta,q_0,q_("accept"),q_("reject"))$ tale che
 $ forall w in Sigma^* space q_0 w arrow.r q_("accept") f(w) $
 - La Mdt si deve arrestare su ogni input
+
+#pagebreak()
+
+= Varianti di MdT
+Siano $T_1$ e $T_2$ due famiglie di modelli computazionali. Per dimostrare che i modelli in $T_1$ hanno lo stesso potere computazionale dei modelli in $T_2$ occorre far vedere che per ogni macchina $M_1 in T_1$ esiste $M_2 in T_2$ equivalente ad $M_1$ e viceversa
+  - Due macchine sono equivalenti se hanno lo stesso linguaggio
+
+== Macchine di Turing che Stanno Ferme
+Questa caratteristica non aggiunge potere computazionale al modello scelto
+\
+\
+La parte non ovvia è mostrare che possiamo trasformare qualsiasi macchina di Turing che ha la possibilità di stare ferma in una macchina di Turing equivalente che non ha tale capacità
+  - Lo dimostriamo costruendo una Mdt in cui simuliamo ogni transizione in cui resta ferma come una transizione che va prima a destra e poi ritorna a sinistra
+
+Sia $T_((L,R))$ l'insieme delle macchine di Turing
+$ (Q backslash {q_("accept"),q_("reject")}) times Gamma arrow.r Q times Gamma times {L,R} $
+Chiamiamo $T_((L,R,S))$ il nuovo insieme di macchine di Turing tali che $M eq (Q,Sigma,Gamma,delta,q_0,q_("accept"),q_("reject"))$ in cui $Q,Sigma,Gamma,q_0,q_("accept"),q_("reject")$ sono definiti come in una MdT deterministica e la funzione di transizione $delta$ definita nel modo seguente:
+$ (Q backslash {q_("accept"),q_("reject")}) times Gamma arrow.r Q times Gamma times {L,R,S} $
+Se $delta(q,gamma) eq (q',gamma',delta)$ e se $M$ si trova nello stato $q$ con la testina posizionata su una cella  $gamma$, alla fine della transizione
+- $M$ si trova nello stato $q'$
+- $gamma' in Gamma$ è il simbolo scritto sul nastro su cui la testina si trovava all'inizio della transizioni 
+- La testina si trova sulla stessa cella dell'inzio della transizione se $d eq S$, a sinistra se $d eq L $ e a destra se $d eq R$
+Le  nozioni di configurazione di linguaggio deciso e di linguaggio riconosciuto da $M' in T_((L,R))$ sono estese in maniera ovvia alle macchine $M$ in $T_((L,R,S))$
+\
+\
+I modelli in $T_((L,R))$ hanno lo stesso potere computazionale dei modelli in $T_((L,R,S))$
+\
+Se $M' eq (Q,Sigma,Gamma,delta',q_0,q_("accept"),q_("reject")) in T_((L,R))$
+\ Definiamo $M eq (Q,Sigma,Gamma,delta,q_0,q_("accept"),q_("reject") in T_((L,R,S))$ \
+Con $delta(q,gamma) eq delta'(q,gamma)$ per ogni $(q,gamma) in (Q backslash {q_("accept"),q_("reject")}) times Gamma$ \
+Ovviamente $L(M) eq L(M')$
+\
+\
+Viceversa se $M eq (Q,Sigma,Gamma,delta,q_0,q_("accept"),q_("reject")) in T_((L,R,S))$ \
+Definiamo $M' eq (Q union Q^c,Sigma,Gamma,delta',q_0,q_("accept"),q_("reject")) in T_((L,R))$ dove
+- Se $delta(q_i,gamma) eq (q_j,gamma',d)$ e $d in {L,R}$ allora $delta'(q_i,gamma) eq delta(q_i,gamma)$
+- Se $delta(q_i,gamma) eq (q_j,gamma',S)$ allora $delta'(q_i,gamma) eq (q_j^c,gamma',R)$ e $delta'(q_j^c, eta) eq (q_j,gamma',L)$ per ogni $eta in Gamma$
+- $Q^c eq {q^c | (q,gamma,S) in delta(Q backslash {q_("accept"),q_("reject")})times Gamma)}$
+Anche in questo caso $L(M) eq L(M')$
+
+#pagebreak()
+== Macchine di Turing Multinastro
+Dato un numero intero positivo $K$, una macchina di Turing con $k$ nastri è una settupla
+$ M eq (Q,Sigma,Gamma,delta,q_0,q_("accept"),q_("reject")) $
+Dove $Q,Sigma,Gamma,q_0,q_("accept"),q_("reject")$ sono definiti come in una MdT deterministica e la funzione di transizione $delta$ è definita come segue
+$ delta: (Q backslash {q_("accept"),q_("reject")}) times Gamma^k arrow.r Q times Gamma^k times {L,R,S}^k $
+Con $Gamma^k$ il prodotto cartesiano di $k$ coppie di $Gamma$ e 
+\ ${L,R,S}^k$ è il prodotto cartesiano di $k$ coppie di ${L,R,S}$
+
+=== Funzione di Transizione
+Il codominio della funzione di transizione di una macchina di Turing a $k$ nastri è un insieme di sequenze $(q_j,b_1,...,b_k,d_1,...,d_k)$ di lunghezza $(2k +1)$ con
+- $q_j in Q$
+- $b_t in Gamma, t in {1,...,k}$
+- $d_t in {L,R,S}, t in {1,...,k}$
+Se $delta(q_i,a_1,...,a_k) eq (q_j,b_1,...,b_k,d_1,...,d_k)$ e se $M$ si trova nello stato $q_i$ con le $k$ testine posizionate sulle celle contenenti $a_1,...,a_k$ alla fine della transizione
+- $M$ si trova nello stato $q_j$
+- $b_t in Gamma$ è il simbolo scritto sulla cella del $t$-esimo nastro su cui la testina si trovava all'inizio della transizione, $t in {1,...,k}$
+- La testina sul $t$-esimo nastro si trova sulla stessa cella in cui si trovava all'inzio della computazione se $d_t eq S$, a sinistra se $d_t eq L $ e a destra se $d_t eq R$, $t in {1,...,k}$
+#pagebreak()
+=== Computazione
+Una MdTM $M eq (Q,Sigma,Gamma,delta,q_0,q_("accept"),q_("reject"))$ inizia la computazione
+- Partendo dallo stato iniziale $q_0$
+- Con l'input $w in Sigma^*$ posizionato nella parte più a sinistra del primo nastro
+- Gli altri nastri contengono solo $union.sq$
+- Tutte le testine sono posizionate sulle prime celle dei rispettivi nastri
+Le nozioni di configurazione, passo di computazione, di linguaggio deciso e di linguaggio riconosciuto da una MdT sono estese in maniera ovvia alle macchine MdTM
+\
+Una configurazione ha la forma
+$ (u_1 q v_1,...,u_k q v_k) $
+Dove $q in Q$ è lo stato corrente di $M$ e per $t in {1,...,k}$, $u_t q v_t in Gamma^* Q Gamma^S$, con $Gamma^S eq Gamma^*(Gamma backslash {union.sq}) union {union.sq, epsilon}$
+\
+La testina del $t$-esimo nastro è posizionata sul primo simbolo di $v_t$, se $v_t eq.not epsilon$, su $union.sq$ altrimenti
+\
+\
+$(q_0 ,...,q_0)$ è una configurazione iniziale
+\
+$(u_1 q_("accept") v_1,...,u_k q_("accept") v_k )$ è una configurazione di accettazione
+
+=== Linguaggio Riconosciuto
+$ L(M) eq {w in Sigma^*| exists u_t,v_t in Gamma^*, t in {1,...,k}}: $
+$ (q_0 w,...,q_0) arrow.r^* (u_1 q_("accept") v_1,...,u_k q_("accept") v_k ) $
+
+#pagebreak()
+
+== Equivalenza MdTM e MdT
+Per ogni MdT multinastro $M eq (Q,Sigma,Gamma,delta,q_0,q_("accept"),q_("reject"))$
+esiste una macchina di Turing a nastro singolo $S$ equivalente a $M$, cioè tale che $L(M) eq L(S)$
+- *Dimostrazione*:
+Supponiamo che $M$ abbia $k$ nastri \
+Per ogni configurazione di $M$
+$ (u_1 q v_1,...,u_k q v_k) $
+La macchina $S$ che simula $M$ deve codificare su un solo nastro:
+- Il contenuto $u_1 v_1,...,u_k v_k$ dei $k$ nastri
+- La posizione di ciascuna testina del nastro
+\
+*Idea della dimostrazione*:
+- Il contenuto del nastro di $S$ è la concatenazione di $k$ blocchi separati da \# 
+- Un elemento $dot(gamma)$, con $gamma in Gamma$, nel blocco $t$-esimo indica la posizione della testina del nastro $t$-esimo, $t in {1,...,k}$, e quindi l'alfabeto dei simboli di nastro di $S$ è $Gamma union {dot(gamma) | gamma in Gamma} union {\#,dot(\#)}$
+\
+Quindi sia $w eq w_1,...,w_n$ una stringa input, $w_t in Sigma, t in {1,...,n}$
+- *Generazione della configurazione iniziale di $M$*: \
+$S$ passa alla configurazione
+$ q' \# w_1...w_n \# dot(union.sq) \# ...\# dot(union.sq) \# $
+Con la conseguente aggiunta di stati addizionali
+- Per simulare un passo di computazione di $M$, per effetto dell'applicazione di $delta(q,a_1,...,a_k) eq (s,b_1,...,b_k,d_1,...,d_k)$, la macchina $S$ scorre il dato sul nastro dal primo $\#$ al $(k+1)$-esimo $\#$ da sinistra a destra e viceversa due volte
+  - La prima volta $S$ determina quali sono i simboli correnti di $M$, memorizzando nello stato i simboli marcati sui singoli nastri
+  - La seconda volta $S$ esegue su ogni sezione le azione che simulano quelle di $M$
+
+\
+Nel corso della simulazione $S$ potrebbe spostare delle testine sul simbolo $\#$, in questo caso $S$ deve spostare tutto il contenuto verso destra di una posizione, a partire da $dot(\#)$ fino all'ultimo $\#$ e scrivere $dot(union.sq)$ nella cella vuota creata al posto di $dot(\#)$
+\ Poi la MdT entro nello stato che ricorda il nuovo stato di $M$ e riposiziona la testina all'inizio del nastro
+\ Se si ferma $M$, anche $S$ si ferma rimuovendo i separatori $\#$ e sostituendo i caratteri $dot(a)_t$ con $a_t$
+
+== MdTM e MdT Linguaggi Riconoscibile
+Un linguaggio $L$ è Turing riconoscibile se e solo se esiste una macchina di Turing multinastro $M$ che lo riconosce, cioè tale che $L(M) eq L$
+
+- *Dimostrazione*:
+Se $L$ è Turing riconoscibile allora esiste una MdT $M$ tale che $L(M) eq L$, poichè $M$ è una MdT a $k$ nastri con $k=1$, esiste una macchina di Turing multinastro $M$ tale che $L(M) eq L$
+
+\
+Viceversa, se esiste una macchina di Turing multinastro $M$ tale che $L(M) eq L$, per il teorema precedente esiste una macchina di Turing a nastro singolo $S$ tale che $L(S) eq L(M) eq L$, quindi $L$ è Turing riconoscibile
+
+#pagebreak()
+
+== Ordine Radix
+Sia $Sigma eq {a_0,...,a_k}$ un alfabeto e sia $a_0 lt a_1 lt ... lt a_k$ un ordinatamento degli elementi di $Sigma$ \
+Siano $x,y in Sigma^*$, diremo che $x lt.eq y$ rispetto all'ordine radix se $x$ e $y$ verificano le condizioni seguenti
+- $|x| lt |y|$
+- $|x| eq |y|$ e $x eq z a x', y eq z b y', z,x',y' in Sigma^*, a,b in Sigma, a lt.eq b$
+#pagebreak()
+
+= Macchina di Turing Non deterministica
+== Descrizione Formale
+Una macchina di Turing non deterministica è una settupla $(Q,Sigma,Gamma,delta,q_0,q_("accept"),q_("reject"))$ con
+- $Q,Sigma,Gamma,q_0,q_("accept"),q_("reject")$ sono definiti come in una MdT deterministica
+- La funzione di transizione $delta$ e definita come segue
+$ delta: (Q backslash {q_("accept"),q_("reject")}) times Gamma arrow.r cal(P)(Q times Gamma times {L,R}) $
+\
+Quindi per ogni $q in Q backslash {q_("accept"),q_("reject")}$, per ogni $gamma in Gamma$ risulta
+$ delta(q,gamma) eq {(q_1,gamma_1,d_1),...,(q_k,gamma_k,d_k)}, "con" k gt.eq 0 "e" $
+$ (q_j,gamma_j,d_j) in Q times Gamma times {L,R}, "per" j in {1,...,k} $
+\
+- La computazione continua ad essere una successione finita di configurazioni $C arrow.r^* C'$, quindi *non è un albero*
+- Ma dato che ci possono essere più configurazioni $u' q' v'$ che sono prodotte da $u q v$ in un passo, ed è possibile organizzarle in un albero
+#pagebreak()
+== Albero delle computazioni
+In una macchina di Turing non deterministica, le computazioni su una stringa input $w$ possono essere organizzate in un albero radicato in cui la radice è la configurazione iniziale $q_o w$
+\
+\
+I nodi sono configurazioni e i figli di ogni nodo rappresentano le possibili configurazioni raggiungibili da quel nodo in un passo di computazione
+\
+\
+In particolare, ogni configurazione in cui lo stato è $q_("reject")$ o $q_("accept")$ è una foglia
+
+== Linguaggio Riconosciuto da una MdT non Deterministica
+Sia $N eq (Q,Sigma,Gamma,delta,q_0,q_("accept"),q_("reject"))$ una MdT non deterministica, il linguaggio $L(N)$ riconosciuto da $N$, è l'insieme
+$ L(N) eq {w in Sigma^*|"esiste una computazione" q_0 w arrow.r^* u q_("accept") v, u,v in Gamma^*} $
+
+#pagebreak()
+
+= Equivalenza Modello Deterministico e non Deterministico
+Per ogni macchina di Turing non deterministica $N$ esiste una macchina di Turing deterministica $D$ equivalente ad $N$, cioè tale che $L(N) eq L(D)$
+
+== Idea della Prova
+- Ogni computazione di $N$ deriva da una sequenza di scelte che $D$ deve riprodurre
+- Per ogni input $w$, $D$ esplora l'albero delle computazioni di $N$ su $w$
+- Se D trova lo stato di accettazione su uno qualsiasi dei rami dell'albero, accetta
+  - *Visita per livelli*, se esiste una computazione $q_0 w arrow.r ^* u q_("accept") v,$ \ $D$ prima o poi effettuerà la sequenza di scelte corrispondenti 
+- Questo assicura che $L(D) eq L(N)$
+\
+La macchina MdT deterministica $D$ che simula $N$ ha tre nastri
+- *Nastro 1*: Contiene la stringa di input e non viene modificato
+- *Nastro 2*: Mantiene una copia del nastro di $N$ corrispondente a qualche diramazione della sua computazione non deterministica
+- *Nastro 3*: Deve tenere traccia della posizione di $D$ nell'albero delle computazioni di $N$
+#pagebreak()
+== Rappresentazione delle Computazioni
+Sia $N eq (Q,Sigma,Gamma,delta,q_0,q_("accept"),q_("reject"))$ una macchina di Turing non deterministica
+\
+Sia $b$ il massimo numero di scelte per $N$ su ogni stato e ogni carattere
+$ b eq max{|delta(q ,sigma)| | q in Q, sigma in Sigma} $
+Consideriamo l'alfabeto $Gamma_b eq {1,...,b}$
+\
+Per ogni coppia stato-simbolo $(q,sigma)$ esistono al più $b$ scelte a ognuna delle quali associamo un diverso simbolo in $Gamma_b$
+\
+Quindi per ogni configurazione $u q sigma v$ esistono al più $b$ successive configurazioni a ognuna delle quali risulta associato un simbolo diverso di $Gamma_b$
+\
+\
+Ogni albero di computazione di $N$ è un albero $b$-ario, cioè ogni nodo ha al più $b$ figli
+\
+Ogni cammino in ogni albero di computazione può essere rappresentato da una stringa sull'alfabeto $Gamma_b eq {1,...,b}$
+- A ogni computazione è associata una stringa su $Gamma_b$
+- Viceversa, a ogni stringa su $Gamma_b$ è associata al più una computazione
+- Non è sempre vero che una stringa rappresenta una computazione
+#pagebreak()
+== Rappresentazione dei Cammini
+Se una stringa rappresenta una computazione, ogni simbolo nella stringa rappresenta una scelta tra le possibili alternative proposte dalla $delta$ in un passo di computazione
+\
+La stringa vuota corrisponde alla configurazione iniziale, è l'indirizzo della radice dell'albero
+\
+Una visita per livelli dell'albero corrisponde alla lista delle stringhe su $Gamma_b$ in ordine radix
+
+== Descrizione dei 3 Nastri
+- Sul *primo nastro* è memorizzata la stringa input $w$ e il contenuto del primo nastro non verrà alterato dalle computazioni di $D$
+- Sul *secondo nastro* viene eseguita la simulazione di $N$, il nastro 2 mantiene una copia del nastro di $N$ corrispondente a qualche diramazione dell'albero delle computazioni
+- Sul *terzo nastro* vengono generate le codifiche delle possibili computazioni di $N$ con input $w$, tenendo traccia delle posizioni
+
+== Descrizione di D
+1. Inizialmente il nastro 1 contiene l'input $w$ e i nastri 2 e 3 contengono solo $union.sq$
+2. $D$ copia il contenuto del nastro 1 sul nastro 2
+3. Utilizza il nastro 2 per simulare $N$ con input $w$ sulla ramificazione della sua computazione non deterministica corrispondente alla stringa sul nastro 3
+ - Prima di ogni passo di $N$, consulta il simbolo sul nastro 3 per determinare quale scelta fare tra quelle consentite dalla funzione di transizione di $N$
+ - Se si raggiunge una configurazione di accettazione $D$ accetta l'input, altrimenti passa al passo 4 
+4. $D$ genera sul nastro 3 la stringa successiva a quella corrente in ordine radix e torna al passo 2
+\
+$D$ accetta se e solo se $N$ accetta $w$, quindi $L(D) eq L(N)$
+
+== Corollario Macchina di Turing non Deterministica
+*Corollario*: \
+Un linguaggio $L$ è Turing riconoscibile se e solo se esiste una macchina di Turing non deterministica $N$ che lo riconosce, cioè tale che $L(N) eq L$
+\
+\
+*Dimostrazione*: \
+Se $L$ è il linguaggio $L(N)$ riconosciuto da un macchina di Turing non deterministica $N$, per il teorema precedente esiste una MdT deterministica $D$ tale che $L(D) eq L(N) eq L$
+\
+Quindi $L$ è Turing riconoscibile
+\
+\
+Viceversa, se $L$ è Turing riconoscibile allora esiste una macchina di Turing deterministica $M eq (Q,Sigma,Gamma,delta,q_0,q_("accept"),q_("reject"))$ che lo riconosce, cioè tale che $L(M) eq L$
+\ \
+La macchina di Turing non deterministica \ $M' eq (Q,Sigma,Gamma,delta,q_0,q_("accept"),q_("reject"))$, dove $delta'(q,gamma) eq {delta(q,gamma)}$,per ogni $q in Q backslash {q_("accept"),q_("reject")}$ e $gamma in Gamma$, è tale che $L(M') eq L(M) eq L$
+
+#pagebreak()
+
+== Decisori non Deterministici
+Una macchina di Turing non deterministica è un decisore se, per ogni stringa input $w$, tutte le computazioni a partire da $q_0 w$ terminano
+\ \
+Una macchina di Turing non deterministica $N$ decide $L$ se $N$ è un decisore e $L eq L(N)$
+\ \
+Sia $N$ un decisore non deterministico e sia $w$ una stringa
+- $N$ *accetta* $w$ se e solo se esiste almeno una computazione \ $q_0 w arrow.r^* u q_("accept") v$, dove $q_0 w$ è la configurazione iniziale di $N$ con input $w$ e $u q_("accept") v$ è una configurazione di accettazione
+  - L'albero della computazione di $N$ su $w$ è finito e contiene almeno una foglia con stato $q_("accept")$
+
+- $N$ *non accetta* $w$ se e solo se nessuna computazione della configurazione iniziale $q_0 w$ con input $w$ termina in una configurazione di accettazione
+  - L'albero delle computazione di $N$ su $w$ è finito e non contiene nessuna foglia con stato $q_("accept")$
+
+\
+Se $N$ è una macchina di Turing non deterministica tale che, per ogni input $w$, $N$ si ferma sempre su tutte le ramificazioni dell'albero delle computazioni su $w$, allora esiste una MdT deterministica $D$ che simula $N$ e che si arresta su ogni input
+\
+\
+Diremo che una MdT non deterministica è un decisore se tutte le sue ramificazioni si fermano su ogni input
+\
+\
+*Corollario*: \
+Un linguaggio $L$ è decidibile se e solo se esiste una macchina di Turing non deterministica $N$ che lo decide
+- Quindi, per ogni input $w$, l'albero delle computazioni di $N$ su $w$ ha un numero finito di nodi
+#pagebreak()
+*Teorema*: \
+Se ogni nodo in un albero ha un numero finito di figli e ogni cammino dell'albero ha un numero finito di nodi, allora l'albero ha un numero finito di nodi
+\
+*Corollario*: \
+Un linguaggio $L$ è decidibile se e solo se esiste una macchina di Turing non deterministica $N$ che lo decide
+\
+*Prova*: \
+Se un linguaggio $L$ è decidibile, esiste una macchina di Turing deterministica $M$ che è un decisore e che accetta $L$ \
+$M$ può essere facilmente trasformata in una macchina di Turing non deterministica che decide $L$
+\
+\
+Viceversa, se un linguaggio $L$ è deciso da una macchina di Turing non deterministica $N$, definiamo una macchina di Turing deterministica $D'$, modificando la precedente definizione di $D$ come segue
+\
+*Descrizione di $D'$*
+1. Inizialmente il nastro 1 contiene l'input $w$ e i nastri 2 e 3 contengono solo $union.sq$
+2. $D'$ copia il contenuto del nastro 1 sul nastro 2
+3. Utilizza il nastro 2 per simulare $N$ con input $w$ sulla ramificazione della sua computazione non deterministica corrispondente alla stringa sul nastro 3
+ - Prima di ogni passo di $N$, consulta il simbolo sul nastro 3 per determinare quale scelta fare tra quelle consentite dalla funzione di transizione di $N$
+ - Se si raggiunge una configurazione di accettazione $D'$ accetta l'input, altrimenti passa al passo 4 
+4. Rifiuta se tutti i cammini dell'albero delle computazioni di $N$ su $w$ non hanno portato a una configurazione di accettazione, altrimenti $D'$ passa al passo 5
+5. $D'$ genera sul nastro 3 la stringa successiva a quella corrente in ordine radix e torna al passo 2
+\
+Quindi possiamo dedurre che $D'$ è un decisore per $L$
+\
+\
+Se $N$ accetta il suo input $w$, allora $D'$ troverà un cammino che termina in una configurazione di accettazione e $D'$ accetta $w$
+\
+\
+Se $N$ non accetta  il suo input $w$, nessuna delle sue computazioni su $w$ termina in una configurazione di accettazione, siccome $N$ è un decisore, ciascuno dei cammini ha un numero finito di nodi poichè ogni arco nel cammino rappresenta un passo di computazione di $N$ su $w$, quindi, $D′$ si fermerà e rifiuterà quando l'intero albero sarà stato esplorato
+
+\
+$D′$ deve avere un controllo sulle stringhe che rappresentano codifiche di computazioni su $w$ che terminano in una configurazione di rifiuto oppure in una configurazione che non produce nessuna altra configurazione. Se $x$ è una stringa che codifica una tale computazione, $D′$ deve bloccare la generazione di stringhe in ordine radix con prefisso $x$. Analogamente, se la stringa $x$ è una stringa non valida, cioè non corrisponde a una computazione, $D′$ deve bloccare la generazione di stringhe in ordine radix con prefisso $x$
+
