@@ -2416,8 +2416,8 @@ Quindi possiamo dedurre che $D'$ è un decisore per $L$
 Se $N$ accetta il suo input $w$, allora $D'$ troverà un cammino che termina in una configurazione di accettazione e $D'$ accetta $w$
 \
 \
-Se $N$ non accetta  il suo input $w$, nessuna delle sue computazioni su $w$ termina in una configurazione di accettazione, siccome $N$ è un decisore, ciascuno dei cammini ha un numero finito di nodi poichè ogni arco nel cammino rappresenta un passo di computazione di $N$ su $w$, quindi, $D′$ si fermerà e rifiuterà quando l'intero albero sarà stato esplorato
+Se $N$ non accetta  il suo input $w$, nessuna delle sue computazioni su $w$ termina in una configurazione di accettazione, siccome $N$ è un decisore, ciascuno dei cammini ha un numero finito di nodi poichè ogni arco nel cammino rappresenta un passo di computazione di $N$ su $w$, quindi, $D'$ si fermerà e rifiuterà quando l'intero albero sarà stato esplorato
 
 \
-$D′$ deve avere un controllo sulle stringhe che rappresentano codifiche di computazioni su $w$ che terminano in una configurazione di rifiuto oppure in una configurazione che non produce nessuna altra configurazione. Se $x$ è una stringa che codifica una tale computazione, $D′$ deve bloccare la generazione di stringhe in ordine radix con prefisso $x$. Analogamente, se la stringa $x$ è una stringa non valida, cioè non corrisponde a una computazione, $D′$ deve bloccare la generazione di stringhe in ordine radix con prefisso $x$
+$D'$ deve avere un controllo sulle stringhe che rappresentano codifiche di computazioni su $w$ che terminano in una configurazione di rifiuto oppure in una configurazione che non produce nessuna altra configurazione. Se $x$ è una stringa che codifica una tale computazione, $D'$ deve bloccare la generazione di stringhe in ordine radix con prefisso $x$. Analogamente, se la stringa $x$ è una stringa non valida, cioè non corrisponde a una computazione, $D'$ deve bloccare la generazione di stringhe in ordine radix con prefisso $x$
 
