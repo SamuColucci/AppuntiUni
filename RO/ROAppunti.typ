@@ -1524,3 +1524,70 @@ Data la coppia di soluzioni $underline(x)$ e $underline(w)$ rispettivamente ammi
 $ s_J w_J eq (underline(a)^j underline(x) - b_j)w_j eq 0, space j eq 1,...,m $
 $ v_i x_i eq (c_i - underline(a)_i^T underline(w))x_i eq 0, space i eq 1,...,n $
 Con $underline(a)^j$ è la j-esima riga di A e $underline(a)_i$ è la i-esima colonna di A
+
+== Applicazione Economica della Dualità
+Le variabili duali $underline(w)$ rappresentano i *prezzi ombra*, ovvero i prezzi minimi a cui bisogna vendere le risorse per mantenere invariato il valore ottimo della funzione obiettivo
+\
+\
+I prezzi ombra sono validi fino a quando non cambia la base ottima
+$ z^* eq underline(c)^T underline(x)^* eq underline(w)^(* T) underline(b) arrow.double.r (partial z) / (partial b_i) eq w_i^* $
+\
+Quindi quando un vincolo è attivo la risorsa ad esso associata è scarsa
+\
+La variabile duale corrispondete, a meno di degenerazione, sarà diversa da zero
+\
+\
+Se la risorsa è abbondante sicuramente la variabile duale ad essa associata è nulla
+$ s_J w_J eq (underline(a)^j underline(x) - b_j)w_j eq 0, space j eq 1,...,m $
+$ v_i x_i eq (c_i - underline(a)_i^T underline(w))x_i eq 0, space i eq 1,...,n $
+\
+#pagebreak()
+= Analisi della Sensitività
+== Valore di una Unità di Risorsa 
+$ w_i eq ("massima variazione di" z)/("massima variazione della risorsa" i) $
+La quantità $w_i$ indica di quanto aumenta l'obiettivo in corrispondenza dell'acquisizione di un ulteriore unità di risorsa
+
+== Analisi di Post-Ottimalità
+Dato un problema di programmazione lineare
+$ min underline(c)^T underline(x) $
+$ A underline(x) eq underline(b) $
+$ underline(x) gt.eq underline(0) $
+Data la soluzione ottima $underline(x)^*$ e la base ottima associata $B$, è possibile variare certe caratteristiche lasciando invariata la base ottima
+
+=== Variazione nel Vettore dei Costi
+Data una soluzione di base ottima $x^*$, supponiamo che il coefficiente di una delle variabili sia cambiato da $c_k$ a $c'_k$, l'effetto di questo cambio si ripercuoterà solo sui coefficienti di costo ridotto
+\
+\
+*Variazione di un coefficiente di costo $c_k$ relativo ad una variabile $x_k$ non in base*: \
+Sia $c_k, k in N$, il coefficiente che viene modificato come segue
+$ c'_k eq c_k + delta $
+In questo caso $underline(c)^T_B$ non subisce variazioni e quindi
+$ z_j eq underline(c)^T_B A_B^(-1) underline(a)_j, "rimane inalterato per ogni" j in N $
+Solo il coefficiente di costo ridotto $z_k - c_k$ cambia come segue
+$ z_k - c'_k eq z_k - (c_k + delta) eq (z_k - c_k) - delta $
+- Se $z_k - c'_k lt.eq 0$ allora $x^*$ è ancora la soluzione ottima
+- Se invece $z_k - c'_k gt 0$ allora $x^*$ non è più la soluzione ottima e quindi occorre effettuare un'iterazione del simplesso per fare entrare in base la variabile $x_k$
+$ z_k - c'_k eq z_k - (c_k + delta) eq (z_k - c_k) - delta lt.eq 0 arrow.double.r delta gt.eq (z_k - c_k) $
+Quindi per ogni valore di $delta$ nell'intervallo $(z_k - c_k) lt.eq delta lt.eq + infinity$ la base continua a rimanere ottima
+
+*Variazione di un coefficiente di costo $c_k$ relativo ad una variabile $x_k$ in base*: \
+Sia $c_(B i), i eq 1,...,m$, il coefficiente di costo che viene modificato in $c'_(B i) eq c_(B i) + delta$ \
+Poichè $ z_j - c_j eq underline(c)^T_B A_B^(-1) underline(a)_j - c_j, j in N $
+\
+La modifica di $c_(B i)$ implica la variazione di tutti i coefficienti di costo ridotto associati alle variabili fuori base
+$ c'_B_i eq c_B_i + delta arrow.double.r underline(c)'_B eq underline(c)_B + delta underline(e)_i $
+$ z'_j - c_j eq (underline(c)_B^T + delta underline(e)_i^T)A_B^(-1) underline(a)_j - c_j eq underline(c)_B^T A_B^(-1)underline(a)_j + delta underline(e)_i^T A_B^(-1) underline(a)_j - c_j $
+Dove $underline(e)_i^T A_B^(-1) eq (A_B^(-1))^i$ è la riga $i$-esima di $A_B^(-1)$
+\
+Le condizioni su $delta$ si ottengono imponendo che
+$ z'_j - c_j  eq (z_j - c_j) + delta(A_B^(-1))^i underline(a)_j lt.eq 0, forall j in N $
+#pagebreak()
+=== Variazione del Termine Noto di un Vincolo
+Sia $b_i, i eq 1,...,m$, il termine noto del $i$-esimo vincolo che viene variato in
+$ b'_i eq b_i + delta arrow.double.r underline(b)' eq underline(b) + delta underline(e)_i $
+A causa di tale variazione si modificano i valori delle variabili di base
+$ underline(x)'_B eq A_B^(-1) underline(b)' eq A_B^(-1)(underline(b) + delta underline(e)_i) eq A_B^(-1) underline(b) + delta(A_B^(-1))_i  arrow.double.r underline(x)'_B eq underline(x)_B + delta(A_B^(-1))_i $
+Dove $A_B^(-1) underline(e)_i eq (A_B^(-1))_i$ è la colonna $i$-esima di $A_B^(-1)$
+\
+Le condizioni su $delta$ si ottengono imponendo che
+$ underline(x)'_B eq underline(x)_B + delta(A_B^(-1))_i gt.eq underline(0) $ 
