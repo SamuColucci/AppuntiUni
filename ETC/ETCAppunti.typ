@@ -2013,7 +2013,7 @@ Grafo i cui nodi sono gli stati della macchina e le etichette sugli archi hanno 
 $ "simbolo" arrow.r "simbolo",d $
 Con il simbolo $in Gamma$ e $d in {L,R}$
 #pagebreak()
-== Computazione di una Mdt Informale
+== Computazione di una MdT Informale
 - Inizia dallo stato iniziale $q_0$
 - Con l'input $w in Sigma^*$ posizionato sulla parte più a sinistra del nastro, e con la testina posizionata sulla cella più a sinistra del nastro
 - Se input $epsilon$, allora il nastro contiene solo $union.sq$
@@ -2104,7 +2104,7 @@ Sia $R(M) eq {w in Sigma^* | M "rifiuta" w}$
 \ In generale $L(M) union R(M)$ non coincide con $Sigma^*$, ma se coincide allora $M$ è un decider
 \
 *Definizione Formale*: \
-Un Mdt $M eq  (Q,Sigma,Gamma, delta,q_0,q_("accept"),q_("reject"))$ è un decisore se per ogni $w in Sigma^*$, esistono $u,v in Gamma^*$ e $q in {q_("accept"),q_("reject")}$ tali che:
+Un MdT $M eq  (Q,Sigma,Gamma, delta,q_0,q_("accept"),q_("reject"))$ è un decisore se per ogni $w in Sigma^*$, esistono $u,v in Gamma^*$ e $q in {q_("accept"),q_("reject")}$ tali che:
 $ q_0 w arrow.r^* u q v $
 
 == Linguaggio Deciso
@@ -2131,7 +2131,7 @@ Rappresenta un sottoinsieme proprio dei linguaggio Turing riconoscibili, quindi 
 == Funzioni Calcolabili
 Una funzione $f: Sigma^* arrow.r Sigma^*$ è calcolabile se esiste una macchina di Turing $M eq  (Q,Sigma,Gamma, delta,q_0,q_("accept"),q_("reject"))$ tale che
 $ forall w in Sigma^* space q_0 w arrow.r q_("accept") f(w) $
-- La Mdt si deve arrestare su ogni input
+- La MdT si deve arrestare su ogni input
 
 #pagebreak()
 
@@ -2144,7 +2144,7 @@ Questa caratteristica non aggiunge potere computazionale al modello scelto
 \
 \
 La parte non ovvia è mostrare che possiamo trasformare qualsiasi macchina di Turing che ha la possibilità di stare ferma in una macchina di Turing equivalente che non ha tale capacità
-  - Lo dimostriamo costruendo una Mdt in cui simuliamo ogni transizione in cui resta ferma come una transizione che va prima a destra e poi ritorna a sinistra
+  - Lo dimostriamo costruendo una MdT in cui simuliamo ogni transizione in cui resta ferma come una transizione che va prima a destra e poi ritorna a sinistra
 
 Sia $T_((L,R))$ l'insieme delle macchine di Turing
 $ (Q backslash {q_("accept"),q_("reject")}) times Gamma arrow.r Q times Gamma times {L,R} $
@@ -2421,3 +2421,96 @@ Se $N$ non accetta  il suo input $w$, nessuna delle sue computazioni su $w$ term
 \
 $D'$ deve avere un controllo sulle stringhe che rappresentano codifiche di computazioni su $w$ che terminano in una configurazione di rifiuto oppure in una configurazione che non produce nessuna altra configurazione. Se $x$ è una stringa che codifica una tale computazione, $D'$ deve bloccare la generazione di stringhe in ordine radix con prefisso $x$. Analogamente, se la stringa $x$ è una stringa non valida, cioè non corrisponde a una computazione, $D'$ deve bloccare la generazione di stringhe in ordine radix con prefisso $x$
 
+= Problemi di Decisione
+Un problema di decisione è un problema che ha come soluzione una risposta si o no
+== Richiami di Logica
+*Variabili Booleane*: Variabili che possono assumere valore vero o falso
+\
+*Operazioni Booleane*: $or ("OR"), and ("AND"), not ("NOT")$
+\
+Denotiamo $not x$ con $overline(x)$
+
+#pagebreak()
+
+Dato un insieme di variabili booleane $X$, le formule booleane su $X$ sono definite induttivamente come segue:
+- Le costanti $0,1$ e le variabili $x, overline(x), "con" x in X$, sono formule booleane
+- Se $Phi, Phi_1, Phi_2$ sono formule booleane allora $(Phi_1 or Phi_2),(Phi_1 and Phi_2), overline(Phi)$ sono formule booleane
+\
+Una formula booleana $Phi$ è soddisfacibile se esiste un insieme di valori $0$ e $1$ per le variabili di $Phi$ che renda la formula uguale a $1$
+
+\
+*Cammino Hamiltoniano*: In un grafo orientato è un cammino orientato che passa per ogni vertice del grafo una e una sola volta
+
+== Istanze Problema di Decisione
+*Istanze*: Gli elementi di un insieme considerati dal problema di decisione, ovvero un particolare input per quel problema
+\ \
+*L'insieme delle istanze*: Rappresenta l'unione del sottoinsieme delle istanze con risposta si e del sottoinsieme con risposta no
+
+== Problemi di Ricerca
+Chiamiamo problemi di ricerca quelli per i quali cerchiamo una soluzione se esiste
+\
+\
+Dato un problema di ricerca possiamo in genere usare come sottoprogramma un algoritmo per il corrispondente problema di decisione, se tale algoritmo esiste
+#pagebreak()
+== Livelli di Descrizione di una Macchina di Turing
+- *Descrizione Formale*: Livello più basso e dettagliato, specificando gli elementi della settupla che definisce la MdT
+- *Descrizione Implementativa*: Descriviamo verbalmente il modo in cui memorizza i dati sul nastro
+- *Descrizione di Alto Livello*: Usiamo frasi del linguaggio per descrivere un algoritmo, ignorando come la macchina gestisce il nastro o la testina
+
+== Codifiche
+La corrispondenza che a una istanza associa una stringa deve essere un codifica, cioè deve rappresentare univocamente l'istanza
+\
+\
+- Useremo $angle.l cal(O) angle.r$ per denotare una stringa che codifica l'oggetto $cal(O)$
+- Useremo $angle.l cal(O)_1,...,cal(O)_k angle.r$ per denotare una stringa che codifica gli oggetti $cal(O)_1,...,cal(O)_k$
+\
+- Una MdT è codificabile con una stringa
+- Una MdT e una stringa $w$ sono codificabili con una stringa
+
+== Codifica di una MdT
+In generale per codificare una macchina di Turing \ $M eq (Q,Sigma,Gamma,delta,q_0,q_("accept"),q_("reject"))$ occore stabilire come codificare
+- I simboli dell'alfabeto in input
+- I simboli dell'alfabeto di nastro
+- Gli stati
+- I possibili movimenti della testina
+- I valori della funzione di transizione
+- Lo stato iniziale $q_0$ e gli stati $q_("accept"),q_("reject")$
+\
+\
+#pagebreak()
+Un possibile codifica di una macchina di Turing $M eq (Q,Sigma,Gamma,delta,q_0,q_("accept"),q_("reject"))$ mediante una stringa su ${0,1}$
+- Fissiamo un alfabeto infinito universale $Sigma_U eq {a_1,a_2...}$ e assumiamo che tutti i simboli di input e di nastro siano estratti da $Sigma_U$
+- Fissiamo un insieme infinito universale di stati $Q_U eq {q_0,q_1,...}$ e assumiamo che tutte le MdT usano nomi di stati scelti da $Q_U$
+- Codifichiamo un elemento $a_i in Sigma_U$ con la stringa $e(a_i) eq 0^(i+1)$
+- Codifichiamo il simbolo $union.sq$ con la stringa $e(union.sq) eq 0$
+- Codifichiamo un alfabeto $Delta eq {b_1,b_2,...,b_r}$ mediante la stringa
+$ e(Delta) eq 111 e(b_1)1e(b_2)1 dot dot dot 1e(b_r)111 $
+Quindi $e(Sigma)$ e $e(Gamma)$ sono definiti
+- Codifichiamo un elemento $q_i in Q_U$ con la stringa $e(q_i) eq 0^(i+1)$
+- Codifichiamo i movimenti della testina con
+$ e(L) eq 0, e(R) eq 00, e(S) eq 000 $
+- Codifichiamo una transizione $m$ di una MdT, ad esempio $delta(q,a) eq (p,b,D)$ con 
+$ e(m) eq 11e(q)1e(a)1e(p)1e(b)1e(D)11 $
+- Infine codifichiamo una l'intera MdT  $M eq (Q,Sigma,Gamma,delta,q_0,q_("accept"),q_("reject"))$ con transizioni $m_1,...,m_t$ mediante la stringa
+$ 11111e(q_0)1e(q_("accept"))1e(q_("reject"))1e(Sigma)1e(Gamma)1e(m_1)1dot dot dot 1 e(m_t)11111 $
+
+- Codifichiamo una stringa $w eq b_1 b_2 dot dot dot b_r$ mediante 
+$ e(w) eq 11e(b_1)1e(b_2)1 dot dot dot 1e(b_r)11 $
+- Codifichiamo una MdT $M$ e una stringa $w$ con la stringa
+$ angle.l M,w angle.r eq e(M) e(w) $
+
+== Linguaggio Associato a un Problema di Decisione
+Il linguaggio $L$ associato a un problema di decisione $PP$ è il linguaggio delle codifiche delle istanza che hanno risposta si
+\
+\
+Se esiste una macchina di Turing che decide $L$ il problema viene detto *decidibile*, altrimenti viene detto *indecidibile*
+\
+\
+Se esiste una macchina di Turing che riconosce $L$ il problema viene detto *semidecidibile*
+
+=== INDEPENDENT-SET
+Sia $G eq (V,E)$ un grafo non orientato, con $V$ insieme di nodi ed $E$ insieme di archi
+\
+Un sottoinsieme $V'$ di nodi di $G$ è un independet-set in $G$ se per ogni $u,v in V'$, la coppia $(u,v)$ non è un arco, cioè $u "e" v$ non sono adiacenti
+$ "INDEPENDENT-SET" eq {angle.l G,k angle.r | G "è un grafo non orientato", $
+$ k "è un intero positivo e " G "ha un independent set di cardinalità " k} $
