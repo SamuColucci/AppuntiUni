@@ -2128,11 +2128,6 @@ Rappresenta un sottoinsieme proprio dei linguaggio Turing riconoscibili, quindi 
 - Esiste una MdT che riconosce $L$
 - Non esiste nessuna MdT tale che $M$ accetta tutte le stringhe di $L$ e rifiuta tutte quelle che appartengono al complemento $overline(L)$
 
-== Funzioni Calcolabili
-Una funzione $f: Sigma^* arrow.r Sigma^*$ è calcolabile se esiste una macchina di Turing $M eq  (Q,Sigma,Gamma, delta,q_0,q_("accept"),q_("reject"))$ tale che
-$ forall w in Sigma^* space q_0 w arrow.r q_("accept") f(w) $
-- La MdT si deve arrestare su ogni input
-
 #pagebreak()
 
 = Varianti di MdT
@@ -2423,6 +2418,9 @@ $D'$ deve avere un controllo sulle stringhe che rappresentano codifiche di compu
 
 = Problemi di Decisione
 Un problema di decisione è un problema che ha come soluzione una risposta si o no
+- *Decidibile*: Se il liguaggio associato è decidibile
+- *Semidecidibile*: Se il liguaggio associato è Turing riconoscibile
+- *Indecidibile*: Se il liguaggio associato non è decidibile
 == Richiami di Logica
 *Variabili Booleane*: Variabili che possono assumere valore vero o falso
 \
@@ -2513,4 +2511,842 @@ Sia $G eq (V,E)$ un grafo non orientato, con $V$ insieme di nodi ed $E$ insieme 
 \
 Un sottoinsieme $V'$ di nodi di $G$ è un independet-set in $G$ se per ogni $u,v in V'$, la coppia $(u,v)$ non è un arco, cioè $u "e" v$ non sono adiacenti
 $ "INDEPENDENT-SET" eq {angle.l G,k angle.r | G "è un grafo non orientato", $
-$ k "è un intero positivo e " G "ha un independent set di cardinalità " k} $
+$ k "è un intero positivo e " G "ha un independent set di cardinalità" k} $
+
+== Problemi di Decisione nella Teoria degli Automi
+== Problema Accettazione di un DFA
+Sia $cal(B)$ unn DFA e $w$ una parola, il corrispondente linguaggio è
+$ A_("DFA") eq {angle.l cal(B),w angle.r | cal(B) "è un DFA che accetta la parola" w} $
+\
+*Teorema*:
+\
+$A_("DFA")$ è un linguaggio decidibile
+
+== Problema del Vuoto
+$ E_("DFA") eq {angle.l cal(A) angle.r | cal(A) "è un DFA e" L(cal(A)) eq emptyset} $
+
+*Teorema*:
+\
+$E_("DFA")$ è un linguaggio decidibile
+
+== Problema del Equivalenza di due DFA
+
+$ E Q_("DFA") eq {angle.l cal(A),cal(B) angle.r | cal(A),cal(B) "sono DFA e" L(cal(A)) eq L(cal(B))} $
+
+*Teorema*:
+\
+$E Q_("DFA")$ è un linguaggio decidibile
+
+== Alcuni Esempi con NFA
+Potremmo formulare i tre precedenti attraverso rappresentazioni equivalenti come NFA o espressioni regolari
+$ A_("NFA") eq {angle.l cal(B),w angle.r | cal(B) "è un NFA che accetta la parola" w} $
+$ A_("REX") eq {angle.l cal(R),w angle.r | cal(R) "è un espressione regolare e" w in L(R)} $
+
+= Metodo della Diagonalizzazione
+== Funzione 
+Dati due insiemi non vuoti $X$ e $Y$, una funzione $f: X arrow.r Y$ da $X$ in $Y$ è una relazione che associa a ogni elemento $x$ in $X$ uno e uno solo  \ $y eq f(x)$ in $Y$
+- $X$ è il dominio della funzione
+- $Y$ è il codominio della funzione
+
+== Funzione Iniettiva 
+Una funzione $f: X arrow.r Y$ è iniettiva se \ $forall x,x' in X, x eq.not x' arrow.double.r f(x) eq.not f(x')$
+
+== Funzione Suriettiva 
+Una funzione $f: X arrow.r Y$ è suriettiva $arrow.double.r.l forall y in Y, exists x in X: y eq f(x)$
+
+== Funzione Biettiva 
+Una funzione $f.X arrow.r Y$ è una funzione biettiva di $X$ su $Y$ se $f$ è iniettiva e suriettiva
+#pagebreak()
+== Cardinalità
+Due insiemi $X$ e $Y$ hanno la stessa cardinalità se esiste una funzione biettiva $f: X arrow.r Y$ di $X$ su $Y$
+$ |X| eq |Y| arrow.double.r.l "esiste una funzione biettiva" f: X arrow.r Y $
+\
+- $|X| lt.eq |Y| arrow.r.l.double$ esiste una funzione iniettiva $f: X arrow Y$
+- $|X| lt.eq |Y|, |X| eq.not |Y| arrow.double.r |X| lt |Y|$
+- $|X| lt.eq |Y|, |X| gt.eq |Y| arrow.double.r |X| eq |Y|$
+=== Esempio $NN$
+Sia $NN$ l'insieme dei numeri interi positivi e sia $NN_p eq {2n|n in NN}$ l'insieme dei numeri interi positivi pari
+$ f: NN arrow.r {2n | n in NN} $
+Dove $f(n) eq 2n$, per ogni $n in NN$, è biettiva
+
+#align(center)[
+  #image("img/Diagonalizzazione/esempio1.png")
+]
+#pagebreak()
+=== Esempio $QQ^+$
+Consideriamo l'insieme $QQ^+ eq {x/y|x,y in NN, x gt 0, y gt 0}$ dei numeri razionali positivi, quindi $NN$ e $QQ^+$ hanno la stessa cardinalità e lo possiamo vedere costruendo la seguente matrice, con la riga i-esima che contiene tutti i numeratori e la riga j-esima che contiene tutti i denominatori
+
+#align(center)[
+  #image("img/Diagonalizzazione/esempio2.png")
+]
+#pagebreak()
+=== Esempio 3
+Sia $NN^2 eq {(x,y)|x,y in NN, x,y gt 0}$, la funzione $f: NN^2 arrow.r NN$ definita come segue è biettiva
+$ forall (x,y) in NN^2 f(x,y) eq ((x+y)(x+y+1))/2 + x eq $
+$ eq 1/2 ((x+y)^2 + 3x +y) in NN $
+La funzione $f$ è nota come la funzione coppia di Cantor
+
+#align(center)[
+  #image("img/Diagonalizzazione/esempio3.png")
+]
+
+== Numerabilità 
+Un insieme $X$ è numerabile se esiste una funzione biettiva $f: NN arrow X$ di $NN$ su $X$
+\
+Un insieme $X$ è enumerabile se esiste una funzione biettiva calcolabile $f: NN arrow X$ di $NN$ su $X$
+\
+Un insieme $X$ è contabile se è finito o numerabile
+#pagebreak()
+=== $RR$ non è Numerabile
+*Dimostrazione per Contraddizione*:
+\
+Supponiamo quindi che esista una funzione biettiva $f$ di $NN$ su $RR$
+\
+Costruiamo una tabella che contiene alcuni valori ipotetici della biezione e scegliamo $x$ in modo che sia diverso dagli elementi della tabella procedendo in diagonale
+
+#align(center)[
+  #image("img/Diagonalizzazione/rNonNum.png")
+]
+
+*Idea della Prova*: \
+Supponiamo per assurdo che esista una funzione biettiva $f$ di $NN$ su $RR$, allora costruiamo la tabella seguente
+
+#align(center)[
+  #image("img/Diagonalizzazione/rNonNum2.png")
+]
+
+Se consideriamo $r eq 0,d_(1,1) d_(2,2)...$ e il numero reale $x eq 0,d'_(1,1) d'_(2,2)...$ che abbiamo ottenuto prima in modo che sia diverso dagli elementi della tabella procedendo in diagonale, non è immagine di nessun intero positivo \ In generale $x eq.not f(i)$ per un qualsiasi $i$, perchè $d'_(i,i) eq.not d_(i,i)$
+
+== Metodo della Diagonalizzazione Linguaggi non Turing riconoscibili
+\
+*Corollario*: \
+Esistono linguaggi che non sono Turing riconoscibili
+\
+Per la prova si usa il metodo della diagonalizzazione e cosiste nel provare le seguenti condizioni
+- Dato un alfabeto $Sigma$, l'insieme $Sigma^*$ è numerabile
+- L'insieme delle codifiche delle macchine di Turing è numerabile
+- L'insieme dei linguaggi Turing riconoscibili è numerabile
+- L'insieme dei linguaggi sull'alfabeto $Sigma$ ha cardinalità maggiore del numerabile
+
+=== Numerabilità dell'Insieme delle Parole
+*Teorema*: \
+Se ogni insieme $S_n$ è numerabile, anche $S eq union_(n in NN) S_n$ è numerabile
+\
+*Corollario*: \
+$Sigma^*$ è numerabile
+\
+*Dimostrazione*: \
+$ Sigma^* eq union_(n in NN) Sigma^n $
+Sia $Sigma eq {a_1,a_2,...,a_k}$ un alfabeto \
+Possiamo definire una corrispondenza biunivoca tra $NN$ e $Sigma^*$ che permette di enumerare le stringhe in ordine Radix
+$ w_1 eq epsilon, w_2 eq a_1,... $
+In generale per la stringa $w_n$ abbiamo
+$ n eq |{y in Sigma^* | y lt w_n ("Rispetto all'ordine Radix")}| +1 $
+Dato che è possibile definire un algoritmo per calcolare tale indice abbiamo una funzione biettiva e calcolabile di $NN$ in $Sigma^*$
+#pagebreak()
+
+==== Dimostrazione alternativa
+*Idea della Dimostrazione*: \
+Provare che $|NN| lt.eq |Sigma^*|$ e poi che $|Sigma^*| lt.eq |NN times NN| eq |NN|$
+#align(center)[
+  #image("img/Diagonalizzazione/dimalt1.png")
+]
+#align(center)[
+  #image("img/Diagonalizzazione/dimalt2.png")
+]
+#pagebreak()
+*Dimostrazione*:
+#align(center)[
+  #image("img/Diagonalizzazione/dimalt3.png")
+]
+#align(center)[
+  #image("img/Diagonalizzazione/dimalt4.png")
+]
+#pagebreak()
+
+=== Numerabilità Insieme Codifiche MdT
+L'insieme ${chevron.l M chevron.r | M "è una macchina di Turing"}$ è numerabile
+\
+*Dimostrazione*: 
+\
+È possibile codificare una MdT M con una stringa su un alfabeto $Sigma$ e l'applicazione $f: chevron.l M chevron.r arrow.r chevron.l M chevron.r in Sigma^*$ è iniettiva
+\
+Quindi
+$ |{chevron.l M chevron.r | M "è una macchina di Turing"}| lt.eq |Sigma^*| eq |NN| $
+Sia $w$ una stringa su un alfabeto $Delta$, il linguaggio ${w}$ è decidibile, sia $M_w$ una fissata MdT che decide ${w}$, l'applicazione $g$ tale che $g(w) eq chevron.l M_w chevron.r$ è iniettiva \
+Quindi 
+$ |NN| eq |Delta^*| lt.eq |{chevron.l M chevron.r |M "è una macchina di Turing" }| $
+Da cui 
+$ |{chevron.l M chevron.r | M "è una macchina di Turing"}| eq |NN| $
+#pagebreak()
+=== Numerabilità dei Linguaggi Turing Riconoscibili
+
+L'insieme ${L | L "è un linguaggio Turing riconoscibile"}$ è numerabile \
+*Dimostrazione*: \
+Possiamo associare a ogni linguaggio Turing riconoscibile una fissata MdT che lo riconosce e questa corrispondeza è iniettiva
+\
+Quindi \
+$ |{L subset.eq Sigma^* | L "è un linguaggio Turing riconoscibile" }| lt.eq $ 
+$ |{chevron.l M chevron.r | M "è una macchina di Turing"}| eq |NN| $
+Sia $w$ una stringa su un alfabeto $Delta$, il linguaggio ${w}$ è Turing riconoscibile
+\
+L'applicazione $h$ tale che $h(w) eq {w}$ è iniettiva
+\
+Quindi
+$ |NN| eq |Delta^*| lt.eq |{L subset.eq Sigma^* | L "è un linguaggio Turing riconoscibile" }| $
+Da cui $ |{L subset.eq Sigma^* | L "è un linguaggio Turing riconoscibile" }| eq |NN| $
+#pagebreak()
+=== Non Numerabilità dell'Insieme dei Linguaggi
+Sia $Sigma^* eq {w_1,w_2,...}$
+\
+Sia $cal(B)$ l'insieme delle sequenze binarie infinite cioè delle sequenze infinite di 0 e 1
+\
+
+È possibile associare a ogni linguaggio $L$ una sequenza binaria infinita $cal(X)_L$, la sequenza caratteristica definita in questo modo:
+
+- Il bit i-esimo di $cal(X)_L$ è 1 se l'i-esima stringa $w_i$ è in L
+- Il bit i-esimo di $cal(X)_L$ è 0 se l'i-esima stringa $w_i in.not L$ 
+
+#align(center)[
+  #image("img/Diagonalizzazione/NonNumLing.png")
+]
+
+Questa relazione è una corrispondenza biunivoca tra l'insieme $cal(B)$ delle sequenze binarie infinite e l'insieme $cal(P)(Sigma^*)$ dei linguaggi su $Sigma$
+- A ogni linguaggio $L$ su $Sigma$ è associata una sola sequenza binaria infinita $cal(X)$ tale che $cal(X) eq cal(X)_L$
+- A ogni sequenza binaria infinita $cal(X)$ è associato un solo linguaggio $L$ su $Sigma$ tale che $cal(X) eq cal(X)_L$
+Quindi l'applicazione $f:cal(P)(Sigma^*) arrow.r cal(B)$ definita da $f(L) eq cal(X)_L$ è biettiva
+#pagebreak()
+=== Non Numerabilità dell'Insieme delle Sequenze Binarie
+L'insieme $cal(B)$ non è numerabile
+\
+*Idea della Dimostrazione*: \
+Mostriamo che non esiste nessuna funzione biettiva di $NN$ sull'insieme $cal(B)$ delle sequenze binarie infinite, supponiamo per assurdo che esista una funzione biettiva $f$ du $NN$ su $cal(B)$
+
+#align(center)[
+  #image("img/Diagonalizzazione/nonNumSeqBin.png")
+]
+
+Le cifre sulla diagonale di questa matrice $d_(1,1),d_(2,2),...$ definiscono una sequenza binaria infinita $cal(X)$
+\
+La sequenza binaria infinita $overline(cal(X)) eq overline(d)_(1,1),overline(d)_(2,2),... $ che si ottiene scegliendo in ogni posizione il complemento della corrispondente cifra in $cal(X)$ non è immagine di nessun intero positivo
+\
+Quindi, per ogni $i, overline(cal(X)) eq.not f(i)$ perchè $overline(d)_(i,i) eq.not d_(i,i)$
+
+=== Non Numerabilità Insieme delle Parti dei Linguaggi
+L'insieme $cal(P)(Sigma^*)$ dei linguaggi su $Sigma$ non è numerabile
+\
+*Dimostrazione*: 
+\
+Esiste un applicazione biettiva di $f "in" cal(P)(Sigma^*) "in" cal(B)$, \ 
+quindi $|cal(B)| eq |cal(P)(Sigma^*)|$
+#pagebreak()
+
+==== Dimostrazione alternativa
+#align(center)[
+  #image("img/Diagonalizzazione/dmialtL1.png")
+]
+#align(center)[
+  #image("img/Diagonalizzazione/dmialtL2.png")
+]
+#align(center)[
+  #image("img/Diagonalizzazione/dmialtL3.png")
+]
+
+== Esistono dei Linguaggi non Turing Riconoscibili
+*Corollario*:
+\
+L'insieme ${L subset.eq Sigma^* | L "è Turing riconoscibile"}$ è numerabile mentre \
+$cal(P)(Sigma^*)$ non è numerbaile, quindi
+$ |{L subset.eq Sigma^* | L "è Turing riconoscibile"}| eq |NN| eq.not |cal(P)(Sigma^*)| $
+Inoltre
+$ h: {L subset.eq Sigma^* | L "è Turing riconoscibile"} arrow.r cal(P)(Sigma^*) "dove" $
+$ h(L) eq L "è iniettiva" $
+Ne consegue
+$ |{L subset.eq Sigma^* | L "è Turing riconoscibile"}| lt |cal(P)(Sigma^*)| $
+Quindi esistono linguaggi che non sono Turing riconoscibili
+
+#pagebreak()
+= Indecidibilità
+== Linguaggio Indecidibile
+*Teorema*: \
+Il linguaggio $A_("TM")$ è Turing riconoscibile ma non è decidibile
+ $ A_("TM") eq {chevron.l M,w chevron.r | M "è un macchina di Turing e" $
+$ M "accetta la parola "w} $
+
+== Macchina di Turing Universale
+
+Una macchina di Turing universale $U$, quando riceve in input una codifica $chevron.l M,w chevron.r $ di una macchina di Turing $M$ e di una stringa $w$, simula la computazione di $M$ sull'input $w$
+
+== Teorema Esistenza MdT Universale
+Esiste una MdT universale
+
+#align(center)[
+  #image("img/Indecibilita/mdtUniversale.png")
+]
+
+Durante la sua computazione $U$
+- Usa il primo nastro per simulare la computazione di $M$
+- Lascia sul secondo nastro la codifica di $M$
+- Ha sul terzo nastro la codifica dello stato corrente di $M$
+$U$ individua l'istruzione corrente sul secondo nastro, usando il contenuto del terzo nastro e il simbolo corrente codificato sul primo nastro, quindi decodifica l'istruzione e la esegue
+#pagebreak()
+== $A_("TM")$ è Turing Riconoscibile
+
+Il linguaggio è Turing riconoscibile
+$ A_("TM") eq {chevron.l M,w chevron.r | M "è una macchina di Turing e" $
+$ M "accetta la parola "w} $
+
+*Dimostrazione*: \
+La seguente MdT $U$ riconosce $A_("TM")$
+\
+$U eq "Sull'input "chevron.l M,w chevron.r$ dove $M$ è una MdT e $w$ è una stringa
+- Simula $M$ sull'input $w$
+- Se $M$ accetta $w$, accetta l'input $chevron.l M,w chevron.r$
+- Se $M$ rifiuta $w$, rifiuta l'input $chevron.l M,w chevron.r$
+Quindi $U$ accetta una stringa $y$ se e solo se è della forma $chevron.l M,w chevron.r$ dove $M$ è una MdT, $w$ è una stringa e $M$ accetta $w$
+\
+Quindi, $U$ accetta una stringa $y$ se e solo se $y eq chevron.l M,w chevron.r$ è un elemento di $A_("TM")$
+\
+Da cui otteniamo che 
+$ L(U) eq A_("TM") $
+*Nota*: \
+$U$ non termina su $chevron.l M,w chevron.r$ se e solo se $M$ non termina su $w$, quindi $U$ non decide $A_("TM")$
+#pagebreak()
+== $A_("TM")$ è Indecidibile
+Il linguaggio $A_("TM")$ è indecidibile, ma è Turing riconoscibile
+\
+*Dimostrazione*: \
+Supponiamo per assurdo che $A_("TM")$ sia decidibile, quindi che esista un decisore $H$ che riconosca $A_("TM")$
+\
+- $H$ accetta $chevron.l M,w chevron.r$ se $chevron.l M,w chevron.r in A_("TM")$
+- $H$ rifiuta $chevron.l M,w chevron.r$ se $chevron.l M,w chevron.r in.not A_("TM")$
+
+$ H(chevron.l M, w chevron.r) = cases(
+  "accetta" & "se" M "accetta" w,
+  "rifiuta" & "se" M "non accetta" w
+) $
+
+Costruiamo una nuova MdT $D$ che usa $H$ come sottoprogramma, che chiama $H$ su $chevron.l M chevron.l M chevron.r chevron.r$
+- $H$ accetta se $M$ accetta $chevron.l M chevron.r$
+- - $H$ rifiuta se $M$ rifiuta $chevron.l M chevron.r$
+Ora costruiamo $D$ in modo che
+- Rifiuta se $M$ accetta
+- Accetta se $M$ rifiuta
+
+#align(center)[
+  #image("img/Indecibilita/atmind1.png")
+]
+Dato che $D$ può essere facilmente costruita a partire da $H$, se esiste $H$ allora esiste anche $D$
+\
+*Descrizione di $D$*:
+$D eq$ Sull'input $chevron.l M chevron.r$, dove $M$ è una MdT
+- Simula $H$ quando $H$ riceve in input $chevron.l M chevron.l M chevron.r chevron.r$
+- Fornisce come output l'opposto di $H$, cioè se $H$ accetta $chevron.l M chevron.l M chevron.r chevron.r$, rifiuta
+- Se $H$ rifiuta $chevron.l M chevron.l M chevron.r chevron.r$, accetta
+
+$ D(chevron.l M chevron.r) = cases(
+  "rifiuta" & "se" M "accetta" chevron.l M chevron.r,
+  "accetta" & "se" M "non accetta" chevron.l M chevron.r
+) $
+
+Ma se diamo in input la sua stessa codifica otteniamo
+$ D(chevron.l D chevron.r) = cases(
+  "rifiuta" & "se" D "accetta" chevron.l D chevron.r,
+  "accetta" & "se" D "non accetta" chevron.l D chevron.r
+) $
+Cioè $D$ accetta $chevron.l D chevron.r$ se e solo se $D$ non accetta $chevron.l D chevron.r$ il che è una contraddizione, quindi $H$ non può esistere
+
+== Linguaggi co-Turing Riconoscibili
+Un linguaggio $L$ è co-Turing riconoscibile se il suo complemento è Turing riconoscibile
+#pagebreak()
+== La Classe dei Linguaggi Decidibili è Chiusa Rispetto al Complemento
+*Soluzione*: \
+Sia $A$ un linguaggio decidibile, sia $M_A$ una MdT che decide $A$ \
+Definiamo la MdT $M_overline(A)$ sull'input $w$, $M_overline(A)$ simula $M_A$ e accetta $W$ se e solo se $M_A$ rifiuta $w$
+\
+Poiché $M_A$ si arresta su ogni input anche $M_overline(A)$ si arresta su ogni input
+\
+Il linguaggio di $M_overline(A)$ è $overline(A)$, dato che accetta $w$ se e solo se $M_A$ rifiuta $w$, quindi se e solo se $w in.not A$
+\
+Quindi $M_overline(A)$ è una MdT che decide $overline(A)$ ed $overline(A)$ è decidibile
+\
+\
+Formalmente sia $M_A$ un decisore che decide $A$
+$ M_A eq (Q,Sigma,Gamma,delta,q_0,q_("accept"),q_("reject")) $ 
+Sia 
+$ M_overline(A) eq (Q,Sigma,Gamma,delta',q_0,q_("accept"),q_("reject")) $ 
+Dove per ogni $q in Q backslash {q_("accept"),q_("reject")}$, per ogni $gamma in Gamma$
+
+$ delta'(q,gamma) eq cases(
+  delta(q,gamma) & "se" delta(q,gamma) eq (q',gamma',d),
+  & "con" q' in.not {q_("accept"),q_("reject")},
+  (q_("accept"),gamma',d) & "se" delta(q,gamma) eq (q_("reject"),gamma',d),
+  (q_("reject"),gamma',d) & "se" delta(q,gamma) eq (q_("accept"),gamma',d),
+) $
+È Semplice verificare che $M_(overline(A))$ è un decisore e che $L(M_(overline(A))) eq overline(A)$
+
+#pagebreak()
+== Linguaggio Decidibile Se e Solo se Turing e co-Turing Riconoscibile
+*Dimostrazione*: \
+Dobbiamo mostrare che $L$ è decidibile $arrow.double.l.r$ $L$ e il suo complemento sono entrambi Turing Riconoscibili
+\
+\
+$arrow.double.r$ \
+Se $L$ è decidibile allora esiste un decider tale che $M$ accetta $w$ se e solo se $w in L$
+, in particolare $M$ ricosce $L$ e quindi $L$ è Turing riconoscibile
+\
+Dato che $L$ decidibile allora anche $overline(L)$ decidibile, quindi $overline(L)$ è Turing riconoscibile
+\
+\
+$arrow.double.l$ \
+Supponiamo che $L$ e il suo complemento siano entrambi Turing riconoscibili\
+Sia $M_1$ una MdT che riconosce $L$ e $M_2$ una MdT che riconosce $overline(L)$
+\
+Definiamo una MdT M \
+$M eq$ Sull'input $w$:
+- Esegue sia $M_1$ che $M_2$ su input $w$ in parallelo
+- Se $M_1$ accetta, accetta
+- Se $M_2$ accetta, rifiuta
+Vogliamo provare che $M$ decide $L$, quindi dobbiamo provare che
+- $M$ è un decisore
+- $M$ riconosce $L$, cioè $L eq L(M)$
+$M$ è un decisore, infatti per ogni stringa $w$ o $w in L$, oppure $w in overline(L)$
+\
+Poichè $M$ si ferma ogni volta che $M_1$ accetta o $M_2$ accetta, allora $M$ si ferma sempre, quindi è un decisore
+\
+\
+#pagebreak()
+Ora dobbiamo provare $L eq L(M)$
+- $w in L$ se e solo se $M_1$ accetta $w$, quindi $M$ accetta $w$
+$ w in L arrow.double.r M "accetta" w $
+- $w in.not L$ se e solo se $M_2$ accetta $w$, quindi $M$ rifiuta $w$
+$ w in.not L arrow.double.r M "non accetta" w $
+Siccome $M$ accetta $w$ se e solo se $w in L$ possiamo concludere che $L(M) eq L$
+ \ *Nota*: Abbiamo usato il contronominale per dimostrare questa doppia inclusione
+
+== $overline(A_("TM"))$ non è Turing Riconoscibile
+*Dimostrazione*: \
+Supponiamo per assurdo che $overline(A_("TM"))$ sia Turing riconoscibile\
+Sappiamo che $A_("TM")$ è Turing riconoscibile\
+Quindi $A_("TM")$ sarebbe Turing riconoscibile e co-Turing riconoscibile, quindi per il precedente teorema sarebbe decidibile, ma è un assurdo dato che $A_("TM")$ è indecidibile
+
+== Chiusura Linguaggi Turing Riconoscibili Rispetto al Complemento
+La classe dei linguaggi Turing riconoscibili non è chiusa rispetto al complemento, infatti $A_("TM")$ è Turing riconoscibile, ma $overline(A_("TM"))$ non è Turing riconoscibile
+\
+*Note*:   \
+- Questo teorema non può essere usato per provare la proprietà di chiusura dei linguaggi decidibili rispetto al complemento
+- Non può essere considerato una definizione di linguaggio decidibile
+
+#pagebreak()
+= Riducibilità
+== Esempio Descrizione Informale
+$ Sigma eq {0,1} $
+Denotiamo con $chevron.l n chevron.r$ la rappresentazione binario di $n in NN$
+$ "EVEN" eq {w in Sigma^* | w eq chevron.l n chevron.r, n in NN "pari"} $
+$ "ODD" eq {w in Sigma^* | w eq chevron.l n chevron.r, n in NN "dispari"} $
+Costruiamo la MdT INCR
+#align(center)[
+  #image("img/Riducibilità/rid1.png")
+]
+
+$"INCR" eq "Sulla stringa di input "w$:
+
+- Se $w in.not ({1 Sigma^* union {0}})$ si ferma sul primo carattere di $w$, altrimenti esegue i passi successivi
+- Trasforma $w$ in $dollar w$
+- Nello stato $q_r$ scorre l'input da sinistra a destra fino a incontrare il simbolo $union.sq$
+- Passa nello stato $q_cal(l)$, si sposta a sinistra cambiando ogni carattere 1 che vede in 0 fino a leggere un carattere diverso da 1
+  - Se questo carattere è 0 lo cambia in 1, e si sposta a sinistra fino a leggere $dollar$, elimina $dollar$ e sposta a sinistra di una casella la stringa di caratteri 0 e 1 sul nastro e poi si ferma
+  - Se questo carattere è $dollar$, l'input era una stringa si caratteri uguali a 1, allora cambia $dollar$ in 1 e si ferma su quest'ultimo carattere
+#pagebreak()
+Abbiamo definito una funzione calcolabile
+$ f: w in Sigma^* arrow w' in Sigma^* $
+Tale che
+$ w eq chevron.l n chevron.r in "EVEN" arrow.double.r.l f(w) eq w' eq chevron.l n+1 chevron.r in "ODD" $
+*Nota*: $f$ è definito su tutto $Sigma^*$
+
+#align(center)[
+  #image("img/Riducibilità/rid2.png")
+]
+- Se esiste una MdT Rc he decide $"ODD"$, la MdT S decide EVEN
+- Se EVEN è indecidibile proviamo che anche ODD lo è
+
+== Riducibilità Descrizione Informale
+*Idea*: \
+Convertire le istanze di un problema P nelle istanze di un problema P' in modo che un algoritmo P', se esiste, possa essere utilizzato per progettare un algortimo per P
+- Sia A il linguaggio associato a P e B il linguaggio associato a P', allora
+ - B decidibile $arrow.double.r$ A decidibile
+ - A indecidibile $arrow.double.r$ B indecidibile
+#pagebreak()
+== Richiamo di Logica
+#align(center)[
+  #image("img/Riducibilità/richiamologica1.png")
+]
+#align(center)[
+  #image("img/Riducibilità/richiamologica2.png")
+]
+#pagebreak()
+== Riduzione Mediante Funzione
+*Definizione*: \
+Un linguaggio $A subset.eq Sigma^*$ è riducibile mendiante una funzione a un linguaggio $B subset.eq Sigma^* space (A lt.eq_m B)$ se esiste una funzione calcolabile \ $f: Sigma^* arrow.r Sigma^*$ tale che
+$ forall w in Sigma^* space w in A arrow.double.r.l f(w) in B $
+\
+*Definizione*: \
+Una riduzione da un linguaggio $A subset.eq Sigma^*$ a un linguaggio $B subset.eq Sigma^*$ è una funzione $f: Sigma^* arrow.r Sigma^*$ calcolabile e tale che:
+$ forall w in Sigma^* space w in A arrow.double.r.l f(w) in B $
+
+== Teorema 1 $A lt.eq_m B$ se e solo se $overline(A) lt.eq_m overline(B)$
+$ A lt.eq_m B$ se e solo se $overline(A) lt.eq_m overline(B) $
+
+*Dimostrazione*: \
+Per ipotesi $ A lt.eq_m B$ quindi esiste una riduzione $f$ di $A$ a $B$ \
+Poichè $f$ è una riduzione, $f$ è calcolabile e inoltre 
+$ forall w in Sigma^* space w in A arrow.double.r.l f(w) in B $
+Quindi 
+$ forall w in Sigma^* space w in.not A arrow.double.r.l f(w) in.not B $
+Cioè
+$ forall w in Sigma^* space w in overline(A) arrow.double.r.l f(w) in overline(B) $
+Quindi per definizione $f$ è una riduzione da $overline(A)$ a $overline(B)$
+#pagebreak()
+
+== Teorema 5.22 $A lt.eq_m B$ e $B$ è Decidibile, allora $A$ è Decidibile
+Se $A lt.eq_m B$ e $B$ è decidibile, allora $A$ è decidibile \
+*Dimostrazione*: \
+
+Sia $M_B$ una MdT che decide $B$, sia $f$ una riduzione da $A$ a $B$ e sia $M_f$ una MdT che calcola $f$
+\
+Consideriamo la MdT $M_A$ \
+$M_A eq "Sull'input" w:$
+- Simula $M_f$ e calcola $f(w)$
+- Simula $M_B$ su $f(w)$
+  - Se $M_B$ accetta $f(w)$, accetta
+  - Se $M_B$ rifiuta $f(w)$, rifiuta
+
+#align(center)[
+  #image("img/Riducibilità/teo522.png")
+]
+- $M_A$ decide $A$, quindi è un decider
+- Per ogni $w, M_f$ si ferma con $f(w)$ sul nastro 
+- Per ogni $w,M_B$ si ferma su $f(w)$ perchè $M_B$ è un decider
+Inoltre $M_A$ riconosce $A$
+$ w in L(M_A) arrow.double.l.r f(w) in L(M_B) ("Definizione di "M_A) $
+$ arrow.double.l.r f(w) in B (M_B "decide" B) $
+$ arrow.double.r.l w in A ("Definizione di riduzione") $
+
+#pagebreak()
+
+== Teorema 5.28 $A lt.eq_m B$ e $B$ è Turing Riconoscibile, allora $A$ è Turing Riconoscibile
+Se $A lt.eq_m B$ e $B$ è Turing riconoscibile, allora $A$ è Turing riconoscibile
+\
+*Dimostrazione*: \
+Sia $M_B$ una MdT che riconosce $B$, sia $f$ una riduzione di $A$ a $B$ e sia $M_f$ una MdT che calcola $f$
+\
+Consideriamo la MdT $M_A$
+\
+$M_A eq "Sull'input" w$
+- Simula $M_f$ e calcola $f(w)$
+- Simula $M_B$ su $f(w)$
+  - Se $M_B$ accetta $f(w)$, accetta
+  - Se $M_B$ rifiuta $f(w)$, rifiuta
+
+$M_A$ riconosce $A$
+$ w in L(M_A) arrow.double.l.r f(w) in L(M_B) ("Definizione di "M_A) $
+$ arrow.double.l.r f(w) in B (M_B "decide" B) $
+$ arrow.double.r.l w in A ("Definizione di riduzione") $
+
+== Corollario Se $A lt.eq_m B$ e $A$ è Indecidibile, allora $B$ è Indecidibile
+Se $A lt.eq_m B$ e $A$ è indecidibile, allora $B$ è indecidibile
+
+*Dimostrazione*: \
+Se $B$ fosse decidibile lo sarebbe anche $A$ in virtù del teorema 5.22
+\ *Nota*: \
+Usiamo il contronominale
+
+#pagebreak()
+== Corollario Se $A lt.eq_m B$ e $A$ non è Turing Riconoscibile, allora $B$ non è Turing Riconoscibile
+Se $A lt.eq_m B$ e $A$ non è Turing Riconoscibile, allora $B$ non è Turing Riconoscibile
+\
+*Dimostrazione*: \
+Se $B$ fosse Turing riconoscibile lo sarebbe anche $A$ in virtù del Teorema 5.28
+
+== Funzioni Calcolabili
+Una funzione $f: Sigma^* arrow.r Sigma^*$ è calcolabile se esiste una macchina di Turing $M eq  (Q,Sigma,Gamma, delta,q_0,q_("accept"),q_("reject"))$ tale che
+$ forall w in Sigma^* space q_0 w arrow.r q_("accept") f(w) $
+- La MdT si deve arrestare su ogni input
+- $M$ si arresta con $f(w)$ e solo con $f(w)$ sul suo nastro
+\
+- Le funzioni possono essere anche trasformazioni di codifiche di MdT
+
+=== Funzioni Aritmetiche Calcolabili
+- $"incr"(n) eq n+1$
+- $"dec"(n) eq cases(
+  n-1 & "se" n gt 0,
+  0 & "se" n eq 0
+)$
+- $(m.n) arrow.r m+n$
+- $(m.n) arrow.r m-n$
+- $(m.n) arrow.r m dot n$
+#pagebreak()
+=== Esempio Funzioni Calcolabili
+Data una MdT $M eq (Q,Sigma,Gamma,delta,q_0,q_("accept"),q_("reject"))$, denotiamo con $M'$ la MdT che accetta le stringhe rifiutate da $M$ e rifiuta quelle accettate, ma in generale $M$ non riconosce il complemento di $L(M)$\
+Consideriamo la funzione $f: Sigma^* arrow Sigma^*$
+$ f(y) eq cases(
+  epsilon & "se" y eq.not chevron.l M chevron.r"," M "MdT",
+  chevron.l M' chevron.r & "se" y eq chevron.l M chevron.r
+) $
+Consideriamo la MdT $F$ sull'input  $y$\
+- Se $y eq.not chevron.l M chevron.r$, restituisce $epsilon$
+- Se $y eq chevron.l M chevron.r$, "costruisce" la MdT $M' eq $ Sull'input $x$
+  - Simula $M$ su $x$
+  - Se $M$ accetta, rifiuta
+  - Se $M$ rifiuta, accetta
+Chiamiamo $delta$ la funzione di transizione di $M$ e $delta'$ quella della MdT $M'$
+\
+$F$ cerca nella codifica di $M$ le codifiche delle transizioni della forma $delta(q,a) eq (q_("accept"),a',D), D in {L,R}, a,a' in Gamma, q in Q$ e cambia ognuna di esse con la codifica \ $delta'(q,a) eq (q_("reject"),a',D), D in {L,R}, a,a' in Gamma, q in Q$
+\
+Analogamente $F$ cerca nella codifica di $M$ le codifiche delle transizioni della forma $delta(q,a) eq (q_("reject"),a',D), D in {L,R}, a,a' in Gamma, q in Q$ e cambia ognuna di esse con la codifica \ $delta'(q,a) eq (q_("accept"),a',D), D in {L,R}, a,a' in Gamma, q in Q$
+\
+Esiste una MdT $F$ dato che deve solo scorrere l'input e verificare lo stesso cambiando i caratteri in esso \
+La stringa in output è la codifica $chevron.l M' chevron.r$ di $M'$ che simula $M$
+
+#pagebreak()
+
+=== Esempio Funzioni Calcolabili 2
+Consideriamo $A_("TM")$ e $B eq {a b}$
+\
+Consideriamo la funzione $f: Sigma^* arrow.r Sigma^*$, dove $a,b in Sigma$
+$ f(y) eq cases(
+  a b & "se" y eq chevron.l M","w chevron.r in A_("TM"),
+  a & "altrimenti"
+) $
+
+Quindi $f$ è una funzione tale che $f(y) eq a$ se $y$ non è della forma $chevron.l M","w chevron.r$, oopure se $y eq chevron.l M","w chevron.r$ con $chevron.l M","w chevron.r in A_("TM")$
+\ Quindi per ogni $y in Sigma^*$
+$ y in A_("TM") arrow.double.l.r f(y) in {a b} $
+*Idea*:  \
+- Supponiamo per assurdo che questa funzione sia calcolabile
+- Se fosse calcolabile allora grazie alla definizione di riduzione \ $A_("TM") lt.eq_m {a b}$
+- Sappiamo che ${a b}$ è decidibile
+- Tuttavia applicando il Teorema 5.22 se $A_("TM") lt.eq_m {a b}$ e ${a b}$ è decidibile, allora $A_("TM")$ deve essere decidibile, ma è un assurdo
+#pagebreak()
+== ${a b} lt.eq_m A_("TM")$
+Sia $M$ la MdT tale che $L(M) eq L(a^*)$ \
+Consideriamo la funzione $f: Sigma^* arrow.r Sigma^*$, dove $a,b in Sigma$
+$ f(y) eq cases(
+  chevron.l M","a chevron.r & "se" y eq a b,
+  chevron.l M","b chevron.r & "altrimenti"
+ ) $
+Con $chevron.l M,a chevron.r in A_("TM")$ e $chevron.l M,b chevron.r in.not A_("TM")$
+\ \  Dobbiamo dimostrare che $f$ è una riduzione da ${a b}$ ad $A_("TM")$
+La funzione $f$ è calcolabile, la MdT $F$ che calcola $f$ sull'input $y$:
+- Se $y eq a b$, scrive la stringa $chevron.l M,a chevron.r$ e si ferma
+- Se $y eq.not a b$, scrive la stringa $chevron.l M,b chevron.r$ e si ferma
+Inoltre
+$ y in {a b} arrow.double.r y eq a b arrow.double.r f(y) eq chevron.l M,a chevron.r in A_("TM") $
+$ y in.not {a b} arrow.double.r y eq.not a b arrow.double.r f(y) eq chevron.l M,b chevron.r in.not A_("TM") $
+
+Quindi per ogni stringa $y$
+$ y in {a b} arrow.double.r.l f(y) in A_("TM") $
+In conclusione ${a b} lt.eq_m A_("TM")$
+#pagebreak()
+== $A_("TM") lt.eq_m "HALT"_("TM")$
+$ "HALT_TM" eq {chevron.l M,w chevron.r | M "è un MdT e "M "si arresta su "w} $
+*Teorema*: \
+$ A_("TM") lt.eq_m "HALT"_("TM") $
+*Dimostrazione*: \
+Definiamo una funzione calcolabile $f: Sigma^* arrow.r Sigma^*$ tale che per ogni stringa $chevron.l M,w chevron.r$ con $M$ MdT e $w$ stringa e $M'$ MdT
+$ f(chevron.l M,w chevron.r) eq chevron.l M',w chevron.r $
+Inoltre 
+$ chevron.l M,w chevron.r in A_("TM") arrow.double.l.r chevron.l M',w chevron.r in "HALT"_("TM") $
+
+Consideriamo la MdT $F$ sull'input $chevron.l M,w chevron.r$
+- Costruisce la MdT $M' eq$ Sull'input $x$
+  - Simula $M$ su $x$
+  - Se $M$ accetta, accetta
+  - Se $M$ rifiuta, cicla
+- Fornisce in output $chevron.l M',w chevron.r$
+
+La funzione $f$ calcolata da $F$ è una riduzione da $A_("TM")$ a $"HALT"_("TM")$
+$ chevron.l M,w chevron.r arrow.double.r.l M "accetta" w arrow.double.r.l M' "si arresta su" w $
+$ arrow.double.r.l chevron.l M',w chevron.r in "HALT"_("TM") $
+#pagebreak()
+
+== $"HALT"_("TM")$
+$ "HALT_TM" eq {chevron.l M,w chevron.r | M "è un MdT e "M "si arresta su "w} $
+È indecidibile
+
+== $A_("TM") lt.eq_m overline(E_("TM"))$
+$ E_("TM") eq {chevron.l M chevron.r | M "è una MdT e" L(M) eq emptyset} $
+Proviamo che 
+$ A_("TM") lt.eq_m overline(E_("TM")) $
+*Dimostrazione*: \
+Definiamo una funzione calcolabile $f: Sigma^* arrow Sigma^*$ che per ogni stringa $chevron.l M,w chevron.r$ con $M$ MdT e $w$ stringa e $M_1$ MdT
+$ f(chevron.l M,w chevron.r) eq chevron.l M_1 chevron.r $
+Inoltre 
+$ chevron.l M,w chevron.r in A_("TM") arrow.double.l.r chevron.l M_1 chevron.r in overline(E_("TM")) $
+Sia $M_1 eq$ Sull'input $x$
+- Se $x eq.not w$ allora $M_1$ si ferma e rifiuta $x$
+- Se $x eq w$ allora $M_1$ simula $M$ su $w$ e accetta $x$ se $M$ accetta $x eq w$
+La funzione che associa a $chevron.l M,w chevron.r$ la stringa $chevron.l M_1 chevron.r$
+ è una riduzione da $A_("TM")$ a $overline(E_("TM"))$
+\
+$f$ è calcolabile e possiamo costruire la MdT $F$ che sull'input $chevron.l M,w chevron.r$ fornisce in output $chevron.l M_1 chevron.r$
+\
+Inoltre
+$ chevron.l M,w chevron.r in A_("TM") arrow.double.r M "accetta" w arrow.double.r L(M_1) eq.not emptyset arrow.double.r chevron.l M_1 chevron.r in overline(E_("TM"))  $
+e 
+$ chevron.l M,w chevron.r in.not A_("TM") arrow.double.r M "non accetta" w arrow.double.r L(M_1) eq emptyset arrow.double.r chevron.l M_1 chevron.r in.not overline(E_("TM"))  $
+Quindi 
+$ chevron.l M,w chevron.r in A_("TM") arrow.double.r.l M "accetta" w arrow.double.r.l L(M_1) eq.not emptyset arrow.double.r.l chevron.l M_1 chevron.r in overline(E_("TM"))  $
+
+== Teorema 5.27 $overline(E_("TM"))$
+$overline(E_("TM"))$ è indecidibile
+== Corollario $E_("TM")$
+$E_("TM")$ è indecidibile
+\
+*Prova*: \
+Se $E_("TM")$ fosse decidibile lo sarebbe anche $overline(E_("TM"))$, ma questo è in contraddizione col teorema 5.27
+\
+*Nota*: \
+Non esiste nessuna riduzione da $A_("TM")$ a $E_("TM")$
+
+
+== $A_("TM") lt.eq_m "REGULAR"_("TM")$
+$ "REGULAR"_("TM") eq {chevron.l M chevron.r | M "è una MdT e" L(M) "è regolare"} $
+Proviamo che $A_("TM") lt.eq_m "REGULAR"_("TM")$
+\
+*Dimostrazione*: \
+Definiamo una funzione calcolabile $f: Sigma^* arrow Sigma^*$ che per ogni stringa $chevron.l M,w chevron.r$ con $M$ MdT e $w$ stringa e $R$ MdT
+$ f(chevron.l M,w chevron.r) eq chevron.l R chevron.r $
+Inoltre 
+
+$ chevron.l M,w chevron.r in A_("TM") arrow.double.l.r chevron.l R chevron.r in "REGULAR"_("TM") $
+Data una MdT $M$ e una stringa $w$, sia $R eq $Sull'input $x$:
+- Se $x in {0^n 1^n | n in NN}$, allora $R$ si ferma e accetta $x$
+- Se $x in.not {0^n 1^n | n in NN}$, allora $R$ simula $M$ su $w$ e accetta $x$ se $M$ accetta $w$
+
+$ L(R) eq cases(
+  Sigma^* & "se" chevron.l M","w chevron.r in A_("TM"),
+  {0^n 1^n | n in NN} & "altrimenti"
+) $
+La funzione che associa a $chevron.l M,w chevron.r$ la stringa $chevron.l R chevron.r$
+ è una riduzione da $A_("TM")$ a $"REGULAR"_("TM")$
+\
+$f$ è calcolabile e possiamo costruire la MdT $F$ che sull'input $chevron.l M,w chevron.r$ fornisce in output $chevron.l R chevron.r$
+\
+Inoltre
+$ chevron.l M,w chevron.r in A_("TM") arrow.double.r M "accetta" w arrow.double.r L(R) eq Sigma^* "è regolare" $
+$ arrow.double.r chevron.l R chevron.r in "REGULAR"_("TM") $
+\
+$ chevron.l M,w chevron.r in.not A_("TM") arrow.double.r M "non accetta" w arrow.double.r L(R) eq Sigma^* "non è regolare" $
+$ arrow.double.r chevron.l R chevron.r in.not "REGULAR"_("TM") $
+
+In conclusione
+$ chevron.l M,w chevron.r in A_("TM") arrow.double.r.l M "accetta" w arrow.double.r.l L(R) eq Sigma^* "è regolare" $
+$ arrow.double.r.l chevron.l R chevron.r in "REGULAR"_("TM") $
+
+== Teorema $"REGULAR"_("TM")$
+$ "REGULAR"_("TM") eq {chevron.l M chevron.r | M "è una MdT e" L(M) "è regolare"}$ è indecidibile
+
+#pagebreak()
+== $E_("TM") lt.eq_m E Q_("TM")$
+$ E_("TM") eq {chevron.l M chevron.r | M "è una MdT e" L(M) eq emptyset} $
+$ E Q_("TM") eq {chevron.l M_1,M_2 chevron.r | M_1,M_2 "sono MdT e" L(M_1) eq L(M_2)} $
+
+Proviamo che $E_("TM") lt.eq_m E Q_("TM")$ \
+Sia $M_1$ una MdT tale che $L(M_1) eq emptyset$, quindi data una MdT $M$ avremmo che $L(M) eq L(M_1)$ se e solo se $L(M) eq emptyset$
+\
+
+La funzione che associa a $chevron.l M chevron.r$ la stringa $chevron.l M,M_1 chevron.r$
+ è una riduzione da $E_("TM")$ a $E Q_("TM")$
+\
+$f$ è calcolabile e possiamo costruire la MdT $F$ che sull'input $chevron.l M chevron.r$ fornisce in output $chevron.l M,M_1 chevron.r$
+\
+Inoltre
+
+$ chevron.l M chevron.r in E_("TM") arrow.double.r.l L(M) eq emptyset arrow.double.r.l L(M) eq L(M_1) $
+$ arrow.double.r.l chevron.l M,M_1 chevron.r in E Q_("TM") $
+
+== Teorema $E Q_("TM")$
+$  $$ E Q_("TM") eq {chevron.l M_1,M_2 chevron.r | M_1,M_2 "sono MdT e" L(M_1) eq L(M_2)}$ è indecidibile
+#pagebreak()
+== $A_("TM") lt.eq_m E Q_("TM")$
+Data $chevron.l M,w chevron.r$, consideriamo una MdT $M_1$ che riconosce $Sigma^*$ e una MdT $M_2$ che riconosce $Sigma^*$ se $M$ accetta $w$ \
+Per ogni input $x$:
+- $M_1$ accetta $x$
+- $M_2$ simula $M$ su $w$, se $M$ accetta, $M_2$ accetta
+Quindi $L(M) eq Sigma^*$ e
+$ L(M_2) eq cases(
+  Sigma^* & "se" chevron.l M","w chevron.r in A_("TM"),
+  emptyset & "altrimenti"
+) $
+Di conseguenza $L(M_1) eq L(M_2)$ se e solo se $M$ accetta $w$
+\
+Consideriamo la MdT $G eq$ Su input $chevron.l M,w chevron.r$, dove $M$ MdT e $w$ è una stringa:
+- Costruisce le due MdT $M_1 "e" M_2$
+  - $M_1 eq$ Su ogni input:
+    - Accetta
+  - $M_2 eq$ Su ogni input:
+    - Esegue $M$ su $w$
+    - Se $M$ accetta, accetta
+- Restituisce $chevron.l M_1,M_2 chevron.r$
+$G$ calcola una funzione $g$ che associa a $chevron.l M,w chevron.r$ la stringa $chevron.l M_1,M_2 chevron.r$, ed è una riduzione da $A_("TM")$ a $E Q_("TM")$ ed è calcolabile
+\
+$ chevron.l M,w chevron.r in A_("TM") arrow.double.r.l M "accetta" w arrow.double.r.l L(M_1) eq Sigma^* eq L(M_2) $
+$ arrow.double.r.l chevron.l M,M_1 chevron.r in E Q_("TM") $
+#pagebreak()
+== $A_("TM") lt.eq_m overline(E Q_("TM"))$
+Data $chevron.l M,w chevron.r$, consideriamo una MdT $M_1$ che riconosce $emptyset$ e una MdT $M_2$ che riconosce $Sigma^*$ se $M$ accetta $w$ \
+Per ogni input $x$:
+- $M_1$ rifiuta $x$
+- $M_2$ simula $M$ su $w$, se $M$ accetta, $M_2$ accetta
+Quindi $L(M) eq emptyset$ e
+$ L(M_2) eq cases(
+  Sigma^* & "se" chevron.l M","w chevron.r in A_("TM"),
+  emptyset & "altrimenti"
+) $
+Di conseguenza $L(M_1) eq.not L(M_2)$ se e solo se $M$ accetta $w$
+\
+Consideriamo la MdT $F eq$ Su input $chevron.l M,w chevron.r$, dove $M$ MdT e $w$ è una stringa:
+- Costruisce le due MdT $M_1 "e" M_2$
+  - $M_1 eq$ Su ogni input:
+    - Rifiuta
+  - $M_2 eq$ Su ogni input:
+    - Esegue $M$ su $w$
+    - Se $M$ accetta, accetta
+- Restituisce $chevron.l M_1,M_2 chevron.r$
+$F$ calcola una funzione $f$ che associa a $chevron.l M,w chevron.r$ la stringa $chevron.l M_1,M_2 chevron.r$, ed è una riduzione da $A_("TM")$ a $overline(E Q_("TM"))$ ed è calcolabile
+\
+$ chevron.l M,w chevron.r in A_("TM") arrow.double.r.l M "accetta" w arrow.double.r.l L(M_2) eq Sigma^* eq.not emptyset eq L(M_1) $
+$ arrow.double.r.l chevron.l M,M_1 chevron.r in overline(E Q_("TM")) $
+
+#pagebreak()
+
+== Teorema $A lt.eq_m B$ se e solo se $overline(A) lt.eq_m overline(B)$
+$A lt.eq_m B$ se e solo se $overline(A) lt.eq_m overline(B)$
+
+== Corollario 4.23 $overline(A_("TM"))$ non è Turing Riconoscibile
+$overline(A_("TM"))$ non è Turing riconoscibile
+
+== Teorema $E Q_("TM")$ non è Nè Turing Riconoscibile e Nè co-Turing Riconoscibile
+*Dimostrazione*: \
+Supponiamo per assurdo che $E Q_("TM")$ sia Turing riconoscibile \
+
+Siccome $A_("TM") lt.eq_m overline(E Q_("TM"))$ allora $overline(A_("TM")) lt.eq_m E Q_("TM")$ per il Teorema precedente \
+Quindi per il Teorema 5.28, se $E Q_("TM")$ fosse Turing riconoscibile allora $overline(A_("TM"))$ sarebbe Turing riconoscibile, ma va in contraddizione con il Corollario 4.23
+\
+Supponiamo per assurdo che $E Q_("TM")$ sia co-Turing riconoscibile, cioè che $overline(E Q_("TM"))$ sia Turing riconoscibile
+\
+Siccome $A_("TM") lt.eq_m E Q_("TM")$ allora $overline(A_("TM")) lt.eq_m overline(E Q_("TM"))$
+\
+Quindi per il Teorema 5.28, se $overline(E Q_("TM"))$ fosse Turing riconoscibile allora \ $overline(A_("TM"))$ sarebbe Turing riconoscibile, ma è in contraddizione con il Corollario 4.23
+
+#pagebreak()
+== Teorema di Rice
+Sia $L eq {chevron.l M chevron.r | M "una MdT che verifica una proprità" cal(P)}$ un linguaggio che soddisfa
+le seguenti tre condizioni:
+- L'appartenenza di $chevron.l M chevron.r$ a $L$ dipende solo da $L(M)$, ovvero $forall M_1,M_2 "MdT tali che" L(M_1) eq L(M_2)$
+$ chevron.l M_1 chevron.r in L arrow.double.r.l chevron.l M_2 chevron.r in L $
+$cal(P)$ non è banale, cioè $L$ non è vuoto e non contiene tutte le codifiche delle MdT
+- $exists$ una MdT $M_1$ tale che $chevron.l M_1 chevron.r in L$
+- $exists$ una MdT $M_2$ tale che $chevron.l M_2 chevron.r in L$
+Allora $L$ è indecidibile
