@@ -3348,5 +3348,5 @@ le seguenti tre condizioni:
 $ chevron.l M_1 chevron.r in L arrow.double.r.l chevron.l M_2 chevron.r in L $
 $cal(P)$ non è banale, cioè $L$ non è vuoto e non contiene tutte le codifiche delle MdT
 - $exists$ una MdT $M_1$ tale che $chevron.l M_1 chevron.r in L$
-- $exists$ una MdT $M_2$ tale che $chevron.l M_2 chevron.r in L$
+- $exists$ una MdT $M_2$ tale che $chevron.l M_2 chevron.r in.not L$
 Allora $L$ è indecidibile
