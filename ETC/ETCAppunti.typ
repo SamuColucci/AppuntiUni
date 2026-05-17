@@ -3350,3 +3350,148 @@ $cal(P)$ non è banale, cioè $L$ non è vuoto e non contiene tutte le codifiche
 - $exists$ una MdT $M_1$ tale che $chevron.l M_1 chevron.r in L$
 - $exists$ una MdT $M_2$ tale che $chevron.l M_2 chevron.r in.not L$
 Allora $L$ è indecidibile
+
+#pagebreak()
+= Complessità di Tempo
+== Definizione Complessità di Tempo
+Sia $M eq Q,Sigma,Gamma,delta,q_0,q_("accept"),q_("reject")$ una MdT deterministica che si arresta su ogni input
+\
+La complessità di tempo $M$ è la funzione $f: NN arrow NN$ dove $f(n)$ è il massimo numero di passi di computazione eseguiti da $M$ su un input di lunghezza $n,n in NN$
+\
+\
+Se $M$ ha complessità di tempo $f(n)$, diremo che $M$ decide $L(M)$ in tempi (deterministico) $f(n)$
+\
+\
+Quindi se $M$ è una MdT deterministica a nastro singolo, che si arresta su ogni input e $C_1,C_2,...,C_(k+1), k gt.eq 1$, sono configurazioni di $M$, tali che:
+- $C_1 eq q_0 w$ è la configurazione inziale di $M$ con input $w$
+- $C_i eq C_(i+1)$ per ogni $i in {1,...,k}$
+- $C_(k+1)$ è una configurazione di arresto
+Il numero di passi eseguiti da $M$ su $w$ è $k$
+$ f(n) eq "Max num. di passi in "q_0 w arrow.r^* u q v, q in {q_("accept"),q_("reject")}, "al variare di" w in Sigma^* $
+
+== Astrazioni 
+- Input hanno la stessa lunghezza
+- Valutazione del caso peggiore
+- Uso della notazione asintotica $O$-grande
+#pagebreak()
+== Analisi Asintotica
+Sia $f$ e $g$ due funzioni 
+$ f: NN arrow RR^+, g : NN arrow RR^+ $
+Diremo che $f(n)$ è $O(g(n))$ oppure $f(n) eq O(g(n))$ se esiste una costante $c gt 0$ e una costante $n_0 gt.eq 0$ tali che per ogni $n gt.eq n_0$
+$ f(n) lt.eq c g(n) $
+Diremo che $g(n)$è un limite superiore per $f(n)$
+
+== Classi di Complessità
+Sia $f:NN arrow RR^+$ una funzione, sia $cal(M)$ l'insieme delle MdT deterministiche che si arrestano su ogni input
+\
+La classe di complessità di tempo deterministico $"TIME"(f(n))$ è
+$ "TIME"(f(n)) eq {L | exists M in cal(M) "che decide" L "in tempo "O(f(n))} $
+- $"TIME"(1)$: Insieme dei linguaggi per i quali esiste un decider che li decide in tempo $O(1)$ (Tempo costante)
+- $"TIME"(n)$: Insieme dei linguaggi per i quali esiste un decider che li decide in tempo $O(n)$ (Tempo lineare)
+- $"TIME"(n^k)$: Insieme dei linguaggi per i quali esiste un decider che li decide in tempo $O(n^k)$ (Tempo polinomiale)
+- $"TIME"(2^n)$: Insieme dei linguaggi per i quali esiste un decider che li decide in tempo $O(2^n)$ (Tempo esponenziale)
+
+== Osservazione sulla Complessità di Tempo
+- La complessità di tempo dipende dal modello di calcolo
+Le varianti delle MdT deterministiche sono polinomialmente equivalenti, cioè possono simularsi tra di loro con un sovraccarico computazionale equivalente, fanno eccezione le MdT non deterministica
+- La complessità di tempo dipende dalla codifica utilizza, in particolare cambia la lunghezza del valore della funzione rispetto alla lunghezza dell'input
+
+
+#align(center)[
+  #image("img/Riducibilità/calcoloComplessita.png")
+]
+
+#align(center)[
+  #image("img/Riducibilità/calcoloComplessita2.png")
+]
+
+
+== Relazione fra Modelli: MdT Multinastro
+*Teorema*: \
+Sia $t(n)$ una funzione tale che $f(n) gt.eq n$, per ogni MdT deterministica multinastro $M$ con complessità di tempo $t(n)$ esiste una MdT deterministica a nastro singolo $M'$ con complessità di tempo $O(t^2(n))$ equivalente a $M$
+\
+\
+La funzione $f: NN arrow NN$ è la funzione definita da $t^2(n) eq (t(n))$, il teorema afferma che $M'$ utilizza $O([t(n)]^2)$ passi per simulare $t(n)$ passi di $M$
+#pagebreak()
+== Tempo di Esecuzione MdT non Deterministica
+Sia $N eq Q,Sigma,Gamma,delta,q_0,q_("accept"),q_("reject")$ una MdT non deterministica che sia un decisore
+\
+Il tempo di esecuzione di $N$ è la funzione $f : NN arrow NN$ dove $f(n)$ è il massimo numero di passi eseguiti da $N$ in ognuna delle computazioni su ogni input di lunghezza $n,n in NN$
+\
+\
+Il tempo di esecuzione di una MdT non deterministica su input $w$ viene definito come il tempo usato dalla ramificazione più lunga
+\
+Quindi la funzione $f: NN arrow NN$ dove
+$ f(n) eq "Max altezze degli alberi, ognuno dei quali" $
+$ "rappresenta le possibili computazioni su input" w," al variare di" w in Sigma^n $
+
+== Relazione fra Modelli: MdT non Deterministica
+*Teorema*:\
+Sia $t(n)$ una funzione tale che $t(n) gt.eq n$
+\
+Per ogni MdT a nastro singolo non deterministica $N$ avente tempo di esecuzione $t(n)$ esiste una MdT a nastro singolo deterministica e di complessità di tempo $2^(O(t(n)))$, equivalente ad $N$
+
+== La Classe P: Tempo Polinomiale
+*Definizione*: \
+La classe $P$ è l'insieme dei linguaggi $L$ per i quali esiste una MdT deterministica $M$ con un solo nastro che decice $L$ in tempo $O(n^k)$ per qualche $k gt.eq 1$
+$ P eq union_(k gt.eq 1) "TIME"(n^k) $
+- $P$ corrisponde alla classe di problemi che sono realisticamente risolubili mediante programmi su computer reali
+#pagebreak()
+== Teorema Classe $P$
+Sia $t(n)$ una funzione tale che $t(n) gt.eq n$\
+Per ogni MdT multinastro $M$ con complessità di tempo $t(n)$ esiste una MdT a nastro singolo $M'$ con complessità di tempo $O(t^2(n))$, equivalente a $M$
+\
+Quindi, se $L$ è deciso in tempo polinomiale su una MdT multinastro, allora $L$ è deciso in tempo polinomiale su una MdT a nastro singolo
+- $P$ è invariante per tutti i modelli di computazione che sono polinomialmente equivalenti alla MdT deterministica a nastro singolo
+- La classe $P$ è invariante rispetto alla scelta di una codifica ragionevole dell'input
+\
+*Nota*: \
+Per mostrare che un algoritmo può essere eseguito in tempo $O(n^k)$ su un input di lunghezza $n$
+- Dobbiamo fornire un limite superiore polinomiale al numero dei passi eseguiti dall'algoritmo
+- Mostrare che ogni passo può essere eseguito in tempo polinomiale da un qualsiasi ragionevole modello di computazione deterministico
+#pagebreak()
+=== PATH
+$ "PATH" eq {chevron.l G,s,t chevron.r | G "è un grafo orientato in cui c'è un cammino da" s "a" t} $
+*Teorema*:  \
+$"PATH" in P$
+- Una generazione esaustiva dei cammini di $G$ condurrebbe a un algoritmo di complessità esponenziale, quindi con $V$ insieme dei nodi di $G$, ovvero $O(2^(chevron.l G,s,t chevron.r))$
+Il seguente algortimo $M$ decide $"PATH"$ in tempo deterministico polinomiale
+$ M eq "Sull'input" <chevron.l G,s,t chevron.r, "dove" G "è un grafo con nodi "s "e" t $
+- Marca il nodo $s$
+- Ripete questa operazione finchè nessun nuovo vertice viene marcato:
+ - Scansiona tutti gli archi di $G$, se trova un arco $(a,b)$ che va da un nodo $a$ marcato ad un nodo $b$ non marcato, manca il nodo $b$
+- Se $t$ è marcato, accetta. Altrimenti rifiuta
+
+$M$ decide il $"PATH"$ in tempo deterministico polinomiale
+\
+Il passo 3 viene eseguito al più m volte, se $m$ il numero dei vertici di $G$, quindi il totale dei passi è al più $1+1+m$
+\
+Infine i passi 1,3,4 possono essere implementati in tempo polinomiale nella lunghezza sull'input su una MdT deterministica
+
+#pagebreak()
+=== RELPRIME
+Due numeri interi positivi $x,y$ sono relativamente primi se il loro massimo comun divisore è $1$
+$ "RELPRIME" eq {chevron.l x,y chevron.r | x "e" y "sono interi positivi relativamente primi"} $
+*Teorema*: \
+$"RELPRIME" in P$ \
+- Una ricerca esaustiva dei divisori non banale $x$ e $y$ condurrebbe a un algortimo di complessità esponenziale
+Se $chevron.l x chevron.r eq a_k dot dot dot a_0$ è la rappresentazione binaria di $x$ allora $x-2$ è $O(2^k) eq O(2^(|chevron.l x chevron.r|))$
+- Per provare che $"RELPRIME" in P$ ci basiamo sull'algoritmo di Euclide
+*Teorema Ricorsione del MCD*: \
+Per un qualsiasi numero intero $a$ non negativo e qualunque intero $b$ positivo, $M C D(a,b) eq M C D(b,a(mod b))$
+\ \
+*Algoritmo di Euclide*: \
+` 
+MCD(a,b)
+if  b=0 then MCD = a
+  else MCD = MCD(b,a (mod b))
+`
+- Sono necessarie $O(log b)$ chiamate ricorsive
+Quindi consideriamo l'algoritmo $R$: \
+$R eq "Sull'input" chevron.l x,y chevron.r," dove" x "e" y "sono numeri naturali in binario:"$
+- Simula $M C D$ su $chevron.l x,y chevron.r$
+- Se il risulta è $1$ accetta, altrimenti rifiuta
+Quindi $R$ decide $"RELPRIME"$ in tempo deterministico polinomiale
+
+
+
