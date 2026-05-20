@@ -2000,7 +2000,7 @@ $ (Q,Sigma,Gamma, delta,q_0,q_("accept"),q_("reject")) $
 - $Sigma$: Alfabeto dei simboli in input, con $union.sq in.not Sigma$
 - $Gamma$: Alfabeto finito dei simboli di nastro, con $union.sq in Gamma, Sigma subset Gamma, space L,R in.not Gamma$
 - $delta$: Funzione di transizione
-$ (Q backslash {q_("accept"),q_("reject")}) times Gamma arrow.r Q times R times {L,R} $
+$ (Q backslash {q_("accept"),q_("reject")}) times Gamma arrow.r Q times Gamma times {L,R} $
 - $q_0 in Q$: Stato iniziale
 - $q_("accept") in Q$: Stato di accettazione
 - $q_("reject") in Q$: Stato di rifiuto, $q_("accept") eq.not q_("reject")$ 
