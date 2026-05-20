@@ -2145,7 +2145,7 @@ Sia $T_((L,R))$ l'insieme delle macchine di Turing
 $ (Q backslash {q_("accept"),q_("reject")}) times Gamma arrow.r Q times Gamma times {L,R} $
 Chiamiamo $T_((L,R,S))$ il nuovo insieme di macchine di Turing tali che $M eq (Q,Sigma,Gamma,delta,q_0,q_("accept"),q_("reject"))$ in cui $Q,Sigma,Gamma,q_0,q_("accept"),q_("reject")$ sono definiti come in una MdT deterministica e la funzione di transizione $delta$ definita nel modo seguente:
 $ (Q backslash {q_("accept"),q_("reject")}) times Gamma arrow.r Q times Gamma times {L,R,S} $
-Se $delta(q,gamma) eq (q',gamma',delta)$ e se $M$ si trova nello stato $q$ con la testina posizionata su una cella  $gamma$, alla fine della transizione
+Se $delta(q,gamma) eq (q',gamma',d)$ e se $M$ si trova nello stato $q$ con la testina posizionata su una cella  $gamma$, alla fine della transizione
 - $M$ si trova nello stato $q'$
 - $gamma' in Gamma$ è il simbolo scritto sul nastro su cui la testina si trovava all'inizio della transizioni 
 - La testina si trova sulla stessa cella dell'inzio della transizione se $d eq S$, a sinistra se $d eq L $ e a destra se $d eq R$
