@@ -2048,7 +2048,7 @@ Sia $M eq  (Q,Sigma,Gamma, delta,q_0,q_("accept"),q_("reject"))$ una MdT determi
 Siano $q_i,q_j in Q, space a,b,c in Gamma, "e" u,v in Gamma^*$
 \ \
 Diremo che $ u a q_i b v "produce" u q_j a c v $
-Se $delta(q_i,b) eq (q_j,c,L)$
+Se $delta(q_i,b) eq (q_j,c,L)$ \
 Diremo che $ u a q_i b v "produce" u a c q_j v $
 Se $delta(q_i,b) eq (q_j,c,R)$
 \ 
@@ -2828,7 +2828,7 @@ $ H(chevron.l M, w chevron.r) = cases(
 
 Costruiamo una nuova MdT $D$ che usa $H$ come sottoprogramma, che chiama $H$ su $chevron.l M chevron.l M chevron.r chevron.r$
 - $H$ accetta se $M$ accetta $chevron.l M chevron.r$
-- - $H$ rifiuta se $M$ rifiuta $chevron.l M chevron.r$
+- $H$ rifiuta se $M$ rifiuta $chevron.l M chevron.r$
 Ora costruiamo $D$ in modo che
 - Rifiuta se $M$ accetta
 - Accetta se $M$ rifiuta
@@ -3087,7 +3087,7 @@ $ forall w in Sigma^* space q_0 w arrow.r q_("accept") f(w) $
 - $(m.n) arrow.r m dot n$
 #pagebreak()
 === Esempio Funzioni Calcolabili
-Data una MdT $M eq (Q,Sigma,Gamma,delta,q_0,q_("accept"),q_("reject"))$, denotiamo con $M'$ la MdT che accetta le stringhe rifiutate da $M$ e rifiuta quelle accettate, ma in generale $M$ non riconosce il complemento di $L(M)$\
+Data una MdT $M eq (Q,Sigma,Gamma,delta,q_0,q_("accept"),q_("reject"))$, denotiamo con $M'$ la MdT che accetta le stringhe rifiutate da $M$ e rifiuta quelle accettate, ma in generale $M'$ non riconosce il complemento di $L(M)$\
 Consideriamo la funzione $f: Sigma^* arrow Sigma^*$
 $ f(y) eq cases(
   epsilon & "se" y eq.not chevron.l M chevron.r"," M "MdT",
