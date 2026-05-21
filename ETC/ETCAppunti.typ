@@ -2514,7 +2514,7 @@ $ "INDEPENDENT-SET" eq {angle.l G,k angle.r | G "è un grafo non orientato", $
 $ k "è un intero positivo e " G "ha un independent set di cardinalità" k} $
 
 == Problemi di Decisione nella Teoria degli Automi
-== Problema Accettazione di un DFA
+=== Problema Accettazione di un DFA
 Sia $cal(B)$ unn DFA e $w$ una parola, il corrispondente linguaggio è
 $ A_("DFA") eq {angle.l cal(B),w angle.r | cal(B) "è un DFA che accetta la parola" w} $
 \
@@ -2522,7 +2522,7 @@ $ A_("DFA") eq {angle.l cal(B),w angle.r | cal(B) "è un DFA che accetta la paro
 \
 $A_("DFA")$ è un linguaggio decidibile
 
-== Problema del Vuoto
+=== Problema del Vuoto
 $ E_("DFA") eq {angle.l cal(A) angle.r | cal(A) "è un DFA e" L(cal(A)) eq emptyset} $
 
 *Teorema*:
@@ -2537,7 +2537,7 @@ $ E Q_("DFA") eq {angle.l cal(A),cal(B) angle.r | cal(A),cal(B) "sono DFA e" L(c
 \
 $E Q_("DFA")$ è un linguaggio decidibile
 
-== Alcuni Esempi con NFA
+=== Alcuni Esempi con NFA
 Potremmo formulare i tre precedenti attraverso rappresentazioni equivalenti come NFA o espressioni regolari
 $ A_("NFA") eq {angle.l cal(B),w angle.r | cal(B) "è un NFA che accetta la parola" w} $
 $ A_("REX") eq {angle.l cal(R),w angle.r | cal(R) "è un espressione regolare e" w in L(R)} $
@@ -3069,8 +3069,9 @@ Se $A lt.eq_m B$ e $A$ non è Turing Riconoscibile, allora $B$ non è Turing Ric
 Se $B$ fosse Turing riconoscibile lo sarebbe anche $A$ in virtù del Teorema 5.28
 
 == Funzioni Calcolabili
-Una funzione $f: Sigma^* arrow.r Sigma^*$ è calcolabile se esiste una macchina di Turing $M eq  (Q,Sigma,Gamma, delta,q_0,q_("accept"),q_("reject"))$ tale che
-$ forall w in Sigma^* space q_0 w arrow.r q_("accept") f(w) $
+Una funzione $f: Sigma^* arrow.r Sigma^*$ è calcolabile se esiste una macchina di Turing $M eq  (Q,Sigma,Gamma, delta,q_0,q_("accept"),q_("reject"))$ tale che su ogni input, $M$ si arresta con $f(w)$, e solo con $f(w)$, sul nastro \
+*Scrittura Compatta*: \
+$ forall w in Sigma^* space q_0 w arrow.r^* q_("accept") f(w) $
 - La MdT si deve arrestare su ogni input
 - $M$ si arresta con $f(w)$ e solo con $f(w)$ sul suo nastro
 \
