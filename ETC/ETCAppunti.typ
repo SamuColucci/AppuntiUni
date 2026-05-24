@@ -2972,7 +2972,7 @@ $ w eq chevron.l n chevron.r in "EVEN" arrow.double.r.l f(w) eq w' eq chevron.l 
 
 == Riducibilità Descrizione Informale
 *Idea*: \
-Convertire le istanze di un problema P nelle istanze di un problema P' in modo che un algoritmo P', se esiste, possa essere utilizzato per progettare un algortimo per P
+Convertire le istanze di un problema P nelle istanze di un problema P' in modo che un algoritmo P', se esiste, possa essere utilizzato per progettare un algoritmo per P
 - Sia A il linguaggio associato a P e B il linguaggio associato a P', allora
  - B decidibile $arrow.double.r$ A decidibile
  - A indecidibile $arrow.double.r$ B indecidibile
@@ -3456,7 +3456,7 @@ $ "PATH" eq {chevron.l G,s,t chevron.r | G "è un grafo orientato in cui c'è un
 *Teorema*:  \
 $"PATH" in P$
 - Una generazione esaustiva dei cammini di $G$ condurrebbe a un algoritmo di complessità esponenziale, quindi con $V$ insieme dei nodi di $G$, ovvero $O(2^(chevron.l G,s,t chevron.r))$
-Il seguente algortimo $M$ decide $"PATH"$ in tempo deterministico polinomiale
+Il seguente algoritmo $M$ decide $"PATH"$ in tempo deterministico polinomiale
 $ M eq "Sull'input" <chevron.l G,s,t chevron.r, "dove" G "è un grafo con nodi "s "e" t $
 - Marca il nodo $s$
 - Ripete questa operazione finchè nessun nuovo vertice viene marcato:
@@ -3475,7 +3475,7 @@ Due numeri interi positivi $x,y$ sono relativamente primi se il loro massimo com
 $ "RELPRIME" eq {chevron.l x,y chevron.r | x "e" y "sono interi positivi relativamente primi"} $
 *Teorema*: \
 $"RELPRIME" in P$ \
-- Una ricerca esaustiva dei divisori non banale $x$ e $y$ condurrebbe a un algortimo di complessità esponenziale
+- Una ricerca esaustiva dei divisori non banale $x$ e $y$ condurrebbe a un algoritmo di complessità esponenziale
 Se $chevron.l x chevron.r eq a_k dot dot dot a_0$ è la rappresentazione binaria di $x$ allora $x-2$ è $O(2^k) eq O(2^(|chevron.l x chevron.r|))$
 - Per provare che $"RELPRIME" in P$ ci basiamo sull'algoritmo di Euclide
 *Teorema Ricorsione del MCD*: \
@@ -3493,6 +3493,441 @@ $R eq "Sull'input" chevron.l x,y chevron.r," dove" x "e" y "sono numeri naturali
 - Simula $M C D$ su $chevron.l x,y chevron.r$
 - Se il risulta è $1$ accetta, altrimenti rifiuta
 Quindi $R$ decide $"RELPRIME"$ in tempo deterministico polinomiale
+
+#pagebreak()
+== Tipi di Problemi
+- *Trattabili*: Problemi per i quali esistono algoritmi polinomiali per decidere i linguaggi associati
+- *Intrattabili*: Problemi per i quali esistono algoritmi esponenziali per decidere i linguaggi associati
+
+== Classe EXPTIME
+$ "EXPTIME" eq union_(K gt.eq 1) "TIME"(2^n^k) $
+
+In particolare 
+$ P subset "EXPTIME" $
+Esistono linguaggi del tipi $"EXPTIME" backslash P$ come 
+$ E Q_("REX" arrow.t) eq {chevron.l Q,R chevron.r | Q "ed" R "sono" E R G "equivalenti"} $
+Risulta che $E Q_("REX" arrow.t) in "EXPTIME" backslash P$
+
+== HAMPATH
+Un cammino Hamiltoniano in un grafo orientato è un cammino che passa per ogni vertice del grafo una e una sola volta
+$ "HAMPATH" eq {chevron.l G,s,t chevron.r | G "è un grafo orientato e" $
+$ "ha un cammino Hamiltoniano da "s "a" t $
+Anche se non conosciamo un algoritmo polinomiale per determinare se un grafo contiene un cammino Hamiltoniano, se un tale cammino esiste la verifica che si tratta di un cammino Hamiltoniano può essere fatta in tempo polinomiale
+\
+Quindi esiste un algoritmo $N$, polinomiale in $|chevron.l G,s,t chevron.r|$ che sull'input $chevron.l chevron.l G,s,t chevron.r ,c chevron.r$, dove $c eq (u_1,...,u_(|V|))$, decide il linguaggio
+$ {chevron.l chevron.l G,s,t chevron.r ,c chevron.r | G "è un grafo orientato e" $
+$ c "è un cammino Hamiltoniano da" s "a" t } $
+Basta verificare che i nodi della sequenza siano distinti, che $u_1 eq s, u_(|V|) eq t$ e che per ogni $i, 2 lt.eq i lt.eq n, (u_(i-1),u_i) in E$
+
+*Teorema*: \
+$"HAMPATH" in N P$
+\
+*Dimostrazione*: \
+Un algoritmo $N$ che verifica HAMPATH in tempo polinomiale: \
+$N eq "Sull'input" chevron.l chevron.l G,s,t chevron.r ,c chevron.r$, dove $G eq (V,E)$ è un grafo orientato \
+- Verifica se $c eq (u_1,...,u_(|V|))$ è una sequenza di $|V|$ vertici di $G$, altrimenti rifiuta 
+- Verifica se i nodi della sequenza sono distinti, $u_1 eq s, u_(|V|) eq t$ e per ogni $i$ con $2 lt.eq i lt.eq n$ se $(u_(i-1),u_i) in E$, accetta in caso affermativo, altrimenti rifiuta
+$exists c: chevron.l chevron.l G,s,t chevron.r ,c chevron.r in L(N) arrow.double.r.l chevron.l G,s,t chevron.r in "HAMPATH"$
+
+
+
+== COMPOSITES
+$ "COMPOSITES" eq {chevron.l x chevron.r | "esistono interi "p,q, "con" p gt 1, $
+$ q gt 1 "tali che "x eq p q } $
+Dati $x,p$, verificare che $p$ è un divisore di $x$, con $p gt 1, p eq.not x$, può essere fatto in tempo polinomiale
+
+== Algoritmo di Verifica 
+*Definizione*: \
+Un algoritmo di verifica (o verificatore) $V$ per un linguaggio $A$ è un algoritmo tale che 
+$ A eq {w | exists c "tale che "V "accetta" chevron.l w,c chevron.r} $
+La stringa $c$ prende il nome di certificato o prova\
+$A$ è il linguaggio verificato da $V$
+#align(center)[
+  #image("img/Complessità/algVerifica.png")
+]
+
+\
+\
+*Nota*: Algoritmo=Decider
+
+== Complessità degli Algoritmi di Verifica
+Misurata in termini della lunghezza $|w|$ di $w$
+\
+*Definizione*: \
+Un algoritmo $V$ è un verificatore per $A$ in tempo polinomiale se
+- $A$ è il linguaggio verificato da $V$
+$ A eq {w | exists c "tale che "V "accetta" chevron.l w,c chevron.r} $
+- $V$ ha complessità di tempo polinomiale $|w|$
+\
+*Nota*: \
+Se $V$ è un algoritmo di verifica e ha complessità polinomiale in $|w|$, allora il certificato ha lunghezza polinomiale nella lunghezza di $w$, ovvero esiste $t$ tale che per ogni $w, |c| eq O(|w|^t)$
+\
+Questo è imposto dal limite di tempo polinomiale per la computazione di $V$, altrimenti se $c$ non avesse lunghezza polinomiale in $|w|$, non sarebbe esaminabile da $V$
+#pagebreak()
+== Classe NP 
+NP è la classe dei linguaggi verificabili in tempo polinomiale, rappresenta l'annotazione per tempo polinomiale non deterministico
+\
+*Definizione*: \
+Sia $t: NN arrow RR^+$ una funzione \
+La classe di complessità in tempo non deterministico $"NTIME"(t(n))$ è 
+$ "NTIME"(t(n)) eq { L | exists "una MdT non deterministica M" $
+$ "che decide "L "in tempo "O(t(n)) $
+
+== Teorema 7.20 Linguaggio in NP
+Un linguaggio $L$ è in NP se e solo se esiste una MdT non deterministica che decide $L$ in tempo polinomiale
+
+== Corollario 7.22
+$ N P eq union_(k gt.eq 1) "NTIME"(n^k) $
+
+== CLIQUE
+*Definizione*: \
+Una clique in un grafo non orientato $G$ è un sottografo di $G$ in cui ogni coppia di vertici è connessa da un arco \
+Una k-clique è una clique che contiene k vertici 
+$ "CLIQUE" eq {chevron.l G,k chevron.r | G "è un grafo non orientato in cui esiste una k-clique"} $
+
+*Teorema*: \
+$"CLIQUE" in N P$
+\
+*Dimostrazione*: \
+Un algoritmo $V$ che verifica CLIQUE in tempo polinomiale: \
+$V eq "Sull'input" chevron.l chevron.l G,k chevron.r ,c chevron.r$:
+- Verifica se $c$ è un insieme di $k$ nodi di $G$, altrimenti rifiuta 
+- Verifica se per ogni coppia di nodi in $c$, esiste un arco in $G$ che li connette, accetta in caso affermativo, altrimenti rifiuta 
+
+$exists c :chevron.l chevron.l G,k chevron.r ,c chevron.r in L(V) arrow.double.r.l chevron.l G,k chevron.r in "CLIQUE"$
+#pagebreak()
+== SUBSET-SUM
+Dato un insieme finito $S$ di numeri interi e un numero intero $t$, esiste un sottoinsieme $S'$ di $S$ tale che la somma dei suoi numeri sia uguale a $t$
+\
+$ "SUBSET-SUM" eq {chevron.l S,t chevron.r | S eq {x_1,...,x_k} "ed esiste" $
+$ S' subset.eq S "tale che" sum_(s in S') s eq t $
+*Teorema*: \
+$"SUBSET-SUM" in N P$
+\
+*Dimostrazione*: \
+Un algoritmo $V$ che verifica SUBSET-SUM in tempo polinomiale: \
+$V eq "Sull'input" chevron.l chevron.l S,t chevron.r ,c chevron.r$: \
+- Verifica se $c$ è un insieme di numeri la cui somma è $t$, altrimenti rifiuta 
+- Verifica se $S$ contiene tutti i numeri in $c$, accetta in caso affermativo, altrimenti rifiuta
+$exists c: chevron.l chevron.l S,t chevron.r ,c chevron.r in L(V) arrow.double.r.l chevron.l S,t chevron.r in "SUBSET-SUM"$
+#pagebreak()
+== $P subset.eq N P$
+*Teorema 1*: \
+*Dimostrazione*: \
+Se $L in P$, esiste un algoritmo $M$ che decide $L$ in tempo polinomiale \
+Consideriamo l'algoritmo di verifica $V$ che sull'input $y$
+- Se $ y eq.not chevron.l w,epsilon chevron.r$, $w$ stringa, rifiuta $y$
+- Se $ y eq chevron.l w,epsilon chevron.r$, $w$ stringa, simula $M$ su $w$
+- Accetta $y eq chevron.l w,epsilon chevron.r$ se e solo se $M$ accetta $w$
+$ A eq {w | exists c "tale che" V "accetta" chevron.l w,c chevron.r} $
+$ eq {w | V "accetta" chevron.l w,epsilon chevron.r} ("Definizione di" V) $
+$ eq {w | M "accetta" w} ("Definizione di" V) $
+$ eq L $
+Inoltre $V$ verifica $L$ in tempo polinomiale perchè $M$ ha complessità di tempo polinomiale in $|w|$
+
+
+#align(center)[
+  #image("img/Complessità/dimalternativa.png")
+]
+
+#pagebreak()
+== Una Gerarchia di Classi 
+$ P subset.eq N P eq union_(k gt.eq 1) "NTIME"(n^k) subset.eq "EXPTIME" eq union_(k gt.eq 1) "TIME"(2^n^k) $
+
+== Chiusura Classe P Rispetto al Complemento
+La classe $P$ è chiusa rispetto al complemento
+
+== coNP 
+$ c o N P eq {L | overline(L) in N P} $
+*Esempi*:
+- $overline("HAMPATH")$
+- $overline("CLIQUE")$
+- $overline("SUBSET-SUM")$
+
+#align(center)[
+  #image("img/Complessità/4scenari.png")
+]
+
+#align(center)[
+  #image("img/Complessità/4scenari2.png")
+]
+#pagebreak()
+== Funzioni Calcolabili in Tempo Polinomiale
+Una funzione $f: Sigma^* arrow.r Sigma^*$ è calcolabile in tempo polinomiale se esiste una macchina di Turing $M eq  (Q,Sigma,Gamma, delta,q_0,q_("accept"),q_("reject"))$ di complessità di tempo polinomiale tale che su ogni input, $M$ si arresta con $f(w)$, e solo con $f(w)$, sul nastro \
+
+== Riduzioni di Tempo Polinomiali 
+*Definizione*: \
+Siano $A,B$ linguaggi sull'alfabeto Sigma \
+Una riduzione di tempo polinomiale $f$ di $A$ e $B$ è
+- Una funzione $f: Sigma^* arrow Sigma^*$
+- Calcolabile in tempo polinomiale
+Tale che 
+$ forall w in Sigma^*, w in A arrow.double.r.l f(w) in B $
+
+
+Un linguaggio $A subset.eq Sigma^*$ è riducibile in tempo polinomiale mendiante una funzione a un linguaggio $B subset.eq Sigma^* space (A lt.eq_p B)$ se esiste una riduzione di tempo polinomiale di $A$ a $B$ \
+\
+
+*Nota*: 
+- Se un linguaggio $A$ su un alfabeto $Sigma$ associato ad un problema di decisione $PP_D$, le stringhe $w in Sigma^*$ si dividono in tre gruppi
+- $w$ è la codifica di una istanza di $PP_D$ per la quale ammette risposta si 
+- $w$ è la codifica di una istanza di $PP_D$ per la quale ammette risposta no 
+- $w$ non è la codifica di una istanza di $PP_D$
+Quindi dato $A$ e $f$ è una riduzione di $A$ a $B$, la MdT $F$ che calcola $f$ utilizza inizialmente un algoritmo polinomiale nella lunghezza dell'input $w$ per decide se è una codifica di un'istanza di $PP_D$
+#pagebreak()
+== Riducibilità in Tempo Polinomiale
+*Teorema*: \
+Se $A lt.eq_P B$ e $B in P$, allora $A in P$
+\
+*Dimostrazione*: \
+Per ipotesi $B in P$, quindi esiste un algoritmo $M$ di complessità $O(m^t)$ che decide $B$
+\
+Inoltre $A lt.eq_P B$, sia $f$ la riduzione di tempo polinomiale di $A$ e $B$ e sia $F$ l'algoritmo di complessità $O(n^k)$
+che calcola $f$
+\
+Consideriamo l'algoritmo $N$ che sull'input $w$:
+- Simula $F$ su $w$ e calcola $f(w)$
+- Simula $M$ sull'input $f(w)$ per decidere se $f(w) in B$
+- $N$ accetta $w$ se $M$ accetta $f(w)$, $N$ rifiuta $w$ se $M$ rifiuta $f(w)$
+
+#align(center)[
+  #image("img/Complessità/ridpolinomiale.png")
+]
+$N$ decide $A$, infatti si ferma su $w$ se si fermano $F$ ed $M$
+\
+Per ogni $w$, $F$ si ferma con $f(w)$ sul nastro e $M$ si ferma su $f(w)$ essendo un decider 
+\
+Inoltre $N$ riconosce $A$
+$ w in L(N) arrow.double.l.r f(w) in L(M) ("Definizione di "N) $
+$ arrow.double.l.r f(w) in B (M "decide "B) $
+$ arrow.double.l.r w in A (f "è una riduzione polinomiale di" A "a" B) $
+$N$ è un algoritmo polinomiale in $n eq |w|$, infatti $F$ calcola $f(w)$ in $O(n^k)$ passi, quindi in $q(n)$ passi per qualche polinomio $q$
+\
+In particolare $|f(w)| lt.eq q(n)$ dato che la lunghezza sull'output di $F$ è limitata dalla complessità di tempo di $F$
+\
+Al secondo passo $M$ viene eseguito sull'input $f(w)$ e si arresta dopo $p(|f(w)|) lt.eq p(q(n))$ passi per qualche polinomio $p$
+\
+In conclusione $N$ ha complessità polinomiale e quindi $A in P$
+#pagebreak()
+== Proprietà Transitiva di $lt.eq_P$
+Se $A lt.eq_P B$ e $B lt.eq_P C$, allora $A lt.eq_P C$
+\
+*Dimostrazione*: \
+Per ipotesi esiste una riduzione di tempo polinomiale $f: Sigma^* arrow Sigma^*$ di $A$ a $B$ ed esiste una riduzione di tempo polinomiale $g: Sigma^* arrow Sigma^*$ di $B$ in $C$
+\
+\
+Consideriamo la composizione $g circle.tiny f: Sigma^* arrow Sigma^*$ delle funzioni $f$ e $g$, definita da $(g circle.tiny f)(w) eq g(f(w))$
+\
+Risulta per ogni $w in Sigma^*$:
+$ w in A arrow.double.l.r f(w) in B (f "riduzione polinomiale di" A "a" B) $
+$ arrow.double.l.r g(f(w)) in C (g "riduzione polinomiale di" B "a" C) $
+Inoltre $g circle.tiny f$ è una funzione calcolabile in tempo polinomiale
+\
+\
+Sia $F$ l'algortimo di complessità $O(n^k)$ che calcola la funzione $f$
+\
+Sia $G$ l'algortimo di complessità $O(m^t)$ che calcola la funzione $g$
+\
+Consideriamo l'algortimo $G F$ che sull'input $w$:
+- Simula $F$ su $w$ e calcola $f(w)$
+- Simula $G$ sull'input $f(w)$ e calcola $g(f(w))$
+- Fornisce in output l'output di $G$
+
+$G F$ è un algoritmo polinomiale in $n eq |w|$, infatti $F$ calcola $f(w)$ in $O(n^k)$ passi, quindi in $q(n)$ passi per qualche polinomio $q$
+\
+In particolare $|f(w)| lt.eq q(n)$ dato che la lunghezza sull'output di $F$ è limitata dalla complessità di tempo di $F$
+\
+Al secondo passo $G$ viene eseguito sull'input $f(w)$ e si arresta dopo $p(|f(w)|) lt.eq p(q(n))$ passi per qualche polinomio $p$
+\
+In conclusione $G F$ ha complessità polinomiale
+
+#pagebreak()
+== Richiami di Logica 
+
+#align(center)[
+  #image("img/Complessità/richiami1.png")
+]
+
+#align(center)[
+  #image("img/Complessità/richiami2.png")
+]
+Si definisce letterale ogni presenza in forma diretta o negata di una variabile in una espressione e numero di letterali il loro numero 
+\
+\
+Una formula booleana $phi.alt$ è soddisfacibile se esiste un insieme di valori 0 e 1 per le variabili di $phi.alt$ che renda la formula uguale a 1
+
+#align(center)[
+  #image("img/Complessità/richiami3.png")
+]
+#align(center)[
+  #image("img/Complessità/richiami4.png")
+]
+#align(center)[
+  #image("img/Complessità/richiami5.png")
+]
+
+#pagebreak()
+== SAT 
+$ "SAT" eq {chevron.l phi.alt chevron.r | phi.alt "è una formula booleana soddisfacibile"} $
+*Teorema*: \
+$"SAT" in N P$
+\
+*Dimostrazione*: \
+Un certificato per $chevron.l phi.alt chevron.r$ sarà un assegnamento $c$ di valori alle variabili di $phi.alt$
+\
+Un algoritmo $V$ che verifica SAT in tempo polinomiale nella lunghezza di $chevron.l phi.alt chevron.r$:
+\
+\
+$V eq "Sull'input" y:$
+- Verifica se $ y eq chevron.l chevron.l phi.alt chevron.r, c chevron.r$, altrimenti rifiuta 
+- Sostituisce ogni variabile della formula con il suo corrispondente valore e quindi valuta l'espressione 
+- Accetta se $phi.alt$ assume valore 1, altrimenti rifiuta 
+$ exists c : chevron.l chevron.l phi.alt chevron.r, c chevron.r in L(V) arrow.double.r.l chevron.l phi.alt chevron.r in "SAT" $
+
+== 3SAT è Riducibile in Tempo Polinomiale a CLIQUE
+
+$ "3SAT" eq {chevron.l phi.alt chevron.r | phi.alt "è una formula 3CNF soddisfacibile"} $
+3CNF è un AND di clausole e tutte le clausole hanno tre letterali
+
+#align(center)[
+  #image("img/Complessità/3sat.png")
+]
+*Teorema*: \
+3SAT è riducibile in tempo polinomiale a CLIQUE 
+\
+*Dimostrazione*: \
+Sia $phi.alt$ una formula 3CNF a $k$ clausole 
+$ (a_1 or b_1 or c_1) and (a_2 or b_2 or c_2)and ... and (a_k or b_k or c_k) $
+Consideriamo la funzione $f$ che associa a $chevron.l phi.alt chevron.r$ la stringa $chevron.l G,k chevron.r$, dove $G$ è il grafo non orientato definito come segue 
+- $V$ ha $3 times k$ vertici, i vertici sono divisi in $k$ gruppi di tre nodi $t_1,...,t_k:t_j$ corrisponde alla clausola $(a_j or b_j or c_j)$ e ogni vertice in $t_j$ corrisponde a un letterale in $(a_j or b_j or c_j)$
+\
+Quindi $V eq {a_1,b_1,c_1,...,a_k,b_k,c_k}$
+- Non ci sono archi fra vertici in una tupla $t_j$
+- Non ci sono archi tra un vertice associato a un letterale $x$ e i vertici associati al letterale $overline(x)$
+- Ogni altra coppia di vertici è connessa da un arco 
+La funzione $f$ è calcolabile in tempo polinomiale
+\
+\
+Per provare che $f$ è una riduzione polinomiale di 3SAT a CLIQUE occorre dimostrare che $phi.alt$ è soddisfacibile se e solo se $G$ ha una $k$-clique
+
+\
+\
+Supponiamo che $phi.alt$ abbia una assegnamento di soddisfacibilità, quindi esiste almeno un letterale vero in ogni clausola
+- Scegliamo un letterale vero in ogni clausola e consideriamo il sottografo $G'$ indotto dai nodi corrispondenti ai letterali scelti, quindi $G'$ è una $k$-clique, dato che due qualsiasidei vertici non appartengono alla stessa clausola e non corrispondono a una coppia $x,overline(x)$ dato che abbiamo preso letterali veri nell'assegnamento 
+
+\
+\
+Viceversa supponiamo che $G$ abbia una $k$-clique $G'$
+\
+Poichè due nodi in una tripla non sono connessi da un arco, ognuna delle $k$ triple contiene esattamente uno dei nodi della $k$-clique 
+\
+Consideriamo l'assegnamento dei valori alle variabili di $phi.alt$ che rende veri i letterali corrispondenti ai nodi di $G'$
+\
+Ogni tripla contiene un nodo di $G'$ e quindi ogni clausola contiene un letterale vero, quindi questo è un assegnamento di soddisfacibilità \ $phi.alt in "3SAT"$
+
+== Definizione Linguaggio NP-Completo 
+*Definizione*: \
+Un linguaggio $B$ è NP-Completo se soddisfa le seguenti due condizioni:
+- $B$ in NP 
+- Ogni $A$ in NP è riducibile in tempo polinomiale a $B$
+
+== Teorema NP-Completo 
+*Teorema*: \
+SE $B$ è NP-Completo e $B$ è in P, allora P $eq$ NP \
+*Dimostrazione*: \
+Siccome $B$ è in NP-Completo, per ogni $A in$ NP, risulta $A lt.eq_P B$
+\
+Ma abbiamo provato che se $A lt.eq_P B$ e $B in P$, allora $A in P$
+\
+Quindi $N P subset.eq P$ e siccome $P subset.eq N P$ risulta $P eq N P$
+#pagebreak()
+== Riducibilità Polinomiale e NP-Completezza 
+Se $B$ è in NP-Completo e $B lt.eq_P C$, con $C in N P$, allora $C$ è NP-Completo
+\
+*Dimostrazione*: \
+Per ipotesi 
+- $C in N P$
+- Per ogni $A in N P, A lt.eq_P B$
+- $B lt.eq_P C$
+Allora utilizzando la proprietà transitiva di $lt.eq_P$
+- $C in N P$
+- Per ogni $A in N P, A lt.eq C$
+Quindi $C$ è in NP-Completo
+
+== Strategia per Mostrare che $B$ è NP-Completo
+- Mostrare che $B in N P$
+- Scegliere un linguaggio $A$ che sia NP-Completo
+- Definire una riduzione di tempo polinomiale di $A$ in $B$
+
+#pagebreak()
+
+== Teorema di Cook-Levin
+SAT è NP-Completo \
+*Conseguenza*:$S A T in P$ se e solo se $P eq N P$
+\
+La prova del teorema consiste nel mostrare che ogni $A in N P$ è riducibile in tempo polinomiale a SAT, la riduzione di tempo polinomiale si ottiene definendo per ogni input $w$ una formula booleana $phi.alt$ che simula la MdT non deterministica che decide $A$ sull'input $w$
+$ "SAT"_("CNF") eq {chevron.l phi.alt chevron.r | phi.alt "è una formula booleana soddisfacibile in CNF"} $
+$ "SAT"_("CNF") in N P $
+$ "SAT" lt.eq_P "SAT"_("CNF") $
+
+== Teorema $"SAT"_("CNF")$ è NP-Completo
+$"SAT"_("CNF")$ è NP-Completo
+
+== Teorema $"3SAT"$ è NP-Completo
+$"3SAT"$ è NP-Completo
+\
+*Dimostrazione*: \
+3SAT è in NP 
+\
+Per provare che 3SAT è NP-Completo basta dimostrare che \ $"SAT"_("CNF") lt.eq_P 3"SAT"$
+\
+La prova consiste nel costruire una formula booleana $psi$ in 3CNF tale che $phi.alt$ è soddisfacibile se e solo se $psi$ è soddisfacibile
+\
+Inoltre $psi$ può essere costruita in tempo polinomiale a partire da $phi.alt$
+#pagebreak()
+== CLIQUE è NP-Completo
+*Teorema*: \
+CLIQUE è NP-Completo
+\
+*Dimostrazione*: \
+Sappiamo che CLIQUE $in N P$
+\
+Inoltre 3SAT è NP-Completo e 3SAT $lt.eq_P$ CLIQUE
+\
+Quindi CLIQUE è NP-Completo
+
+
+== VERTEX-COVER
+
+Un vortex cover $V'$ di $G$, un grafo non orientato, è un sottoinsieme di $V$ tale che per ogni $(u,v) in E$ risulta ${u,v} inter V' eq.not emptyset$, quindi $V'$ copre ogni arco $(u,v)$ in $G$
+
+
+#align(center)[
+  #image("img/Complessità/vertex.png")
+]
+$ "VERTEX-COVER" eq {chevron.l G,k chevron.r | G "è un grafo non orientato che ha " $
+$ "un vertex cover di cardinalità "k $
+
+
+*Teorema*: \
+VERTEX-COVER $in N P$
+\
+*Dimostrazione*: \
+Un algoritmo $V$ che verifica VERTEX-COVER in tempo polinomiale \
+$V eq "Sull'input "chevron.l chevron.l G,k chevron.r ,c chevron.r:$
+- Verifica se c'è un insieme $V'$ di $k$ nodi di $G$, altrimenti rifiuta
+- Verifica se $V'$ copre ogni arco in $G$, accetta in caso affermativo, altrimenti rifiuta 
+$ exists c: chevron.l chevron.l G,k chevron.r ,c chevron.r in L(V) arrow.double.r.l "VERTEX-COVER" $
+\
+*Teorema*: \
+VERTEX-COVER è NP-Completo
+\
+*Dimostrazione*: \
+Abbiamo dimostrato che VERTEX-COVER è NP-Completo, ora dobbiamo dimostrare che 
+$ "3SAT" lt.eq_P "VERTEX-COVER" $
+#align(center)[
+  #image("img/Complessità/vortexnpcompleto.png")
+]
 
 
 
