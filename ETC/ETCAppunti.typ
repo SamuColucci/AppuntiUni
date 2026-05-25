@@ -3565,7 +3565,8 @@ Se $V$ è un algoritmo di verifica e ha complessità polinomiale in $|w|$, allor
 Questo è imposto dal limite di tempo polinomiale per la computazione di $V$, altrimenti se $c$ non avesse lunghezza polinomiale in $|w|$, non sarebbe esaminabile da $V$
 #pagebreak()
 == NP
-Classe dei linguaggi verificabili in tempo polinomiale
+La classe dei linguaggi che ammettono un verificatore
+in tempo polinomiale
 
 == Classe Di Complessità in Tempo non Polinomiale 
 NP è la classe dei linguaggi verificabili in tempo polinomiale, rappresenta l'annotazione per tempo polinomiale non deterministico
