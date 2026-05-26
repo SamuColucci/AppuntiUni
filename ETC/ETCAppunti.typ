@@ -3050,7 +3050,7 @@ $M_A eq "Sull'input" w$
 
 $M_A$ riconosce $A$
 $ w in L(M_A) arrow.double.l.r f(w) in L(M_B) ("Definizione di "M_A) $
-$ arrow.double.l.r f(w) in B (M_B "decide" B) $
+$ arrow.double.l.r f(w) in B (M_B "riconosce" B) $
 $ arrow.double.r.l w in A ("Definizione di riduzione") $
 
 == Corollario Se $A lt.eq_m B$ e $A$ è Indecidibile, allora $B$ è Indecidibile
@@ -3167,7 +3167,7 @@ Consideriamo la MdT $F$ sull'input $chevron.l M,w chevron.r$
 - Fornisce in output $chevron.l M',w chevron.r$
 
 La funzione $f$ calcolata da $F$ è una riduzione da $A_("TM")$ a $"HALT"_("TM")$
-$ chevron.l M,w chevron.r arrow.double.r.l M "accetta" w arrow.double.r.l M' "si arresta su" w $
+$ chevron.l M,w chevron.r in A_("TM") arrow.double.r.l M "accetta" w arrow.double.r.l M' "si arresta su" w $
 $ arrow.double.r.l chevron.l M',w chevron.r in "HALT"_("TM") $
 #pagebreak()
 
@@ -3238,7 +3238,7 @@ Inoltre
 $ chevron.l M,w chevron.r in A_("TM") arrow.double.r M "accetta" w arrow.double.r L(R) eq Sigma^* "è regolare" $
 $ arrow.double.r chevron.l R chevron.r in "REGULAR"_("TM") $
 \
-$ chevron.l M,w chevron.r in.not A_("TM") arrow.double.r M "non accetta" w arrow.double.r L(R) eq Sigma^* "non è regolare" $
+$ chevron.l M,w chevron.r in.not A_("TM") arrow.double.r M "non accetta" w arrow.double.r L(R) eq {0^n 1^n | n in NN} "non è regolare" $
 $ arrow.double.r chevron.l R chevron.r in.not "REGULAR"_("TM") $
 
 In conclusione
