@@ -3806,7 +3806,7 @@ Consideriamo la funzione $f$ che associa a $chevron.l phi.alt chevron.r$ la stri
 - $V$ ha $3 times k$ vertici, i vertici sono divisi in $k$ gruppi di tre nodi $t_1,...,t_k:t_j$ corrisponde alla clausola $(a_j or b_j or c_j)$ e ogni vertice in $t_j$ corrisponde a un letterale in $(a_j or b_j or c_j)$
 \
 Quindi $V eq {a_1,b_1,c_1,...,a_k,b_k,c_k}$
-- Non ci sono archi fra vertici in una tupla $t_j$
+- Non ci sono archi fra vertici in una tripla $t_j$
 - Non ci sono archi tra un vertice associato a un letterale $x$ e i vertici associati al letterale $overline(x)$
 - Ogni altra coppia di vertici è connessa da un arco 
 La funzione $f$ è calcolabile in tempo polinomiale
