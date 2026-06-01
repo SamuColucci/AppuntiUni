@@ -3187,6 +3187,12 @@ $ chevron.l M,w chevron.r in A_("TM") arrow.double.l.r chevron.l M_1 chevron.r i
 Sia $M_1 eq$ Sull'input $x$
 - Se $x eq.not w$ allora $M_1$ si ferma e rifiuta $x$
 - Se $x eq w$ allora $M_1$ simula $M$ su $w$ e accetta $x$ se $M$ accetta $x eq w$
+
+$ L(M_1) eq cases(
+  {w} & "se" chevron.l M","w chevron.r in A_("TM"),
+  emptyset & "altrimenti"
+) $
+
 La funzione che associa a $chevron.l M,w chevron.r$ la stringa $chevron.l M_1 chevron.r$
  è una riduzione da $A_("TM")$ a $overline(E_("TM"))$
 \
@@ -3434,6 +3440,9 @@ Per ogni MdT a nastro singolo non deterministica $N$ avente tempo di esecuzione 
 
 == La Classe P: Tempo Polinomiale
 *Definizione*: \
+Classe dei linguaggi $L$ decidibili in tempo polinomiale
+\ \
+*Teorema*: \
 La classe $P$ è l'insieme dei linguaggi $L$ per i quali esiste una MdT deterministica $M$ con un solo nastro che decice $L$ in tempo $O(n^k)$ per qualche $k gt.eq 1$
 $ P eq union_(k gt.eq 1) "TIME"(n^k) $
 - $P$ corrisponde alla classe di problemi che sono realisticamente risolubili mediante programmi su computer reali
