@@ -3460,6 +3460,7 @@ Per mostrare che un algoritmo può essere eseguito in tempo $O(n^k)$ su un input
 - Dobbiamo fornire un limite superiore polinomiale al numero dei passi eseguiti dall'algoritmo
 - Mostrare che ogni passo può essere eseguito in tempo polinomiale da un qualsiasi ragionevole modello di computazione deterministico
 #pagebreak()
+
 === PATH
 $ "PATH" eq {chevron.l G,s,t chevron.r | G "è un grafo orientato in cui c'è un cammino da" s "a" t} $
 *Teorema*:  \
